@@ -49,11 +49,19 @@ const getStringUntilMatchingBracket = (
   }
 };
 
-export const getAllJsonFromString = async (text: string) => {
+export const getAllJsonFromString = (text: string) => {
   const openBrackets = getAllOpenBrackets(text);
   return openBrackets
     .map(openBracketIndex =>
       getStringUntilMatchingBracket(text, openBracketIndex)
     )
     .filter(Boolean);
+};
+
+export const isJsonLdObject = (obj: JSON) => {
+  return '@context' in obj;
+};
+
+export const getAllJsonLdFromString = (text: string) => {
+  return getAllJsonFromString(text).filter(isJsonLdObject);
 };
