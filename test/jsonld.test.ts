@@ -1,4 +1,10 @@
-import { hasExhaustiveContext } from '../src';
+import fs from 'fs';
+import path from 'path';
+import {
+  hasExhaustiveContext,
+  getAllJsonFromString,
+  getAllJsonLdFromString,
+} from '../src';
 
 const context = [
   {
@@ -30,5 +36,20 @@ describe('hasExhaustiveContext', () => {
   it('should return false if some properties are missing from the context', async () => {
     const result = await hasExhaustiveContext(docWithNotExhaustiveContext);
     expect(result).toBeFalsy();
+  });
+});
+
+describe('getAllJsonLdFromString', () => {
+  const textPath = path.join(__dirname, './__fixtures__/example.html');
+  const text = fs.readFileSync(textPath).toString();
+
+  it('should return all JSON objects from the page', () => {
+    const results = getAllJsonFromString(text);
+    expect(results).toHaveLength(51);
+  });
+
+  it('should return all JSON-LD objects from the page', () => {
+    const results = getAllJsonLdFromString(text);
+    expect(results).toHaveLength(16);
   });
 });
