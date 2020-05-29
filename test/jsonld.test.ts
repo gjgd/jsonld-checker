@@ -27,22 +27,26 @@ const docWithNotExhaustiveContext = {
   property3: 'value1',
 };
 
+const textPath = path.join(__dirname, './__fixtures__/example.html');
+const text = fs.readFileSync(textPath).toString();
+
 describe('hasExhaustiveContext', () => {
   it('should return true if all properties are in the context', async () => {
-    const result = await hasExhaustiveContext(docWithExhaustiveContext);
-    expect(result).toBeTruthy();
+    const result = await check(docWithExhaustiveContext);
+    expect(result.ok).toBeTruthy();
   });
 
   it('should return false if some properties are missing from the context', async () => {
-    const result = await hasExhaustiveContext(docWithNotExhaustiveContext);
-    expect(result).toBeFalsy();
+    const result = await check(docWithNotExhaustiveContext);
+    expect(result.ok).toBeFalsy();
+    expect(result.error!.type).toBe('MISSING_PROPERTIES_IN_CONTEXT');
+    expect(result.error!.details).toEqual(['property3']);
   });
+
+  // TODO add test about invalid context
 });
 
 describe('getAllJsonLdFromString', () => {
-  const textPath = path.join(__dirname, './__fixtures__/example.html');
-  const text = fs.readFileSync(textPath).toString();
-
   it('should return all JSON objects from the page', () => {
     const results = getAllJsonFromString(text);
     expect(results).toHaveLength(51);
@@ -50,6 +54,15 @@ describe('getAllJsonLdFromString', () => {
 
   it('should return all JSON-LD objects from the page', () => {
     const results = getAllJsonLdFromString(text);
+    expect(results).toHaveLength(16);
+  });
+});
+
+describe('integration', () => {
+  it('should return all non exhaustive json-ld contexts', async () => {
+    const jsonldObjects = getAllJsonLdFromString(text);
+    const promises = jsonldObjects.map(check);
+    const results = await Promise.all(promises);
     expect(results).toHaveLength(16);
   });
 });
