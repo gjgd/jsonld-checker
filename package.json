@@ -17,6 +17,11 @@
     "lint": "tsdx lint src test",
     "prepare": "tsdx build"
   },
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
+  },
   "prettier": {
     "printWidth": 80,
     "semi": true,
