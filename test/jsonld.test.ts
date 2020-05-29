@@ -1,10 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import {
-  check,
-  getAllJsonFromString,
-  getAllJsonLdFromString,
-} from '../src';
+import { check, getAllJsonFromString, getAllJsonLdFromString } from '../src';
 
 const context = [
   {
