@@ -1,14 +1,59 @@
 import jsonld from 'jsonld';
 
-export const hasExhaustiveContext = async (jsonldDocument: any) => {
-  // Remove all keys not present in the jsonld context
-  const expanded = await jsonld.expand(jsonldDocument);
-  const compacted = await jsonld.compact(expanded, jsonldDocument['@context']);
-  // Check which keys have been removed
-  const keys = Object.keys(jsonldDocument);
-  const newKeysSet = new Set(Object.keys(compacted));
-  const difference = keys.filter(key => !newKeysSet.has(key));
-  return difference.length === 0;
+// const CONTEXTS = {};
+//
+// const nodeDocumentLoader = jsonld.documentLoaders.node();
+//
+// // change the default document loader
+// const customLoader = async (url: string) => {
+//   console.log(url);
+//   if (url in CONTEXTS) {
+//     return {
+//       contextUrl: null,
+//       document: CONTEXTS[url],
+//       documentUrl: url,
+//     };
+//   }
+//   return nodeDocumentLoader(url);
+// };
+//
+// jsonld.documentLoader = customLoader;
+
+export const check = async (jsonldDocument: any) => {
+  try {
+    // Remove all keys not present in the jsonld context
+    const expanded = await jsonld.expand(jsonldDocument);
+    const compacted = await jsonld.compact(
+      expanded,
+      jsonldDocument['@context']
+    );
+    // Check which keys have been removed
+    const keys = Object.keys(jsonldDocument);
+    const newKeysSet = new Set(Object.keys(compacted));
+    const difference = keys.filter(key => !newKeysSet.has(key));
+    if (difference.length === 0) {
+      return {
+        ok: true,
+        error: null,
+      };
+    } else {
+      return {
+        ok: false,
+        error: {
+          type: 'MISSING_PROPERTIES_IN_CONTEXT',
+          details: difference,
+        },
+      };
+    }
+  } catch (err) {
+    return {
+      ok: false,
+      error: {
+        type: 'INVALID_CONTEXT',
+        details: err,
+      },
+    };
+  }
 };
 
 const getAllOpenBrackets = (text: string) => {
