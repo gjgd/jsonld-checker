@@ -1,23 +1,24 @@
 import jsonld from 'jsonld';
 
-// const CONTEXTS = {};
-//
-// const nodeDocumentLoader = jsonld.documentLoaders.node();
-//
-// // change the default document loader
-// const customLoader = async (url: string) => {
-//   console.log(url);
-//   if (url in CONTEXTS) {
-//     return {
-//       contextUrl: null,
-//       document: CONTEXTS[url],
-//       documentUrl: url,
-//     };
-//   }
-//   return nodeDocumentLoader(url);
-// };
-//
-// jsonld.documentLoader = customLoader;
+const CONTEXTS = {};
+
+const nodeDocumentLoader = jsonld.documentLoaders.node();
+
+// change the default document loader
+const customLoader = async (url: string) => {
+  if (url in CONTEXTS) {
+    return {
+      contextUrl: null,
+      document: await CONTEXTS[url],
+      documentUrl: url,
+    };
+  }
+  const res = nodeDocumentLoader(url);
+  CONTEXTS[url] = res.document;
+  return res;
+};
+
+jsonld.documentLoader = customLoader;
 
 export const check = async (jsonldDocument: any) => {
   try {
