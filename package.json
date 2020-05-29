@@ -33,7 +33,6 @@
   "author": "gjgd",
   "module": "dist/jsonld-checker.esm.js",
   "devDependencies": {
-    "@types/jsonld": "^1.5.1",
     "fs": "0.0.1-security",
     "husky": "^4.2.5",
     "path": "^0.12.7",
