@@ -20,8 +20,14 @@ const customLoader = async (url: string) => {
 
 jsonld.documentLoader = customLoader;
 
-export const check = async (jsonldDocument: any) => {
+export const check = async (jsonldDocument: string | object) => {
   try {
+    let jsonldDoc: object;
+    if (typeof jsonldDocument === 'string') {
+      jsonldDoc = JSON.parse(jsonldDocument);
+    } else {
+      jsonldDoc = jsonldDocument;
+    }
     // Remove all keys not present in the jsonld context
     const expanded = await jsonld.expand(jsonldDocument);
     const compacted = await jsonld.compact(
