@@ -5,6 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import CheckJsonTab from './CheckJsonTab';
 
 type TabPanelProps = {
   children: string | React.ReactNode,
@@ -63,7 +64,7 @@ export default function SimpleTabs() {
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        <div>lol</div>
+        <CheckJsonTab />
       </TabPanel>
       <TabPanel value={value} index={1}>
         TODO
