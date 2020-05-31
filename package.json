@@ -7,8 +7,10 @@
     "node": ">=10"
   },
   "scripts": {
+    "build": "lerna run build",
+    "lint": "lerna run lint",
     "postinstall": "lerna bootstrap",
-    "lint": "lerna run lint"
+    "test": "lerna run test"
   },
   "husky": {
     "hooks": {
