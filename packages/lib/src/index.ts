@@ -1,4 +1,5 @@
 import jsonld from 'jsonld';
+import CheckResult from './CheckResult';
 
 const CONTEXTS = {};
 
@@ -29,37 +30,23 @@ export const check = async (jsonldDocument: string | object) => {
       jsonldDoc = jsonldDocument;
     }
     // Remove all keys not present in the jsonld context
-    const expanded = await jsonld.expand(jsonldDocument);
-    const compacted = await jsonld.compact(
-      expanded,
-      jsonldDocument['@context']
-    );
+    const expanded = await jsonld.expand(jsonldDoc);
+    const compacted = await jsonld.compact(expanded, jsonldDoc['@context']);
     // Check which keys have been removed
-    const keys = Object.keys(jsonldDocument);
+    const keys = Object.keys(jsonldDoc);
     const newKeysSet = new Set(Object.keys(compacted));
     const difference = keys.filter(key => !newKeysSet.has(key));
     if (difference.length === 0) {
-      return {
-        ok: true,
-        error: null,
-      };
+      return new CheckResult(true);
     } else {
-      return {
-        ok: false,
-        error: {
-          type: 'MISSING_PROPERTIES_IN_CONTEXT',
-          details: difference,
-        },
-      };
+      return new CheckResult(
+        false,
+        'MISSING_PROPERTIES_IN_CONTEXT',
+        JSON.stringify(difference)
+      );
     }
   } catch (err) {
-    return {
-      ok: false,
-      error: {
-        type: 'INVALID_CONTEXT',
-        details: err,
-      },
-    };
+    return new CheckResult(false, err.name, err.message);
   }
 };
 
