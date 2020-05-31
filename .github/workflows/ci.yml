@@ -23,20 +23,12 @@ jobs:
 
       - name: Install dependencies
         run: npm install
-        env:
-          CI: true
 
       - name: Lint
         run: npm run lint
-        env:
-          CI: true
 
       - name: Test
         run: npm run test
-        env:
-          CI: true
 
       - name: Build
         run: npm run build
-        env:
-          CI: true
