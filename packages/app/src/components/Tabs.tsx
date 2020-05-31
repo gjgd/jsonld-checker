@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
 type TabPanelProps = {
-  children: string,
+  children: string | React.ReactNode,
   value: number,
   index: number,
 };
@@ -56,20 +56,20 @@ export default function SimpleTabs() {
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+        <Tabs value={value} onChange={handleChange} centered>
+          <Tab label="Check a single JSON" {...a11yProps(0)} />
+          <Tab disabled label="Check a file" {...a11yProps(1)} />
+          <Tab disabled label="Check a Github repo" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
-        Item One
+        <div>lol</div>
       </TabPanel>
       <TabPanel value={value} index={1}>
-        Item Two
+        TODO
       </TabPanel>
       <TabPanel value={value} index={2}>
-        Item Three
+        TODO
       </TabPanel>
     </div>
   );
