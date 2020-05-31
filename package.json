@@ -1,21 +1,13 @@
 {
+  "name": "jsonld-checker",
+  "author": "gjgd",
   "version": "0.1.0",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "files": [
-    "dist",
-    "src"
-  ],
   "engines": {
     "node": ">=10"
   },
   "scripts": {
-    "start": "tsdx watch",
-    "build": "tsdx build",
-    "test": "tsdx test",
-    "lint": "tsdx lint src test",
-    "prepare": "tsdx build"
+    "postinstall": "lerna bootstrap"
   },
   "husky": {
     "hooks": {
@@ -28,18 +20,8 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "jsonld-checker",
-  "author": "gjgd",
-  "module": "dist/jsonld-checker.esm.js",
   "devDependencies": {
-    "fs": "0.0.1-security",
     "husky": "^4.2.5",
-    "path": "^0.12.7",
-    "tsdx": "^0.13.2",
-    "tslib": "^2.0.0",
-    "typescript": "^3.9.3"
-  },
-  "dependencies": {
-    "jsonld": "^3.1.1"
+    "lerna": "^3.22.0"
   }
 }
