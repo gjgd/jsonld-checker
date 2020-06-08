@@ -1,13 +1,13 @@
 // import { Paper } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
-import "ace-builds/src-noconflict/ext-language_tools";
-import "ace-builds/src-noconflict/mode-json";
-import "ace-builds/src-noconflict/theme-monokai";
 import { check } from 'jsonld-checker-lib';
 import React from 'react';
 import AceEditor from "react-ace";
 import JsonLdCheckResult from '../models/JsonLDCheckResult';
 import CheckResult from './CheckResult';
+import "ace-builds/src-noconflict/ext-language_tools";
+import "ace-builds/src-noconflict/mode-json";
+import "ace-builds/src-noconflict/theme-monokai";
 
 const CheckJsonTab: React.FunctionComponent<{}> = () => {
 

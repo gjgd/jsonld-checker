@@ -22,3 +22,4 @@
 - Could not find a declaration file for module 'jsonld-checker-lib'. '/Users/guillaume/workspace/jsonld-checker/packages/lib/dist/index.js' implicitly has an 'any' type.
   Try `npm install @types/jsonld-checker-lib` if it exists or add a new declaration (.d.ts) file containing `declare module 'jsonld-checker-lib';`ts(7016)
 - Share JsonLdCheckResult between lib and app
+- Add loader during check
