@@ -39,7 +39,16 @@ describe('hasExhaustiveContext', () => {
     expect(result.error!.details).toEqual(['property3']);
   });
 
+  it('should return false if argument is a non parseable string', async () => {
+    const result = await check('{');
+    expect(result.ok).toBeFalsy();
+    expect(result.error!.type).toBe('NOT_JSON');
+  });
+
   // TODO add test about invalid context
+
+  // TODO add test: {"bonjour": "lol"}
+  // TODO add test positive test for string arg
 });
 
 describe('getAllJsonLdFromString', () => {
