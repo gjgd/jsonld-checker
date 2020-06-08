@@ -1,11 +1,11 @@
 class CheckResult {
-  ok: boolean
+  ok: boolean;
   error: {
-    type: string,
-    details: string,
-  }
+    type: string;
+    details: string;
+  };
 
-  constructor(ok: boolean, type='', details='') {
+  constructor(ok: boolean, type = '', details = '') {
     this.ok = ok;
     this.error = {
       type,
