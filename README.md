@@ -15,7 +15,6 @@
 
 ## TODO
 
-- jest typescript eslint
 - fix tests
 - fix css
 - implement second tab
