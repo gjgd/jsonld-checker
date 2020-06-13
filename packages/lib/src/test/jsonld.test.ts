@@ -1,6 +1,6 @@
 import fs from 'fs';
 import path from 'path';
-import { check, getAllJsonFromString, getAllJsonLdFromString } from '../src';
+import { check, getAllJsonFromString, getAllJsonLdFromString } from '..';
 
 const context = [
   {
@@ -26,7 +26,7 @@ const docWithNotExhaustiveContext = {
 const textPath = path.join(__dirname, './__fixtures__/example.html');
 const text = fs.readFileSync(textPath).toString();
 
-describe('hasExhaustiveContext', () => {
+describe.only('hasExhaustiveContext', () => {
   it('should return true if all properties are in the context', async () => {
     const result = await check(docWithExhaustiveContext);
     expect(result.ok).toBeTruthy();
@@ -64,7 +64,8 @@ describe('getAllJsonLdFromString', () => {
 });
 
 describe('integration', () => {
-  it('should return all non exhaustive json-ld contexts', async () => {
+  it("should return all non exhaustive json-ld contexts", async () => {
+    const lol = "mdrr";
     const jsonldObjects = getAllJsonLdFromString(text);
     const promises = jsonldObjects.map(check);
     const results = await Promise.all(promises);
