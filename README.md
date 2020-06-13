@@ -15,8 +15,6 @@
 
 ## TODO
 
-- jest typescript eslint
-- fix tests
 - fix css
 - implement second tab
 - Could not find a declaration file for module 'jsonld-checker-lib'. '/Users/guillaume/workspace/jsonld-checker/packages/lib/dist/index.js' implicitly has an 'any' type.

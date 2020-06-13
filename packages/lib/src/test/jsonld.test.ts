@@ -1,34 +1,20 @@
-import fs from 'fs';
-import path from 'path';
 import { check, getAllJsonFromString, getAllJsonLdFromString } from '..';
+import {
+  docNotJsonLd,
+  docWithExhaustiveContext,
+  docWithInvalidContext,
+  docWithNotExhaustiveContext,
+  text,
+} from './__fixtures__';
 
-const context = [
-  {
-    test: 'http://test.com#',
-    property1: 'test:1',
-    property2: 'test:2',
-  },
-];
-
-const docWithExhaustiveContext = {
-  '@context': context,
-  property1: 'value1',
-  property2: 'value2',
-};
-
-const docWithNotExhaustiveContext = {
-  '@context': context,
-  property1: 'value1',
-  property2: 'value1',
-  property3: 'value1',
-};
-
-const textPath = path.join(__dirname, './__fixtures__/example.html');
-const text = fs.readFileSync(textPath).toString();
-
-describe.only('hasExhaustiveContext', () => {
+describe('check', () => {
   it('should return true if all properties are in the context', async () => {
     const result = await check(docWithExhaustiveContext);
+    expect(result.ok).toBeTruthy();
+  });
+
+  it('should return true for valid string argument', async () => {
+    const result = await check(JSON.stringify(docWithExhaustiveContext));
     expect(result.ok).toBeTruthy();
   });
 
@@ -36,19 +22,30 @@ describe.only('hasExhaustiveContext', () => {
     const result = await check(docWithNotExhaustiveContext);
     expect(result.ok).toBeFalsy();
     expect(result.error!.type).toBe('MISSING_PROPERTIES_IN_CONTEXT');
-    expect(result.error!.details).toEqual(['property3']);
+    expect(result.error!.details).toEqual('["property3"]');
   });
 
   it('should return false if argument is a non parseable string', async () => {
     const result = await check('{');
     expect(result.ok).toBeFalsy();
-    expect(result.error!.type).toBe('NOT_JSON');
+    expect(result.error!.type).toBe('SyntaxError');
+    expect(result.error!.details).toBe('Unexpected end of JSON input');
   });
 
-  // TODO add test about invalid context
+  it('should return false is doc has invalid context', async () => {
+    const result = await check(docWithInvalidContext);
+    expect(result.ok).toBeFalsy();
+    expect(result.error!.type).toBe('jsonld.InvalidUrl');
+  });
 
-  // TODO add test: {"bonjour": "lol"}
-  // TODO add test positive test for string arg
+  it('should return false is doc is not JSON-LD', async () => {
+    const result = await check(docNotJsonLd);
+    expect(result.ok).toBeFalsy();
+    expect(result.error!.type).toBe('jsonld.SyntaxError');
+    expect(result.error!.details).toBe(
+      'Invalid JSON-LD syntax; @context must be an object.'
+    );
+  });
 });
 
 describe('getAllJsonLdFromString', () => {
