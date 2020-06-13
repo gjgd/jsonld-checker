@@ -13,4 +13,8 @@ module.exports = {
     // Has to be the last one in the extends array
     'plugin:prettier/recommended',
   ],
+  rules: {
+    'react/prop-types': 'off',
+    'react/jsx-props-no-spreading': 'off',
+  },
 };
