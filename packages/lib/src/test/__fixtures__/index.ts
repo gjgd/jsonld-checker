@@ -29,11 +29,14 @@ const docWithInvalidContext = {
   property3: 'value1',
 };
 
+const docNotJsonLd = { bonjour: 'lol' };
+
 const textPath = path.join(__dirname, './example.html');
 const text = fs.readFileSync(textPath).toString();
 
 export {
   context,
+  docNotJsonLd,
   docWithExhaustiveContext,
   docWithInvalidContext,
   docWithNotExhaustiveContext,

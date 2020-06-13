@@ -1,12 +1,13 @@
 import { check, getAllJsonFromString, getAllJsonLdFromString } from '..';
 import {
+  docNotJsonLd,
   docWithExhaustiveContext,
-  docWithNotExhaustiveContext,
   docWithInvalidContext,
+  docWithNotExhaustiveContext,
   text,
 } from './__fixtures__';
 
-describe('hasExhaustiveContext', () => {
+describe('check', () => {
   it('should return true if all properties are in the context', async () => {
     const result = await check(docWithExhaustiveContext);
     expect(result.ok).toBeTruthy();
@@ -32,7 +33,15 @@ describe('hasExhaustiveContext', () => {
     expect(result.error!.type).toBe('jsonld.InvalidUrl');
   });
 
-  // TODO add test: {"bonjour": "lol"}
+  it('should return false is doc is not JSON-LD', async () => {
+    const result = await check(docNotJsonLd);
+    expect(result.ok).toBeFalsy();
+    expect(result.error!.type).toBe('jsonld.SyntaxError');
+    expect(result.error!.details).toBe(
+      'Invalid JSON-LD syntax; @context must be an object.'
+    );
+  });
+
   // TODO add test positive test for string arg
 });
 
