@@ -1,5 +1,6 @@
 class CheckResult {
   ok: boolean;
+
   error: {
     type: string;
     details: string;
