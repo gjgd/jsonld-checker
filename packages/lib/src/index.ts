@@ -46,13 +46,12 @@ export const check = async (jsonldDocument: string | object) => {
     const difference = keys.filter(key => !newKeysSet.has(key));
     if (difference.length === 0) {
       return new CheckResult(true);
-    } else {
-      return new CheckResult(
-        false,
-        'MISSING_PROPERTIES_IN_CONTEXT',
-        JSON.stringify(difference)
-      );
     }
+    return new CheckResult(
+      false,
+      'MISSING_PROPERTIES_IN_CONTEXT',
+      JSON.stringify(difference)
+    );
   } catch (err) {
     return new CheckResult(false, err.name, err.message);
   }
@@ -60,7 +59,7 @@ export const check = async (jsonldDocument: string | object) => {
 
 const getAllOpenBrackets = (text: string) => {
   const results: number[] = [];
-  for (let cursor = 0; cursor < text.length; cursor++) {
+  for (let cursor = 0; cursor < text.length; cursor += 1) {
     if (text[cursor] === '{') {
       results.push(cursor);
     }
@@ -78,7 +77,7 @@ const getStringUntilMatchingBracket = (
   }
   let bracketCount = 1;
   let cursor = openBracketIndex + 1;
-  const length = text.length;
+  const { length } = text;
   while (bracketCount !== 0 && cursor < length) {
     const currentChar = text[cursor];
     if (currentChar === '{') {
