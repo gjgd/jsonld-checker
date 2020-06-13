@@ -26,7 +26,7 @@ const docWithNotExhaustiveContext = {
 const textPath = path.join(__dirname, './__fixtures__/example.html');
 const text = fs.readFileSync(textPath).toString();
 
-describe.only('hasExhaustiveContext', () => {
+describe('hasExhaustiveContext', () => {
   it('should return true if all properties are in the context', async () => {
     const result = await check(docWithExhaustiveContext);
     expect(result.ok).toBeTruthy();
@@ -36,13 +36,14 @@ describe.only('hasExhaustiveContext', () => {
     const result = await check(docWithNotExhaustiveContext);
     expect(result.ok).toBeFalsy();
     expect(result.error!.type).toBe('MISSING_PROPERTIES_IN_CONTEXT');
-    expect(result.error!.details).toEqual(['property3']);
+    expect(result.error!.details).toEqual('["property3"]');
   });
 
   it('should return false if argument is a non parseable string', async () => {
     const result = await check('{');
     expect(result.ok).toBeFalsy();
-    expect(result.error!.type).toBe('NOT_JSON');
+    expect(result.error!.type).toBe('SyntaxError');
+    expect(result.error!.details).toBe('Unexpected end of JSON input');
   });
 
   // TODO add test about invalid context
