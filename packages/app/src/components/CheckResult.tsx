@@ -6,7 +6,7 @@ const CheckResult: React.FunctionComponent<{ result: JsonLdCheckResult }> = ({
   result,
 }) => {
   if (!result) {
-    return <React.Fragment />;
+    return <></>;
   }
   if (result.ok) {
     return (

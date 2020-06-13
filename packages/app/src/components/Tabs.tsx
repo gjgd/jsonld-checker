@@ -7,9 +7,9 @@ import Box from '@material-ui/core/Box';
 import CheckJsonTab from './CheckJsonTab';
 
 type TabPanelProps = {
-  children: React.ReactNode,
-  value: number,
-  index: number,
+  children: React.ReactNode;
+  value: number;
+  index: number;
 };
 
 function TabPanel(props: TabPanelProps) {
@@ -22,9 +22,7 @@ function TabPanel(props: TabPanelProps) {
       id={`simple-tabpanel-${index}`}
       aria-labelledby={`simple-tab-${index}`}
     >
-      {value === index && (
-        <Box p={3}> {children} </Box>
-      )}
+      {value === index && <Box p={3}> {children} </Box>}
     </div>
   );
 }

@@ -2,15 +2,14 @@
 import Button from '@material-ui/core/Button';
 import { check } from 'jsonld-checker-lib';
 import React from 'react';
-import AceEditor from "react-ace";
+import AceEditor from 'react-ace';
 import JsonLdCheckResult from '../models/JsonLDCheckResult';
 import CheckResult from './CheckResult';
-import "ace-builds/src-noconflict/ext-language_tools";
-import "ace-builds/src-noconflict/mode-json";
-import "ace-builds/src-noconflict/theme-monokai";
+import 'ace-builds/src-noconflict/ext-language_tools';
+import 'ace-builds/src-noconflict/mode-json';
+import 'ace-builds/src-noconflict/theme-monokai';
 
 const CheckJsonTab: React.FunctionComponent<{}> = () => {
-
   const [jsonValue, setJsonValue] = React.useState('');
   const [result, setResult] = React.useState<JsonLdCheckResult>();
 
@@ -25,7 +24,7 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Button variant="contained" onClick={onClickCheck}>
         Check
       </Button>
@@ -37,9 +36,9 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
         name="json-ld-editor"
         onChange={onChange}
         fontSize={14}
-        showPrintMargin={true}
-        showGutter={true}
-        highlightActiveLine={true}
+        showPrintMargin
+        showGutter
+        highlightActiveLine
         value={jsonValue}
         setOptions={{
           enableBasicAutocompletion: false,
@@ -49,7 +48,7 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
           tabSize: 2,
         }}
       />
-    </React.Fragment>
+    </>
   );
 };
 
