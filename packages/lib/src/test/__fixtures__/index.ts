@@ -22,7 +22,20 @@ const docWithNotExhaustiveContext = {
   property3: 'value1',
 };
 
+const docWithInvalidContext = {
+  '@context': 'http://invalid.context.com',
+  property1: 'value1',
+  property2: 'value1',
+  property3: 'value1',
+};
+
 const textPath = path.join(__dirname, './example.html');
 const text = fs.readFileSync(textPath).toString();
 
-export { context, docWithExhaustiveContext, docWithNotExhaustiveContext, text };
+export {
+  context,
+  docWithExhaustiveContext,
+  docWithInvalidContext,
+  docWithNotExhaustiveContext,
+  text,
+};

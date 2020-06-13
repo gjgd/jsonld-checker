@@ -2,6 +2,7 @@ import { check, getAllJsonFromString, getAllJsonLdFromString } from '..';
 import {
   docWithExhaustiveContext,
   docWithNotExhaustiveContext,
+  docWithInvalidContext,
   text,
 } from './__fixtures__';
 
@@ -25,7 +26,11 @@ describe('hasExhaustiveContext', () => {
     expect(result.error!.details).toBe('Unexpected end of JSON input');
   });
 
-  // TODO add test about invalid context
+  it('should return false is doc has invalid context', async () => {
+    const result = await check(docWithInvalidContext);
+    expect(result.ok).toBeFalsy();
+    expect(result.error!.type).toBe('jsonld.InvalidUrl');
+  });
 
   // TODO add test: {"bonjour": "lol"}
   // TODO add test positive test for string arg
