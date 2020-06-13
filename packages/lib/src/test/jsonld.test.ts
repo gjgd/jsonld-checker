@@ -13,6 +13,11 @@ describe('check', () => {
     expect(result.ok).toBeTruthy();
   });
 
+  it('should return true for valid string argument', async () => {
+    const result = await check(JSON.stringify(docWithExhaustiveContext));
+    expect(result.ok).toBeTruthy();
+  });
+
   it('should return false if some properties are missing from the context', async () => {
     const result = await check(docWithNotExhaustiveContext);
     expect(result.ok).toBeFalsy();
@@ -41,8 +46,6 @@ describe('check', () => {
       'Invalid JSON-LD syntax; @context must be an object.'
     );
   });
-
-  // TODO add test positive test for string arg
 });
 
 describe('getAllJsonLdFromString', () => {
