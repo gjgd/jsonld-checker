@@ -5,6 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import CheckJsonTab from './CheckJsonTab';
+import CheckFileTab from './CheckFileTab';
 
 type TabPanelProps = {
   children: React.ReactNode;
@@ -54,7 +55,7 @@ export default function SimpleTabs() {
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} centered>
           <Tab label="Check a single JSON" {...a11yProps(0)} />
-          <Tab disabled label="Check a file" {...a11yProps(1)} />
+          <Tab label="Check a file" {...a11yProps(1)} />
           <Tab disabled label="Check a Github repo" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
@@ -62,7 +63,7 @@ export default function SimpleTabs() {
         <CheckJsonTab />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <div>TODO</div>
+        <CheckFileTab />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <div>TODO</div>
