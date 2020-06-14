@@ -9,9 +9,7 @@ const CheckResult: React.FunctionComponent<{ result: JsonLdCheckResult }> = ({
     return <></>;
   }
   if (result.ok) {
-    return (
-      <Alert severity="success">This is a success alert — check it out!</Alert>
-    );
+    return <Alert severity="success">All Good!</Alert>;
   }
   return (
     <Alert severity="error">

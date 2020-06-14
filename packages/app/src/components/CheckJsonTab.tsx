@@ -1,16 +1,29 @@
-// import { Paper } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { check } from 'jsonld-checker-lib';
 import React from 'react';
-import AceEditor from 'react-ace';
 import JsonLdCheckResult from '../models/JsonLDCheckResult';
 import CheckResult from './CheckResult';
-import 'ace-builds/src-noconflict/ext-language_tools';
-import 'ace-builds/src-noconflict/mode-json';
-import 'ace-builds/src-noconflict/theme-monokai';
+import JsonEditor from './JsonEditor';
+
+const defaultValue = JSON.stringify(
+  {
+    '@context': [
+      'https://transmute-industries.github.io/universal-wallet/contexts/wallet-v1.json',
+    ],
+    id: 'did:example:123456789abcdefghi',
+    type: 'Person',
+    name: 'John Smith',
+    image: 'https://via.placeholder.com/150',
+    description: 'Professional software developer for Acme Corp.',
+    tags: ['professional', 'person'],
+    correlation: ['4058a72a-9523-11ea-bb37-0242ac130002'],
+  },
+  null,
+  2
+);
 
 const CheckJsonTab: React.FunctionComponent<{}> = () => {
-  const [jsonValue, setJsonValue] = React.useState('');
+  const [jsonValue, setJsonValue] = React.useState(defaultValue);
   const [result, setResult] = React.useState<JsonLdCheckResult>();
 
   const onChange = (value: string) => {
@@ -29,25 +42,7 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
         Check
       </Button>
       <CheckResult result={result} />
-      <AceEditor
-        placeholder="Paste your JSON-LD object here"
-        mode="json"
-        theme="monokai"
-        name="json-ld-editor"
-        onChange={onChange}
-        fontSize={14}
-        showPrintMargin
-        showGutter
-        highlightActiveLine
-        value={jsonValue}
-        setOptions={{
-          enableBasicAutocompletion: false,
-          enableLiveAutocompletion: false,
-          enableSnippets: false,
-          showLineNumbers: true,
-          tabSize: 2,
-        }}
-      />
+      <JsonEditor onChange={onChange} value={jsonValue} />
     </>
   );
 };

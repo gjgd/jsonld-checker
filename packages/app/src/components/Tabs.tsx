@@ -5,6 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import CheckJsonTab from './CheckJsonTab';
+import CheckFileTab from './CheckFileTab';
 
 type TabPanelProps = {
   children: React.ReactNode;
@@ -46,7 +47,11 @@ export default function SimpleTabs() {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
+    if (newValue === 2) {
+      alert('Not implemented yet');
+    } else {
+      setValue(newValue);
+    }
   };
 
   return (
@@ -54,15 +59,15 @@ export default function SimpleTabs() {
       <AppBar position="static">
         <Tabs value={value} onChange={handleChange} centered>
           <Tab label="Check a single JSON" {...a11yProps(0)} />
-          <Tab disabled label="Check a file" {...a11yProps(1)} />
-          <Tab disabled label="Check a Github repo" {...a11yProps(2)} />
+          <Tab label="Check a file" {...a11yProps(1)} />
+          <Tab label="Check a Github repo" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
       <TabPanel value={value} index={0}>
         <CheckJsonTab />
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <div>TODO</div>
+        <CheckFileTab />
       </TabPanel>
       <TabPanel value={value} index={2}>
         <div>TODO</div>
