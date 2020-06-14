@@ -1,9 +1,11 @@
+/* eslint-disable no-restricted-syntax */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { getAllJsonLdFromString } from 'jsonld-checker-lib';
 import ResultTable from './ResultTable';
+import CheckStatus from '../models/CheckStatus';
 
 const defaultUrl =
   'https://raw.githubusercontent.com/transmute-industries/universal-wallet/master/docs/index.html';
@@ -28,7 +30,21 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
     const res = await fetch(url);
     const text = await res.text();
     const jsonldObjects: Array<Object> = await getAllJsonLdFromString(text);
-    setDocs(jsonldObjects);
+    const sleep = (ms: number) =>
+      new Promise((resolve) => setTimeout(resolve, ms));
+    const processed = [];
+    for (let i = 0; i < jsonldObjects.length; i += 1) {
+      const object = jsonldObjects[i];
+      processed.push({
+        object,
+        status: CheckStatus.PENDING,
+      });
+      setDocs([...processed]);
+      // eslint-disable-next-line no-await-in-loop
+      await sleep(500);
+      processed[i].status = CheckStatus.PASSED;
+      setDocs([...processed]);
+    }
   };
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {

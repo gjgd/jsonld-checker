@@ -17,12 +17,7 @@ import Done from '@material-ui/icons/Done';
 import Error from '@material-ui/icons/Error';
 import HourglassEmpty from '@material-ui/icons/HourglassEmpty';
 import JsonEditor from './JsonEditor';
-
-enum Status {
-  PENDING,
-  PASSED,
-  FAILED,
-}
+import CheckStatus from '../models/CheckStatus';
 
 const useRowStyles = makeStyles({
   root: {
@@ -38,13 +33,13 @@ function Row(props: { row: any }) {
   const classes = useRowStyles();
   let Icon;
   switch (row.status) {
-    case Status.PASSED:
+    case CheckStatus.PASSED:
       Icon = <Done style={{ color: 'green' }} />;
       break;
-    case Status.FAILED:
+    case CheckStatus.FAILED:
       Icon = <Error style={{ color: 'red' }} />;
       break;
-    case Status.PENDING:
+    case CheckStatus.PENDING:
     default:
       Icon = <HourglassEmpty style={{ color: 'orange' }} />;
   }
@@ -89,11 +84,11 @@ function Row(props: { row: any }) {
 const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
   results,
 }) => {
-  const rows = results.map((result: any, index: number) => ({
+  const rows = results.map(({ object, status }: any, index: number) => ({
     key: index,
-    name: result.id ? result.id : `object ${index}`,
-    status: Status.PENDING,
-    object: result,
+    name: object.id ? object.id : `object ${index}`,
+    status,
+    object,
   }));
   if (rows.length === 0) {
     return <></>;
