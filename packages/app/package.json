@@ -20,6 +20,7 @@
   },
   "scripts": {
     "build": "react-scripts build",
+    "deploy": "aws s3 sync ./build/ s3://www.jsonld-checker.com --delete --profile jsonld-checker-admin",
     "eject": "react-scripts eject",
     "lint": "eslint --ext .tsx,.ts src",
     "start": "react-scripts start",

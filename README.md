@@ -22,6 +22,7 @@ http://www.jsonld-checker.com.s3-website.eu-west-3.amazonaws.com/
 
 - CD
 - HTTPS
+- Fix IAM permissions
 - Add inspect feature that brings you back to tab
 - fix css
 - Share JsonLdCheckResult between lib and app

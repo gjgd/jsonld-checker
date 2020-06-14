@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "lerna run build",
+    "deploy": "lerna run deploy",
     "lint": "lerna run lint",
     "postinstall": "lerna bootstrap",
     "test": "lerna run test"
