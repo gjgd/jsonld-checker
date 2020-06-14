@@ -13,8 +13,11 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Done from '@material-ui/icons/Done';
+import Error from '@material-ui/icons/Error';
+import HourglassEmpty from '@material-ui/icons/HourglassEmpty';
 
-enum STATUS {
+enum Status {
   PENDING,
   PASSED,
   FAILED,
@@ -28,10 +31,22 @@ const useRowStyles = makeStyles({
   },
 });
 
-function Row(props: { row: { name: string; status: STATUS } }) {
+function Row(props: { row: any }) {
   const { row } = props;
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
+  let Icon;
+  switch (row.status) {
+    case Status.PASSED:
+      Icon = <Done style={{ color: 'green' }} />;
+      break;
+    case Status.FAILED:
+      Icon = <Error style={{ color: 'red' }} />;
+      break;
+    case Status.PENDING:
+    default:
+      Icon = <HourglassEmpty style={{ color: 'orange' }} />;
+  }
 
   return (
     <>
@@ -48,7 +63,7 @@ function Row(props: { row: { name: string; status: STATUS } }) {
         <TableCell component="th" scope="row">
           {row.name}
         </TableCell>
-        <TableCell align="right">{row.status}</TableCell>
+        <TableCell align="center">{Icon}</TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -72,7 +87,7 @@ const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
   const rows = results.map((result: any, index: number) => ({
     key: index,
     name: result.id ? result.id : `object ${index}`,
-    status: STATUS.PENDING,
+    status: Status.PENDING,
   }));
   if (rows.length === 0) {
     return <></>;
@@ -84,7 +99,7 @@ const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
           <TableRow>
             <TableCell />
             <TableCell>JSON-LD objects detected</TableCell>
-            <TableCell align="right">Status</TableCell>
+            <TableCell align="center">Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
