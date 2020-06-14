@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { getAllJsonLdFromString } from 'jsonld-checker-lib';
+import ResultTable from './ResultTable';
 
 const defaultUrl =
   'https://raw.githubusercontent.com/transmute-industries/universal-wallet/master/docs/index.html';
@@ -41,7 +42,6 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
       <Button variant="contained" onClick={onClickCheck}>
         Check
       </Button>
-      <div>{JSON.stringify(docs, null, 2)}</div>
       <TextField
         label="Enter the URL to a file"
         onChange={onChange}
@@ -50,6 +50,7 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
         fullWidth
         margin="normal"
       />
+      <ResultTable results={docs} />
     </div>
   );
 };
