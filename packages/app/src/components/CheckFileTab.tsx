@@ -38,8 +38,7 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
   const onClickCheck = async () => {
     const res = await fetch(url);
     const text = await res.text();
-    let jsonldObjects: Array<any> = await getAllJsonLdFromString(text);
-    jsonldObjects = jsonldObjects.slice(0, 4);
+    const jsonldObjects: Array<any> = await getAllJsonLdFromString(text);
     setTotal(jsonldObjects.length);
     const sleep = (ms: number) =>
       new Promise((resolve) => setTimeout(resolve, ms));
@@ -52,6 +51,7 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
         object,
         status: result.ok ? CheckStatus.PASSED : CheckStatus.FAILED,
         error: result.error,
+        result,
       });
       setDocs([...processed]);
     }

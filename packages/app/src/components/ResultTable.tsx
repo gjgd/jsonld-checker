@@ -17,6 +17,7 @@ import Done from '@material-ui/icons/Done';
 import Error from '@material-ui/icons/Error';
 import HourglassEmpty from '@material-ui/icons/HourglassEmpty';
 import JsonEditor from './JsonEditor';
+import CheckResult from './CheckResult';
 import CheckStatus from '../models/CheckStatus';
 
 const useRowStyles = makeStyles({
@@ -68,7 +69,7 @@ function Row(props: { row: any }) {
               <Typography variant="h6" gutterBottom component="div">
                 Details
               </Typography>
-              {JSON.stringify(row.error, null, 2)}
+              <CheckResult result={row.result} />
               <JsonEditor
                 value={JSON.stringify(row.object, null, 2)}
                 index={row.key}
@@ -85,13 +86,16 @@ function Row(props: { row: any }) {
 const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
   results,
 }) => {
-  const rows = results.map(({ object, status, error }: any, index: number) => ({
-    key: index,
-    name: object.id ? object.id : `object ${index}`,
-    status,
-    object,
-    error,
-  }));
+  const rows = results.map(
+    ({ object, status, error, result }: any, index: number) => ({
+      key: index,
+      name: object.id ? object.id : `object ${index}`,
+      status,
+      object,
+      error,
+      result,
+    })
+  );
   if (rows.length === 0) {
     return <></>;
   }
