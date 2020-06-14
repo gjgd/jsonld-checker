@@ -1,9 +1,10 @@
+/* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { getAllJsonLdFromString } from 'jsonld-checker-lib';
+import { getAllJsonLdFromString, check } from 'jsonld-checker-lib';
 import ResultTable from './ResultTable';
 import CheckStatus from '../models/CheckStatus';
 
@@ -38,11 +39,13 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
       processed.push({
         object,
         status: CheckStatus.PENDING,
+        error: {},
       });
       setDocs([...processed]);
-      // eslint-disable-next-line no-await-in-loop
-      await sleep(500);
-      processed[i].status = CheckStatus.PASSED;
+      await sleep(200);
+      const result = await check(object);
+      processed[i].status = result.ok ? CheckStatus.PASSED : CheckStatus.FAILED;
+      processed[i].error = result.error;
       setDocs([...processed]);
     }
   };

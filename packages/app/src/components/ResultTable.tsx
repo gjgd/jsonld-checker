@@ -68,6 +68,7 @@ function Row(props: { row: any }) {
               <Typography variant="h6" gutterBottom component="div">
                 Details
               </Typography>
+              {JSON.stringify(row.error, null, 2)}
               <JsonEditor
                 value={JSON.stringify(row.object, null, 2)}
                 index={row.key}
@@ -84,11 +85,12 @@ function Row(props: { row: any }) {
 const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
   results,
 }) => {
-  const rows = results.map(({ object, status }: any, index: number) => ({
+  const rows = results.map(({ object, status, error }: any, index: number) => ({
     key: index,
     name: object.id ? object.id : `object ${index}`,
     status,
     object,
+    error,
   }));
   if (rows.length === 0) {
     return <></>;
