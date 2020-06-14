@@ -1,6 +1,7 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
 import Button from '@material-ui/core/Button';
+import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Alert, AlertTitle } from '@material-ui/lab';
@@ -17,6 +18,11 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
   },
+  progressBar: {
+    width: '100%',
+    marginTop: theme.spacing(2),
+    marginBottom: theme.spacing(2),
+  },
   textField: {
     marginLeft: theme.spacing(1),
     marginRight: theme.spacing(1),
@@ -27,26 +33,26 @@ const useStyles = makeStyles((theme) => ({
 const CheckFileTab: React.FunctionComponent<{}> = () => {
   const [url, setUrl] = React.useState(defaultUrl);
   const [docs, setDocs] = React.useState<Array<any>>([]);
+  const [total, setTotal] = React.useState<number>(0);
 
   const onClickCheck = async () => {
     const res = await fetch(url);
     const text = await res.text();
-    const jsonldObjects: Array<any> = await getAllJsonLdFromString(text);
+    let jsonldObjects: Array<any> = await getAllJsonLdFromString(text);
+    jsonldObjects = jsonldObjects.slice(0, 4);
+    setTotal(jsonldObjects.length);
     const sleep = (ms: number) =>
       new Promise((resolve) => setTimeout(resolve, ms));
     const processed = [];
     for (let i = 0; i < jsonldObjects.length; i += 1) {
       const object = jsonldObjects[i];
-      processed.push({
-        object,
-        status: CheckStatus.PENDING,
-        error: {},
-      });
-      setDocs([...processed]);
       await sleep(200);
       const result = await check(object);
-      processed[i].status = result.ok ? CheckStatus.PASSED : CheckStatus.FAILED;
-      processed[i].error = result.error;
+      processed.push({
+        object,
+        status: result.ok ? CheckStatus.PASSED : CheckStatus.FAILED,
+        error: result.error,
+      });
       setDocs([...processed]);
     }
   };
@@ -79,6 +85,16 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
           <AlertTitle>{errorSentence}</AlertTitle>
           Check details below
         </Alert>
+      ) : (
+        <></>
+      )}
+      {total > 0 ? (
+        <div className={classes.progressBar}>
+          <LinearProgress
+            variant="determinate"
+            value={(100 * docs.length) / total}
+          />
+        </div>
       ) : (
         <></>
       )}
