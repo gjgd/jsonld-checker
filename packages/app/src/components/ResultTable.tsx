@@ -73,7 +73,11 @@ function Row(props: { row: any }) {
               <Typography variant="h6" gutterBottom component="div">
                 Details
               </Typography>
-              <JsonEditor value={row.object} index={row.key} readOnly />
+              <JsonEditor
+                value={JSON.stringify(row.object, null, 2)}
+                index={row.key}
+                readOnly
+              />
             </Box>
           </Collapse>
         </TableCell>
