@@ -16,6 +16,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Done from '@material-ui/icons/Done';
 import Error from '@material-ui/icons/Error';
 import HourglassEmpty from '@material-ui/icons/HourglassEmpty';
+import JsonEditor from './JsonEditor';
 
 enum Status {
   PENDING,
@@ -72,7 +73,7 @@ function Row(props: { row: any }) {
               <Typography variant="h6" gutterBottom component="div">
                 Details
               </Typography>
-              HI
+              <JsonEditor value={row.object} index={row.key} readOnly />
             </Box>
           </Collapse>
         </TableCell>
@@ -88,6 +89,7 @@ const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
     key: index,
     name: result.id ? result.id : `object ${index}`,
     status: Status.PENDING,
+    object: result,
   }));
   if (rows.length === 0) {
     return <></>;
