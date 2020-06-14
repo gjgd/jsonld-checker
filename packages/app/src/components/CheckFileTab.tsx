@@ -1,12 +1,13 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-import React from 'react';
+import Button from '@material-ui/core/Button';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import { getAllJsonLdFromString, check } from 'jsonld-checker-lib';
-import ResultTable from './ResultTable';
+import { Alert, AlertTitle } from '@material-ui/lab';
+import { check, getAllJsonLdFromString } from 'jsonld-checker-lib';
+import React from 'react';
 import CheckStatus from '../models/CheckStatus';
+import ResultTable from './ResultTable';
 
 const defaultUrl =
   'https://raw.githubusercontent.com/transmute-industries/universal-wallet/master/docs/index.html';
@@ -25,12 +26,12 @@ const useStyles = makeStyles((theme) => ({
 
 const CheckFileTab: React.FunctionComponent<{}> = () => {
   const [url, setUrl] = React.useState(defaultUrl);
-  const [docs, setDocs] = React.useState<Array<Object>>([]);
+  const [docs, setDocs] = React.useState<Array<any>>([]);
 
   const onClickCheck = async () => {
     const res = await fetch(url);
     const text = await res.text();
-    const jsonldObjects: Array<Object> = await getAllJsonLdFromString(text);
+    const jsonldObjects: Array<any> = await getAllJsonLdFromString(text);
     const sleep = (ms: number) =>
       new Promise((resolve) => setTimeout(resolve, ms));
     const processed = [];
@@ -56,6 +57,10 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
 
   const classes = useStyles();
 
+  const errors = docs.filter((doc) => doc.status === CheckStatus.FAILED);
+  const hasErrors = errors.length > 0;
+  const errorSentence = `Found ${errors.length} JSON-LD errors`;
+
   return (
     <div className={classes.root}>
       <Button variant="contained" onClick={onClickCheck}>
@@ -69,6 +74,14 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
         fullWidth
         margin="normal"
       />
+      {hasErrors ? (
+        <Alert severity="error">
+          <AlertTitle>{errorSentence}</AlertTitle>
+          Check details below
+        </Alert>
+      ) : (
+        <></>
+      )}
       <ResultTable results={docs} />
     </div>
   );
