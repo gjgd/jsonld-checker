@@ -74,6 +74,9 @@ const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
     name: result.id ? result.id : `object ${index}`,
     status: STATUS.PENDING,
   }));
+  if (rows.length === 0) {
+    return <></>;
+  }
   return (
     <TableContainer component={Paper}>
       <Table aria-label="collapsible table">
