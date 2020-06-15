@@ -1,6 +1,6 @@
 # JSONLD Checker
 
-http://www.jsonld-checker.com/
+https://www.jsonld-checker.com
 
 # Useful links
 
