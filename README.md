@@ -1,6 +1,6 @@
 # JSONLD Checker
 
-http://www.jsonld-checker.com.s3-website.eu-west-3.amazonaws.com/
+http://www.jsonld-checker.com/
 
 # Useful links
 
