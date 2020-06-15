@@ -1,5 +1,10 @@
 name: CI
-on: [push]
+
+on:
+  push:
+    branches-ignore:
+      - master
+
 jobs:
   build:
     runs-on: ubuntu-latest
