@@ -11,6 +11,7 @@
     "deploy": "lerna run deploy",
     "lint": "lerna run lint",
     "postinstall": "lerna bootstrap",
+    "publish": "lerna publish",
     "test": "lerna run test"
   },
   "husky": {

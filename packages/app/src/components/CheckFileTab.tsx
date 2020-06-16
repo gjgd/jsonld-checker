@@ -5,7 +5,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import { check, getAllJsonLdFromString } from 'jsonld-checker-lib';
+import { check, getAllJsonLdFromString } from 'jsonld-checker';
 import React from 'react';
 import CheckStatus from '../models/CheckStatus';
 import ResultTable from './ResultTable';
