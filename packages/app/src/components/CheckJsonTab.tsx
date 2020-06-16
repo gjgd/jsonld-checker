@@ -1,5 +1,5 @@
 import Button from '@material-ui/core/Button';
-import { check } from 'jsonld-checker-lib';
+import { check } from 'jsonld-checker';
 import React from 'react';
 import JsonLdCheckResult from '../models/JsonLDCheckResult';
 import CheckResult from './CheckResult';
