@@ -1,5 +1,6 @@
 {
   "name": "jsonld-checker-app",
+  "private": true,
   "author": "gjgd",
   "version": "0.1.0",
   "license": "MIT",
