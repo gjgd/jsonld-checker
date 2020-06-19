@@ -12,6 +12,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/lab": "^4.0.0-alpha.54",
     "ace-builds": "^1.4.11",
+    "clsx": "^1.1.1",
     "jsonld-checker": "^0.1.1",
     "react": "^16.13.1",
     "react-ace": "^9.0.0",
@@ -38,6 +39,12 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
   },
   "devDependencies": {
     "@types/node": "^12.0.0",

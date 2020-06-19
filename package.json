@@ -19,12 +19,6 @@
       "pre-push": "npm run lint"
     }
   },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
   "devDependencies": {
     "husky": "^4.2.5",
     "lerna": "^3.22.0"

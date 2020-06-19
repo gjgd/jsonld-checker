@@ -13,6 +13,7 @@ const JsonEditor: React.FunctionComponent<{
   return (
     <AceEditor
       placeholder="Paste your JSON-LD object here"
+      width="800px"
       mode="json"
       theme="monokai"
       name={`json-ld-editor-${index}`}

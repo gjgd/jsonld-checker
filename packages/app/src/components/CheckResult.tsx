@@ -2,9 +2,10 @@ import React from 'react';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import JsonLdCheckResult from '../models/JsonLDCheckResult';
 
-const CheckResult: React.FunctionComponent<{ result: JsonLdCheckResult }> = ({
-  result,
-}) => {
+const CheckResult: React.FunctionComponent<{
+  result: JsonLdCheckResult;
+  className?: any;
+}> = ({ result, className }) => {
   if (!result) {
     return <></>;
   }
@@ -12,7 +13,7 @@ const CheckResult: React.FunctionComponent<{ result: JsonLdCheckResult }> = ({
     return <Alert severity="success">All Good!</Alert>;
   }
   return (
-    <Alert severity="error">
+    <Alert className={className} severity="error">
       <AlertTitle>{result.error.type}</AlertTitle>
       {result.error.details}
     </Alert>
