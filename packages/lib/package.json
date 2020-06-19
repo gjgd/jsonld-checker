@@ -6,10 +6,7 @@
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/jsonld-checker.esm.js",
-  "files": [
-    "dist",
-    "src"
-  ],
+  "files": [ "dist" ],
   "engines": {
     "node": ">=10"
   },

@@ -29,6 +29,16 @@ const docWithInvalidContext = {
   property3: 'value1',
 };
 
+const docWithAtProperty = {
+  '@context': [
+    'https://schema.org',
+    'https://identity.foundation/EcdsaSecp256k1RecoverySignature2020/lds-ecdsa-secp256k1-recovery2020-0.0.jsonld',
+    'https://identity.foundation/SchnorrSecp256k1Signature2019/contexts/schnorr-v1.json',
+  ],
+  '@type': 'SpecialAnnouncement',
+  name: 'Stanford announce COVID-19 testing facility',
+};
+
 const docNotJsonLd = { bonjour: 'lol' };
 
 const textPath = path.join(__dirname, './example.html');
@@ -40,5 +50,6 @@ export {
   docWithExhaustiveContext,
   docWithInvalidContext,
   docWithNotExhaustiveContext,
+  docWithAtProperty,
   text,
 };
