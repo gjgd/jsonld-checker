@@ -5,8 +5,6 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { green, red } from '@material-ui/core/colors';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import JsonLdCheckResult from '../models/JsonLDCheckResult';
-import CheckResult from './CheckResult';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -41,14 +39,14 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const CheckJsonButton: React.FunctionComponent<{ value: Object }> = ({
-  value,
-}) => {
+const CheckJsonButton: React.FunctionComponent<{
+  value: Object;
+  setResult: any;
+}> = ({ value, setResult }) => {
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState(false);
-  const [result, setResult] = React.useState<JsonLdCheckResult>();
 
   const buttonClassname = clsx({
     [classes.buttonSuccess]: success,
@@ -88,7 +86,6 @@ const CheckJsonButton: React.FunctionComponent<{ value: Object }> = ({
         {loading && (
           <CircularProgress size={24} className={classes.buttonProgress} />
         )}
-        <CheckResult result={result} />
       </div>
     </div>
   );
