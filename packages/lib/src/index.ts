@@ -29,6 +29,8 @@ const customLoader = async (url: string) => {
 
 jsonld.documentLoader = customLoader;
 
+const isNotJsonLdPropery = property => !['@id', '@type'].includes(property);
+
 export const check = async (jsonldDocument: string | object) => {
   try {
     let jsonldDoc: object;
@@ -41,7 +43,7 @@ export const check = async (jsonldDocument: string | object) => {
     const expanded = await jsonld.expand(jsonldDoc);
     const compacted = await jsonld.compact(expanded, jsonldDoc['@context']);
     // Check which keys have been removed
-    const keys = Object.keys(jsonldDoc);
+    const keys = Object.keys(jsonldDoc).filter(isNotJsonLdPropery);
     const newKeysSet = new Set(Object.keys(compacted));
     const difference = keys.filter(key => !newKeysSet.has(key));
     if (difference.length === 0) {
