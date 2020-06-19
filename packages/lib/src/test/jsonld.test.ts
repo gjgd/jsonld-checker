@@ -5,11 +5,19 @@ import {
   docWithInvalidContext,
   docWithNotExhaustiveContext,
   text,
+  docWithAtProperty,
 } from './__fixtures__';
+
+jest.setTimeout(10 * 1000);
 
 describe('check', () => {
   it('should return true if all properties are in the context', async () => {
     const result = await check(docWithExhaustiveContext);
+    expect(result.ok).toBeTruthy();
+  });
+
+  it('should return true if doc contains @ properties', async () => {
+    const result = await check(docWithAtProperty);
     expect(result.ok).toBeTruthy();
   });
 
