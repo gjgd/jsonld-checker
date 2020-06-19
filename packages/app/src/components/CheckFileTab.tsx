@@ -69,7 +69,7 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
 
   return (
     <div className={classes.root}>
-      <Button variant="contained" onClick={onClickCheck}>
+      <Button variant="contained" color="primary" onClick={onClickCheck}>
         Check
       </Button>
       <TextField
