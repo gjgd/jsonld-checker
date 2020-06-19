@@ -1,7 +1,7 @@
 class CheckResult {
   ok: boolean;
 
-  error: {
+  error?: {
     type: string;
     details: string;
   };

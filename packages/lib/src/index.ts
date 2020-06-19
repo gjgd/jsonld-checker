@@ -113,3 +113,5 @@ export const isJsonLdObject = (obj: Object): Boolean => {
 export const getAllJsonLdFromString = (text: string) => {
   return getAllJsonFromString(text).filter(obj => isJsonLdObject(obj));
 };
+
+export { CheckResult };
