@@ -21,7 +21,9 @@ const JsonLdPlaygroundLink: React.FunctionComponent<{ value: string }> = ({
         href={`https://json-ld.org/playground/#json-ld=${encodedValue}`}
         target="_blank"
         rel="noopener"
-      >Open in JSON-LD Playground</Button>
+      >
+        Open in JSON-LD Playground
+      </Button>
     </>
   );
 };
