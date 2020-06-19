@@ -4,6 +4,7 @@ import React from 'react';
 import JsonLdCheckResult from '../models/JsonLDCheckResult';
 import CheckResult from './CheckResult';
 import JsonEditor from './JsonEditor';
+import JsonLdPlaygroundButton from './JsonLdPlaygroundButton';
 
 const defaultValue = JSON.stringify(
   {
@@ -76,6 +77,7 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
       <Button variant="contained" onClick={onClickCheck}>
         Check
       </Button>
+      <JsonLdPlaygroundButton value={jsonValue} />
       <CheckResult result={result} />
       <JsonEditor onChange={onChange} value={jsonValue} />
     </>
