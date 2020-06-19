@@ -39,6 +39,12 @@
       "last 1 safari version"
     ]
   },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
   "devDependencies": {
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
