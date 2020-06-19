@@ -1,11 +1,11 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import { CheckResult as JsonLdCheckResult } from 'jsonld-checker';
 import JsonEditor from './JsonEditor';
 import JsonLdPlaygroundButton from './JsonLdPlaygroundButton';
 import CheckJsonButton from './CheckJsonButton';
 import defaultValueJson from '../data/defaultValue.json';
 import CheckResult from './CheckResult';
-import JsonLdCheckResult from '../models/JsonLDCheckResult';
 
 const defaultValue = JSON.stringify(defaultValueJson, null, 2);
 

@@ -1,9 +1,9 @@
 import React from 'react';
 import { Alert, AlertTitle } from '@material-ui/lab';
-import JsonLdCheckResult from '../models/JsonLDCheckResult';
+import { CheckResult as JsonLdCheckResult } from 'jsonld-checker';
 
 const CheckResult: React.FunctionComponent<{
-  result: JsonLdCheckResult;
+  result: JsonLdCheckResult | undefined;
   className?: any;
 }> = ({ result, className }) => {
   if (!result) {
@@ -14,8 +14,8 @@ const CheckResult: React.FunctionComponent<{
   }
   return (
     <Alert className={className} severity="error">
-      <AlertTitle>{result.error.type}</AlertTitle>
-      {result.error.details}
+      <AlertTitle>{result.error!.type}</AlertTitle>
+      {result.error!.details}
     </Alert>
   );
 };
