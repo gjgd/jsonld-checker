@@ -5,6 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { green, red } from '@material-ui/core/colors';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
+import { getQueryParameter } from '../utils';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -43,6 +44,7 @@ const CheckJsonButton: React.FunctionComponent<{
   value: Object;
   setResult: any;
 }> = ({ value, setResult }) => {
+  const analyzeQueryParameter = getQueryParameter('analyze');
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
   const [success, setSuccess] = React.useState(false);
@@ -53,12 +55,7 @@ const CheckJsonButton: React.FunctionComponent<{
     [classes.buttonError]: error,
   });
 
-  React.useEffect(() => {
-    setSuccess(false);
-    setError(false);
-  }, [value]);
-
-  const onClick = async () => {
+  const analyzeObject = async () => {
     if (!loading) {
       setLoading(true);
       const res = await check(value);
@@ -68,6 +65,18 @@ const CheckJsonButton: React.FunctionComponent<{
       setLoading(false);
     }
   };
+
+  React.useEffect(() => {
+    if (analyzeQueryParameter === '1') {
+      analyzeObject();
+    }
+    // eslint-disable-next-line
+  }, [analyzeQueryParameter]);
+
+  React.useEffect(() => {
+    setSuccess(false);
+    setError(false);
+  }, [value]);
 
   return (
     <div className={classes.root}>
@@ -79,7 +88,7 @@ const CheckJsonButton: React.FunctionComponent<{
           color="primary"
           className={buttonClassname}
           disabled={loading}
-          onClick={onClick}
+          onClick={analyzeObject}
         >
           Check
         </Button>

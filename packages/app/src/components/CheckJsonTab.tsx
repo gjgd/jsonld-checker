@@ -27,6 +27,7 @@ const useStyles = makeStyles((theme) => ({
 
 const CheckJsonTab: React.FunctionComponent<{}> = () => {
   const classes = useStyles();
+  // Json query parameter
   const jsonQueryParameter = getQueryParameter('json');
   let defaultJson: string;
   if (jsonQueryParameter) {
@@ -34,6 +35,7 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
   } else {
     defaultJson = defaultValue;
   }
+
   const [jsonValue, setJsonValue] = React.useState(defaultJson);
   const [result, setResult] = React.useState<JsonLdCheckResult>();
 
