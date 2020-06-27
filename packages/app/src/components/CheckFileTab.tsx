@@ -8,9 +8,7 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import { check, getAllJsonLdFromString } from 'jsonld-checker';
 import React from 'react';
 import ResultTable from './ResultTable';
-
-const defaultUrl =
-  'https://raw.githubusercontent.com/transmute-industries/universal-wallet/master/docs/index.html';
+import { getQueryParameter, updateQueryParameter } from '../utils';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,9 +28,22 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CheckFileTab: React.FunctionComponent<{}> = () => {
+  // Url query parameter
+  const urlQueryParameter = getQueryParameter('url');
+  let defaultUrl: string;
+  if (urlQueryParameter) {
+    defaultUrl = decodeURIComponent(urlQueryParameter);
+  } else {
+    defaultUrl =
+      'https://raw.githubusercontent.com/transmute-industries/universal-wallet/master/docs/index.html';
+  }
   const [url, setUrl] = React.useState(defaultUrl);
   const [docs, setDocs] = React.useState<Array<any>>([]);
   const [total, setTotal] = React.useState<number>(0);
+
+  React.useEffect(() => {
+    updateQueryParameter('url', url);
+  }, [url]);
 
   const onClickCheck = async () => {
     const res = await fetch(url);
