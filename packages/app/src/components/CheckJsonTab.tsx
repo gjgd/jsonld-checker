@@ -6,6 +6,7 @@ import JsonLdPlaygroundButton from './JsonLdPlaygroundButton';
 import CheckJsonButton from './CheckJsonButton';
 import defaultValueJson from '../data/defaultValue.json';
 import CheckResult from './CheckResult';
+import ShareButton from './ShareButton';
 
 const defaultValue = JSON.stringify(defaultValueJson, null, 2);
 
@@ -38,6 +39,7 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
       <div className={classes.buttonWrapper}>
         <CheckJsonButton value={jsonValue} setResult={setResult} />
         <JsonLdPlaygroundButton value={jsonValue} />
+        <ShareButton value={jsonValue} />
       </div>
       <div className={classes.contentWrapper}>
         <CheckResult className={classes.checkResult} result={result} />
