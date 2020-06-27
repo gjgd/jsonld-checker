@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-const updateQueryString = (key: string, value: string) => {
+const updateQueryParameter = (key: string, value: string) => {
   const newUrl = new URLSearchParams(window.location.search);
   newUrl.set(key, value);
   window.history.pushState(null, '', `/?${newUrl.toString()}`);
@@ -10,4 +10,4 @@ const getQueryParameter = (key: string): string | null => {
   return urlParams.get(key);
 };
 
-export { updateQueryString, getQueryParameter };
+export { updateQueryParameter, getQueryParameter };

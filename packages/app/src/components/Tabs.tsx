@@ -6,7 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import CheckJsonTab from './CheckJsonTab';
 import CheckFileTab from './CheckFileTab';
-import { updateQueryString, getQueryParameter } from '../utils';
+import { updateQueryParameter, getQueryParameter } from '../utils';
 
 type TabPanelProps = {
   children: React.ReactNode;
@@ -55,14 +55,14 @@ export default function SimpleTabs() {
     defaultTab = 0;
   }
   const classes = useStyles();
-  updateQueryString('tab', `${defaultTab}`);
+  updateQueryParameter('tab', `${defaultTab}`);
   const [tab, setTab] = React.useState(defaultTab);
 
   const handleChange = (event: ChangeEvent<{}>, newTab: number) => {
     if (newTab === 2) {
       alert('Not implemented yet');
     } else {
-      updateQueryString('tab', `${newTab}`);
+      updateQueryParameter('tab', `${newTab}`);
       setTab(newTab);
     }
   };
