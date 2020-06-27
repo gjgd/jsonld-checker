@@ -5,7 +5,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { green, red } from '@material-ui/core/colors';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { getQueryParameter } from '../utils';
+import { getQueryParameter, updateQueryParameter } from '../utils';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -63,6 +63,7 @@ const CheckJsonButton: React.FunctionComponent<{
       setError(!res.ok);
       setResult(res);
       setLoading(false);
+      updateQueryParameter('analyze', '1');
     }
   };
 
