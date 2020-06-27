@@ -6,7 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import CheckJsonTab from './CheckJsonTab';
 import CheckFileTab from './CheckFileTab';
-import { updateQueryString } from '../utils';
+import { updateQueryString, getQueryParameter } from '../utils';
 
 type TabPanelProps = {
   children: React.ReactNode;
@@ -44,9 +44,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function SimpleTabs() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const tabQueryParameter = urlParams.get('tab');
   let defaultTab: number;
+  const tabQueryParameter = getQueryParameter('tab');
   if (tabQueryParameter) {
     defaultTab = Number.parseInt(tabQueryParameter, 10);
     if (defaultTab > 1) {

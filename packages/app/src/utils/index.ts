@@ -5,4 +5,9 @@ const updateQueryString = (key: string, value: string) => {
   window.history.pushState(null, '', `/?${newUrl.toString()}`);
 };
 
-export { updateQueryString };
+const getQueryParameter = (key: string): string | null => {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(key);
+};
+
+export { updateQueryString, getQueryParameter };
