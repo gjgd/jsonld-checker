@@ -37,13 +37,10 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
     defaultUrl =
       'https://raw.githubusercontent.com/transmute-industries/universal-wallet/master/docs/index.html';
   }
+  const analyzeQueryParameter = getQueryParameter('analyze');
   const [url, setUrl] = React.useState(defaultUrl);
   const [docs, setDocs] = React.useState<Array<any>>([]);
   const [total, setTotal] = React.useState<number>(0);
-
-  React.useEffect(() => {
-    updateQueryParameter('url', url);
-  }, [url]);
 
   const onClickCheck = async () => {
     const res = await fetch(url);
@@ -57,9 +54,22 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
       processed.push({ object, result });
       setDocs([...processed]);
     }
+    updateQueryParameter('analyze', '1');
   };
 
+  React.useEffect(() => {
+    updateQueryParameter('url', url);
+  }, [url]);
+
+  React.useEffect(() => {
+    if (analyzeQueryParameter === '1') {
+      onClickCheck();
+    }
+    // eslint-disable-next-line
+  }, [analyzeQueryParameter]);
+
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    updateQueryParameter('analyze', '0');
     setUrl(event.target.value);
   };
 
@@ -71,6 +81,7 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
 
   return (
     <div className={classes.root}>
+      {/* TODO: Make progressable */}
       <Button variant="contained" color="primary" onClick={onClickCheck}>
         Check
       </Button>
