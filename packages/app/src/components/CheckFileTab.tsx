@@ -1,6 +1,5 @@
 /* eslint-disable no-await-in-loop */
 /* eslint-disable no-restricted-syntax */
-import Button from '@material-ui/core/Button';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -9,6 +8,7 @@ import { check, getAllJsonLdFromString } from 'jsonld-checker';
 import React from 'react';
 import ResultTable from './ResultTable';
 import { getQueryParameter, updateQueryParameter } from '../utils';
+import LoaderButton from './LoaderButton';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -81,10 +81,7 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
 
   return (
     <div className={classes.root}>
-      {/* TODO: Make progressable */}
-      <Button variant="contained" color="primary" onClick={onClickCheck}>
-        Check
-      </Button>
+      <LoaderButton onClick={onClickCheck} buttonText="Check" />
       <TextField
         label="Enter the URL to a file"
         onChange={onChange}
