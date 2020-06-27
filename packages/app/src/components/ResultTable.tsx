@@ -87,12 +87,11 @@ const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
   results,
 }) => {
   const rows = results.map(
-    ({ object, status, error, result }: any, index: number) => ({
+    ({ object, status, result }: any, index: number) => ({
       key: index,
       name: object.id ? object.id : `object ${index}`,
       status,
       object,
-      error,
       result,
     })
   );

@@ -50,7 +50,6 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
       processed.push({
         object,
         status: result.ok ? CheckStatus.PASSED : CheckStatus.FAILED,
-        error: result.error,
         result,
       });
       setDocs([...processed]);
