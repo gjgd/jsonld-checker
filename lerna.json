@@ -2,5 +2,13 @@
   "packages": [
     "packages/*"
   ],
+  "command": {
+    "publish": {
+      "conventionalCommits": true
+    },
+    "version": {
+      "conventionalCommits": true
+    }
+  },
   "version": "0.1.1"
 }
