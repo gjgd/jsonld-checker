@@ -1,12 +1,14 @@
 {
   "name": "jsonld-checker",
   "author": "gjgd",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
   "module": "dist/jsonld-checker.esm.js",
-  "files": [ "dist" ],
+  "files": [
+    "dist"
+  ],
   "engines": {
     "node": ">=10"
   },
