@@ -7,7 +7,6 @@ import TextField from '@material-ui/core/TextField';
 import { Alert, AlertTitle } from '@material-ui/lab';
 import { check, getAllJsonLdFromString } from 'jsonld-checker';
 import React from 'react';
-import CheckStatus from '../models/CheckStatus';
 import ResultTable from './ResultTable';
 
 const defaultUrl =
@@ -44,11 +43,7 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
     for (let i = 0; i < jsonldObjects.length; i += 1) {
       const object = jsonldObjects[i];
       const result = await check(object);
-      processed.push({
-        object,
-        status: result.ok ? CheckStatus.PASSED : CheckStatus.FAILED,
-        result,
-      });
+      processed.push({ object, result });
       setDocs([...processed]);
     }
   };
@@ -59,7 +54,7 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
 
   const classes = useStyles();
 
-  const errors = docs.filter((doc) => doc.status === CheckStatus.FAILED);
+  const errors = docs.filter((doc) => !doc.result.ok);
   const hasErrors = errors.length > 0;
   const errorSentence = `Found ${errors.length} JSON-LD errors`;
 
