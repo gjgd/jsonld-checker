@@ -7,7 +7,7 @@ import CheckJsonButton from './CheckJsonButton';
 import defaultValueJson from '../data/defaultValue.json';
 import CheckResult from './CheckResult';
 import ShareButton from './ShareButton';
-import { getQueryParameter } from '../utils';
+import { getQueryParameter, updateQueryParameter } from '../utils';
 
 const defaultValue = JSON.stringify(defaultValueJson, null, 2);
 
@@ -39,6 +39,7 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
 
   const onChange = (value: string) => {
     setResult(undefined);
+    updateQueryParameter('json', encodeURIComponent(value));
     setJsonValue(value);
   };
 
