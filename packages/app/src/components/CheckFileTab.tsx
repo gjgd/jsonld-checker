@@ -40,12 +40,9 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
     const text = await res.text();
     const jsonldObjects: Array<any> = await getAllJsonLdFromString(text);
     setTotal(jsonldObjects.length);
-    const sleep = (ms: number) =>
-      new Promise((resolve) => setTimeout(resolve, ms));
     const processed = [];
     for (let i = 0; i < jsonldObjects.length; i += 1) {
       const object = jsonldObjects[i];
-      await sleep(200);
       const result = await check(object);
       processed.push({
         object,
