@@ -33,9 +33,6 @@ const ShareButton: React.FunctionComponent = () => {
   const createShortUrl = () => {
     const url = `${window.location.toString()}`;
     const tinyUrlService = 'https://tiny.gjgd.fr/';
-    if (tinyUrl) {
-      return tinyUrl;
-    }
     return fetch(tinyUrlService, {
       method: 'POST',
       headers: {
@@ -58,6 +55,7 @@ const ShareButton: React.FunctionComponent = () => {
 
   const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
+    setTinyUrl('');
     return createShortUrl();
   };
 
