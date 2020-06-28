@@ -54,7 +54,7 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
       processed.push({ object, result });
       setDocs([...processed]);
     }
-    updateQueryParameter('analyze', '1');
+    // updateQueryParameter('analyze', '1');
   };
 
   React.useEffect(() => {
@@ -69,7 +69,7 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
   }, [analyzeQueryParameter]);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateQueryParameter('analyze', '0');
+    // updateQueryParameter('analyze', '0');
     setUrl(event.target.value);
   };
 
