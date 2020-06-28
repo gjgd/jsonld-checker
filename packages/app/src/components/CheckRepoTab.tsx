@@ -31,8 +31,9 @@ const CheckRepoTab: React.FunctionComponent<{}> = () => {
     }
     return 'https://github.com/transmute-industries/universal-wallet';
   });
-  const [files, setFiles] = React.useState<Array<{ path: string }>>([]);
-  console.log(files);
+  const [files, setFiles] = React.useState<
+    Array<{ path: string; url: string }>
+  >([]);
 
   React.useEffect(() => {
     updateQueryParameter('repo', repo);
@@ -58,10 +59,7 @@ const CheckRepoTab: React.FunctionComponent<{}> = () => {
         fullWidth
         margin="normal"
       />
-      {files.map((file) => (
-        <div>{file.path}</div>
-      ))}
-      <FilesTable />
+      {files.length > 0 ? <FilesTable files={files} /> : <></>}
     </div>
   );
 };
