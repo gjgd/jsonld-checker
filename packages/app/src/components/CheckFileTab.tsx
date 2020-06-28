@@ -20,25 +20,18 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
   },
-  textField: {
-    marginLeft: theme.spacing(1),
-    marginRight: theme.spacing(1),
-    width: '25ch',
-  },
 }));
 
 const CheckFileTab: React.FunctionComponent<{}> = () => {
-  // Url query parameter
-  const urlQueryParameter = getQueryParameter('url');
-  let defaultUrl: string;
-  if (urlQueryParameter) {
-    defaultUrl = decodeURIComponent(urlQueryParameter);
-  } else {
-    defaultUrl =
-      'https://raw.githubusercontent.com/transmute-industries/universal-wallet/master/docs/index.html';
-  }
   const analyzeQueryParameter = getQueryParameter('analyze');
-  const [url, setUrl] = React.useState(defaultUrl);
+  const [url, setUrl] = React.useState(() => {
+    const urlQueryParameter = getQueryParameter('url');
+    if (urlQueryParameter) {
+      return decodeURIComponent(urlQueryParameter);
+    }
+    return 'https://raw.githubusercontent.com/transmute-industries/universal-wallet/master/docs/index.html';
+  });
+
   const [docs, setDocs] = React.useState<Array<any>>([]);
   const [total, setTotal] = React.useState<number>(0);
 
@@ -85,7 +78,7 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
       <TextField
         label="Enter the URL to a file"
         onChange={onChange}
-        defaultValue={defaultUrl}
+        defaultValue={url}
         style={{ margin: 8 }}
         fullWidth
         margin="normal"

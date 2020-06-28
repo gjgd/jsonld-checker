@@ -9,8 +9,6 @@ import CheckResult from './CheckResult';
 import ShareButton from './ShareButton';
 import { getQueryParameter, updateQueryParameter } from '../utils';
 
-const defaultValue = JSON.stringify(defaultValueJson, null, 2);
-
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
     display: 'flex',
@@ -27,16 +25,14 @@ const useStyles = makeStyles((theme) => ({
 
 const CheckJsonTab: React.FunctionComponent<{}> = () => {
   const classes = useStyles();
-  // Json query parameter
-  const jsonQueryParameter = getQueryParameter('json');
-  let defaultJson: string;
-  if (jsonQueryParameter) {
-    defaultJson = decodeURIComponent(jsonQueryParameter);
-  } else {
-    defaultJson = defaultValue;
-  }
+  const [jsonValue, setJsonValue] = React.useState(() => {
+    const jsonQueryParameter = getQueryParameter('json');
+    if (jsonQueryParameter) {
+      return decodeURIComponent(jsonQueryParameter);
+    }
+    return JSON.stringify(defaultValueJson, null, 2);
+  });
 
-  const [jsonValue, setJsonValue] = React.useState(defaultJson);
   const [result, setResult] = React.useState<JsonLdCheckResult>();
 
   const onChange = (value: string) => {
