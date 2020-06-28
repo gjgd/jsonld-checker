@@ -1,8 +1,10 @@
 /* eslint-disable import/prefer-default-export */
 const updateQueryParameter = (key: string, value: string) => {
   const newUrl = new URLSearchParams(window.location.search);
-  newUrl.set(key, value);
-  window.history.pushState(null, '', `/?${newUrl.toString()}`);
+  if (newUrl.get(key) !== value) {
+    newUrl.set(key, value);
+    window.history.pushState(null, '', `/?${newUrl.toString()}`);
+  }
 };
 
 const getQueryParameter = (key: string): string | null => {
