@@ -7,6 +7,7 @@ import { getFiles } from 'jsonld-checker';
 // import ResultTable from './ResultTable';
 import { getQueryParameter, updateQueryParameter } from '../utils';
 import LoaderButton from './LoaderButton';
+import FilesTable from './FilesTable';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,6 +61,7 @@ const CheckRepoTab: React.FunctionComponent<{}> = () => {
       {files.map((file) => (
         <div>{file.path}</div>
       ))}
+      <FilesTable />
     </div>
   );
 };
