@@ -1,9 +1,10 @@
 name: CD
 
 on:
-  push:
-    branches:
-      - master
+  push
+  # :
+  #   branches:
+  #     - master
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
