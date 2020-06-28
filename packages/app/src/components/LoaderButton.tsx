@@ -1,16 +1,15 @@
 import React from 'react';
-import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { createStyles, makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { green } from '@material-ui/core/colors';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
-    wrapper: {
-      margin: theme.spacing(1),
+    loaderButtonWrapper: {
       position: 'relative',
     },
-    progress: {
+    loaderButtonProgress: {
       color: green[500],
       position: 'absolute',
       top: '50%',
@@ -22,27 +21,31 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const ShareButton: React.FunctionComponent<{
-  onClick: () => Promise<any>;
+  className?: any;
+  onClick: any;
   buttonText: string;
-}> = ({ onClick, buttonText }) => {
+}> = ({ onClick, buttonText, className }) => {
   const classes = useStyles();
   const [loading, setLoading] = React.useState(false);
   return (
-    <div className={classes.wrapper}>
+    <div className={classes.loaderButtonWrapper}>
       <Button
+        className={className}
         color="primary"
         variant="contained"
         disabled={loading}
-        onClick={async () => {
+        onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
           setLoading(true);
-          onClick().finally(() => {
+          onClick(event).finally(() => {
             setLoading(false);
           });
         }}
       >
         {buttonText}
       </Button>
-      {loading && <CircularProgress size={24} className={classes.progress} />}
+      {loading && (
+        <CircularProgress size={24} className={classes.loaderButtonProgress} />
+      )}
     </div>
   );
 };

@@ -1,23 +1,17 @@
 import React from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { green } from '@material-ui/core/colors';
+import Popover from '@material-ui/core/Popover';
+import Typography from '@material-ui/core/Typography';
+import LoaderButton from './LoaderButton';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    typography: {
+      padding: theme.spacing(2),
+    },
     wrapper: {
       margin: theme.spacing(1),
       position: 'relative',
-    },
-    // TODO duplicated code with CheckJsonButton progress
-    shareProgress: {
-      color: green[500],
-      position: 'absolute',
-      top: '50%',
-      left: '50%',
-      marginTop: -12,
-      marginLeft: -12,
     },
   })
 );
@@ -25,46 +19,68 @@ const useStyles = makeStyles((theme: Theme) =>
 const ShareButton: React.FunctionComponent = () => {
   const classes = useStyles();
   const [tinyUrl, setTinyUrl] = React.useState('');
-  const [loading, setLoading] = React.useState(false);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null
+  );
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(tinyUrl) && Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
+  const createShortUrl = () => {
+    const url = `${window.location.toString()}`;
+    const tinyUrlService = 'https://tiny.gjgd.fr/';
+    if (tinyUrl) {
+      return tinyUrl;
+    }
+    return fetch(tinyUrlService, {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+      body: JSON.stringify({ url }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          return res.json();
+        }
+        throw new Error();
+      })
+      .then((data) => {
+        const shortUrl = data.shortUrl || '';
+        setTinyUrl(shortUrl);
+        return shortUrl;
+      });
+  };
+
+  const handleClick = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+    return createShortUrl();
+  };
+
   return (
     <div className={classes.wrapper}>
-      <Button
-        color="primary"
-        variant="contained"
-        disabled={loading}
-        onClick={() => {
-          const url = `${window.location.toString()}`;
-          const tinyUrlService = 'https://tiny.gjgd.fr/';
-          setLoading(true);
-          fetch(tinyUrlService, {
-            method: 'POST',
-            headers: {
-              'Content-type': 'application/json; charset=UTF-8',
-            },
-            body: JSON.stringify({ url }),
-          })
-            .then((res) => {
-              if (res.ok) {
-                return res.json();
-              }
-              throw new Error();
-            })
-            .then((data) => {
-              setTinyUrl(data.shortUrl || '');
-            })
-            .finally(() => {
-              setLoading(false);
-            });
+      <LoaderButton onClick={handleClick} buttonText="Share" />
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
         }}
       >
-        Share
-      </Button>
-      {loading && (
-        <CircularProgress size={24} className={classes.shareProgress} />
-      )}
-      {tinyUrl && (
-        <span className={classes.wrapper}>
+        <Typography className={classes.typography}>
           <span>Copy the URL or use this short one:</span>
+          <br />
           <a
             className={classes.wrapper}
             href={`https://${tinyUrl}`}
@@ -73,8 +89,8 @@ const ShareButton: React.FunctionComponent = () => {
           >
             {tinyUrl}
           </a>
-        </span>
-      )}
+        </Typography>
+      </Popover>
     </div>
   );
 };
