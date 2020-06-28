@@ -6,8 +6,8 @@ import JsonLdPlaygroundButton from './JsonLdPlaygroundButton';
 import CheckJsonButton from './CheckJsonButton';
 import defaultValueJson from '../data/defaultValue.json';
 import CheckResult from './CheckResult';
-
-const defaultValue = JSON.stringify(defaultValueJson, null, 2);
+import ShareButton from './ShareButton';
+import { getQueryParameter, updateQueryParameter } from '../utils';
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
@@ -25,19 +25,32 @@ const useStyles = makeStyles((theme) => ({
 
 const CheckJsonTab: React.FunctionComponent<{}> = () => {
   const classes = useStyles();
-  const [jsonValue, setJsonValue] = React.useState(defaultValue);
+  const [jsonValue, setJsonValue] = React.useState(() => {
+    const jsonQueryParameter = getQueryParameter('json');
+    if (jsonQueryParameter) {
+      return decodeURIComponent(jsonQueryParameter);
+    }
+    return JSON.stringify(defaultValueJson, null, 2);
+  });
+
   const [result, setResult] = React.useState<JsonLdCheckResult>();
 
   const onChange = (value: string) => {
+    updateQueryParameter('analyze', '0');
     setResult(undefined);
     setJsonValue(value);
   };
+
+  React.useEffect(() => {
+    updateQueryParameter('json', encodeURIComponent(jsonValue));
+  }, [jsonValue]);
 
   return (
     <>
       <div className={classes.buttonWrapper}>
         <CheckJsonButton value={jsonValue} setResult={setResult} />
         <JsonLdPlaygroundButton value={jsonValue} />
+        <ShareButton />
       </div>
       <div className={classes.contentWrapper}>
         <CheckResult className={classes.checkResult} result={result} />

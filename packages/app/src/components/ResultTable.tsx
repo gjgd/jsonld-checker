@@ -15,10 +15,8 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Done from '@material-ui/icons/Done';
 import Error from '@material-ui/icons/Error';
-import HourglassEmpty from '@material-ui/icons/HourglassEmpty';
 import JsonEditor from './JsonEditor';
 import CheckResult from './CheckResult';
-import CheckStatus from '../models/CheckStatus';
 
 const useRowStyles = makeStyles({
   root: {
@@ -33,16 +31,10 @@ function Row(props: { row: any }) {
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
   let Icon;
-  switch (row.status) {
-    case CheckStatus.PASSED:
-      Icon = <Done style={{ color: 'green' }} />;
-      break;
-    case CheckStatus.FAILED:
-      Icon = <Error style={{ color: 'red' }} />;
-      break;
-    case CheckStatus.PENDING:
-    default:
-      Icon = <HourglassEmpty style={{ color: 'orange' }} />;
+  if (row.result.ok) {
+    Icon = <Done style={{ color: 'green' }} />;
+  } else {
+    Icon = <Error style={{ color: 'red' }} />;
   }
 
   return (
@@ -86,16 +78,12 @@ function Row(props: { row: any }) {
 const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
   results,
 }) => {
-  const rows = results.map(
-    ({ object, status, error, result }: any, index: number) => ({
-      key: index,
-      name: object.id ? object.id : `object ${index}`,
-      status,
-      object,
-      error,
-      result,
-    })
-  );
+  const rows = results.map(({ object, result }: any, index: number) => ({
+    key: index,
+    name: object.id ? object.id : `object ${index}`,
+    object,
+    result,
+  }));
   if (rows.length === 0) {
     return <></>;
   }

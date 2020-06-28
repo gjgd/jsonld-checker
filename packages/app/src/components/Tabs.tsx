@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import CheckJsonTab from './CheckJsonTab';
 import CheckFileTab from './CheckFileTab';
+import { updateQueryParameter, getQueryParameter } from '../utils';
 
 type TabPanelProps = {
   children: React.ReactNode;
@@ -44,32 +45,48 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SimpleTabs() {
   const classes = useStyles();
-  const [value, setValue] = React.useState(0);
+  const [tab, setTab] = React.useState(() => {
+    const tabQueryParameter = getQueryParameter('tab');
+    let defaultTab: number;
+    if (tabQueryParameter) {
+      defaultTab = Number.parseInt(tabQueryParameter, 10);
+      if (defaultTab > 1) {
+        defaultTab = 1;
+      }
+    } else {
+      defaultTab = 0;
+    }
+    return defaultTab;
+  });
 
-  const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
-    if (newValue === 2) {
+  const handleChange = (event: ChangeEvent<{}>, newTab: number) => {
+    if (newTab === 2) {
       alert('Not implemented yet');
     } else {
-      setValue(newValue);
+      setTab(newTab);
     }
   };
+
+  React.useEffect(() => {
+    updateQueryParameter('tab', `${tab}`);
+  }, [tab]);
 
   return (
     <div className={classes.root}>
       <AppBar position="static">
-        <Tabs value={value} onChange={handleChange} centered>
+        <Tabs value={tab} onChange={handleChange} centered>
           <Tab label="Check a single JSON" {...a11yProps(0)} />
           <Tab label="Check a file" {...a11yProps(1)} />
           <Tab label="Check a Github repo" {...a11yProps(2)} />
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
+      <TabPanel value={tab} index={0}>
         <CheckJsonTab />
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={tab} index={1}>
         <CheckFileTab />
       </TabPanel>
-      <TabPanel value={value} index={2}>
+      <TabPanel value={tab} index={2}>
         <div>TODO</div>
       </TabPanel>
     </div>
