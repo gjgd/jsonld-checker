@@ -38,9 +38,12 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
   const onChange = (value: string) => {
     // updateQueryParameter('analyze', '0');
     setResult(undefined);
-    updateQueryParameter('json', encodeURIComponent(value));
     setJsonValue(value);
   };
+
+  React.useEffect(() => {
+    updateQueryParameter('json', encodeURIComponent(jsonValue));
+  }, [jsonValue]);
 
   return (
     <>

@@ -55,17 +55,19 @@ export default function SimpleTabs() {
     defaultTab = 0;
   }
   const classes = useStyles();
-  updateQueryParameter('tab', `${defaultTab}`);
   const [tab, setTab] = React.useState(defaultTab);
 
   const handleChange = (event: ChangeEvent<{}>, newTab: number) => {
     if (newTab === 2) {
       alert('Not implemented yet');
     } else {
-      updateQueryParameter('tab', `${newTab}`);
       setTab(newTab);
     }
   };
+
+  React.useEffect(() => {
+    updateQueryParameter('tab', `${tab}`);
+  }, [tab]);
 
   return (
     <div className={classes.root}>
