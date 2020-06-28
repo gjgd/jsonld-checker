@@ -3,7 +3,7 @@ import { check } from 'jsonld-checker';
 import { green, red } from '@material-ui/core/colors';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { getQueryParameter } from '../utils';
+import { getQueryParameter, updateQueryParameter } from '../utils';
 import LoaderButton from './LoaderButton';
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -50,7 +50,7 @@ const CheckJsonButton: React.FunctionComponent<{
     setSuccess(res.ok);
     setError(!res.ok);
     setResult(res);
-    // updateQueryParameter('analyze', '1');
+    updateQueryParameter('analyze', '1');
   };
 
   React.useEffect(() => {

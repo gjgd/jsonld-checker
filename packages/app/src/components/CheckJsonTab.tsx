@@ -36,7 +36,7 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
   const [result, setResult] = React.useState<JsonLdCheckResult>();
 
   const onChange = (value: string) => {
-    // updateQueryParameter('analyze', '0');
+    updateQueryParameter('analyze', '0');
     setResult(undefined);
     setJsonValue(value);
   };
