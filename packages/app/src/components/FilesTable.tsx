@@ -298,9 +298,6 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-  const emptyRows =
-    rowsPerPage - Math.min(rowsPerPage, files.length - page * rowsPerPage);
-
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -355,11 +352,6 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
                     </TableRow>
                   );
                 })}
-              {emptyRows > 0 && (
-                <TableRow style={{ height: 53 * emptyRows }}>
-                  <TableCell colSpan={6} />
-                </TableRow>
-              )}
             </TableBody>
           </Table>
         </TableContainer>
