@@ -1,5 +1,9 @@
 import React from 'react';
-import clsx from 'clsx';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormGroup from '@material-ui/core/FormGroup';
+import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
 import {
   createStyles,
   lighten,
@@ -15,14 +19,12 @@ import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
+import Typography from '@material-ui/core/Typography';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import FormGroup from '@material-ui/core/FormGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
+import clsx from 'clsx';
+import { check, getAllJsonLdFromString } from 'jsonld-checker';
+import LoaderButton from './LoaderButton';
 
 interface Data {
   path: string;
@@ -318,6 +320,22 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
     setState({ ...state, [name]: checked });
   };
 
+  const onCheck = async () => {
+    const filesToCheck = files.filter((file) => selected.get(file.path));
+    for (const file of filesToCheck) {
+      const rawUrl = `https://raw.githubusercontent.com/gjgd/jsonld-checker/master/${file.path}`;
+      const res = await fetch(rawUrl);
+      const text = await res.text();
+      const jsonldObjects: Array<any> = await getAllJsonLdFromString(text);
+      let ok = true;
+      for (let i = 0; i < jsonldObjects.length; i += 1) {
+        const object = jsonldObjects[i];
+        const result = await check(object);
+        ok = ok && result.ok;
+      }
+    }
+  };
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -339,6 +357,7 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
             );
           })}
         </FormGroup>
+        <LoaderButton onClick={onCheck} buttonText="Check" />
         <EnhancedTableToolbar numSelected={countSelected()} />
         <TableContainer>
           <Table

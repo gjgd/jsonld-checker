@@ -14,8 +14,10 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   rules: {
+    'no-await-in-loop': 'off',
+    'no-restricted-syntax': 'off',
+    'react/jsx-props-no-spreading': 'off',
     'react/jsx-wrap-multilines': 'off',
     'react/prop-types': 'off',
-    'react/jsx-props-no-spreading': 'off',
   },
 };

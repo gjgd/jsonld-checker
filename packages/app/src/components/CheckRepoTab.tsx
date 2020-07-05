@@ -50,7 +50,7 @@ const CheckRepoTab: React.FunctionComponent<{}> = () => {
 
   return (
     <div className={classes.root}>
-      <LoaderButton onClick={onClick} buttonText="Check Repo" />
+      <LoaderButton onClick={onClick} buttonText="List files" />
       <TextField
         label="Enter the URL of a Github repo"
         onChange={onChange}
