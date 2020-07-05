@@ -14,6 +14,7 @@ module.exports = {
     'plugin:prettier/recommended',
   ],
   rules: {
+    'react/jsx-wrap-multilines': 'off',
     'react/prop-types': 'off',
     'react/jsx-props-no-spreading': 'off',
   },
