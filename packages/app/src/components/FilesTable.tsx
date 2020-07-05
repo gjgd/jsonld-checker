@@ -75,7 +75,6 @@ const headCells: HeadCell[] = [
     disablePadding: true,
     label: 'Path',
   },
-  { id: 'url', align: 'left', disablePadding: false, label: 'URL' },
 ];
 
 interface EnhancedTableProps {
@@ -354,7 +353,6 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
                       >
                         {row.path}
                       </TableCell>
-                      <TableCell align="right">{row.url}</TableCell>
                     </TableRow>
                   );
                 })}
