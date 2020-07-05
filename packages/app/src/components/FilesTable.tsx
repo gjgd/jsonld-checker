@@ -17,10 +17,12 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import Tooltip from '@material-ui/core/Tooltip';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Checkbox from '@material-ui/core/Checkbox';
 
 interface Data {
   path: string;
@@ -243,7 +245,13 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<keyof Data>('path');
-  const [selected, setSelected] = React.useState<string[]>([]);
+  const [selected, setSelected] = React.useState(() => {
+    const initialSelected = new Map();
+    files.forEach((file) => {
+      initialSelected.set(file.path, false);
+    });
+    return initialSelected;
+  });
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(100);
 
@@ -257,31 +265,17 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
   };
 
   const handleSelectAllClick = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.checked) {
-      const newSelecteds = files.map((n) => n.path);
-      setSelected(newSelecteds);
-      return;
-    }
-    setSelected([]);
+    const newSelected = new Map(selected);
+    files.forEach((file) => {
+      newSelected.set(file.path, event.target.checked);
+    });
+    setSelected(newSelected);
   };
 
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
-    const selectedIndex = selected.indexOf(name);
-    let newSelected: string[] = [];
-
-    if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selected, name);
-    } else if (selectedIndex === 0) {
-      newSelected = newSelected.concat(selected.slice(1));
-    } else if (selectedIndex === selected.length - 1) {
-      newSelected = newSelected.concat(selected.slice(0, -1));
-    } else if (selectedIndex > 0) {
-      newSelected = newSelected.concat(
-        selected.slice(0, selectedIndex),
-        selected.slice(selectedIndex + 1)
-      );
-    }
-
+    const currentValue = selected.get(name);
+    const newSelected = new Map(selected);
+    newSelected.set(name, !currentValue);
     setSelected(newSelected);
   };
 
@@ -296,12 +290,56 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
     setPage(0);
   };
 
-  const isSelected = (name: string) => selected.indexOf(name) !== -1;
+  const isSelected = (name: string) => selected.get(name);
+
+  const countSelected = () => {
+    const arraySelected = Array.from(selected);
+    const count = arraySelected.filter((file) => file[1]).length;
+    return count;
+  };
+
+  const fileTypes = ['*.js', '*.ts', '*.json', '*.html'];
+
+  const [state, setState] = React.useState<any>({});
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+    const extension = name.split('.').pop();
+    const newSelected = new Map(selected);
+    files
+      .filter((file) => {
+        const fileMatchesExtension = file.path.split('.').pop() === extension;
+        return fileMatchesExtension;
+      })
+      .forEach((file) => {
+        newSelected.set(file.path, checked);
+      });
+    setSelected(newSelected);
+    setState({ ...state, [name]: checked });
+  };
 
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
-        <EnhancedTableToolbar numSelected={selected.length} />
+        <FormGroup row>
+          {fileTypes.map((fileType) => {
+            return (
+              <FormControlLabel
+                key={fileType}
+                control={
+                  <Checkbox
+                    checked={state[fileType]}
+                    onChange={handleChange}
+                    name={fileType}
+                    color="primary"
+                  />
+                }
+                label={fileType}
+              />
+            );
+          })}
+        </FormGroup>
+        <EnhancedTableToolbar numSelected={countSelected()} />
         <TableContainer>
           <Table
             className={classes.table}
@@ -311,7 +349,7 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
           >
             <EnhancedTableHead
               classes={classes}
-              numSelected={selected.length}
+              numSelected={countSelected()}
               order={order}
               orderBy={orderBy}
               onSelectAllClick={handleSelectAllClick}
