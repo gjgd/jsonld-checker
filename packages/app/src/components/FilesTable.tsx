@@ -67,7 +67,6 @@ interface HeadCell {
   id: keyof Data;
   label: string;
   align: TableCellProps['align'];
-
 }
 
 const headCells: HeadCell[] = [
