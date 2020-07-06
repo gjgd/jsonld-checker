@@ -421,7 +421,9 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
                   const isItemSelected = isSelected(row.path);
                   const fileState = isValid(row.path);
                   const labelId = `enhanced-table-checkbox-${index}`;
-                  const rawUrl = `${toRawGithubUrl(row.path)}`;
+                  const checkFileUrl = `${
+                    window.location.origin
+                  }?url=${toRawGithubUrl(row.path)}&tab=1&analyze=1`;
                   let Icon;
                   if (fileState === FileState.Valid) {
                     Icon = <Done style={{ color: 'green' }} />;
@@ -455,7 +457,13 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
                         {row.path}
                       </TableCell>
                       <TableCell>
-                        <a href={rawUrl}>{rawUrl}</a>
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          href={checkFileUrl}
+                        >
+                          {checkFileUrl}
+                        </a>
                       </TableCell>
                       <TableCell>{Icon}</TableCell>
                     </TableRow>
