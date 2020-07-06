@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
 import CheckJsonTab from './CheckJsonTab';
 import CheckFileTab from './CheckFileTab';
+import CheckRepoTab from './CheckRepoTab';
 import { updateQueryParameter, getQueryParameter } from '../utils';
 
 type TabPanelProps = {
@@ -50,8 +51,8 @@ export default function SimpleTabs() {
     let defaultTab: number;
     if (tabQueryParameter) {
       defaultTab = Number.parseInt(tabQueryParameter, 10);
-      if (defaultTab > 1) {
-        defaultTab = 1;
+      if (defaultTab > 2) {
+        defaultTab = 0;
       }
     } else {
       defaultTab = 0;
@@ -60,11 +61,7 @@ export default function SimpleTabs() {
   });
 
   const handleChange = (event: ChangeEvent<{}>, newTab: number) => {
-    if (newTab === 2) {
-      alert('Not implemented yet');
-    } else {
-      setTab(newTab);
-    }
+    setTab(newTab);
   };
 
   React.useEffect(() => {
@@ -87,7 +84,7 @@ export default function SimpleTabs() {
         <CheckFileTab />
       </TabPanel>
       <TabPanel value={tab} index={2}>
-        <div>TODO</div>
+        <CheckRepoTab />
       </TabPanel>
     </div>
   );
