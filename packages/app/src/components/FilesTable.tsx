@@ -33,6 +33,12 @@ interface Data {
   url: string;
 }
 
+enum FileState {
+  Unchecked,
+  Valid,
+  Invalid,
+}
+
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -268,7 +274,7 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
   const [valid, setValid] = React.useState(() => {
     const initialValid = new Map();
     files.forEach((file) => {
-      initialValid.set(file.path, false);
+      initialValid.set(file.path, FileState.Unchecked);
     });
     return initialValid;
   });
@@ -345,6 +351,7 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
 
   const onCheck = async () => {
     const filesToCheck = files.filter((file) => selected.get(file.path));
+    const newValid = new Map(valid);
     for (const file of filesToCheck) {
       const rawUrl = toRawGithubUrl(file.path);
       const res = await fetch(rawUrl);
@@ -356,12 +363,18 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
         const result = await check(object);
         ok = ok && result.ok;
       }
-      const newValid = new Map(valid);
-      newValid.set(file.path, ok);
-      setValid(newValid);
+      newValid.set(file.path, ok ? FileState.Valid : FileState.Invalid);
+      setValid(new Map(newValid));
     }
   };
 
+  React.useEffect(() => {
+    const newValid = new Map();
+    files.forEach((file) => {
+      newValid.set(file.path, FileState.Unchecked);
+    });
+    setValid(newValid);
+  }, [selected, setValid, files]);
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
@@ -406,16 +419,14 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: any, index: number) => {
                   const isItemSelected = isSelected(row.path);
-                  const isItemValid = isValid(row.path);
+                  const fileState = isValid(row.path);
                   const labelId = `enhanced-table-checkbox-${index}`;
                   const rawUrl = `${toRawGithubUrl(row.path)}`;
                   let Icon;
-                  if (isItemSelected) {
-                    if (isItemValid) {
-                      Icon = <Done style={{ color: 'green' }} />;
-                    } else {
-                      Icon = <Error style={{ color: 'red' }} />;
-                    }
+                  if (fileState === FileState.Valid) {
+                    Icon = <Done style={{ color: 'green' }} />;
+                  } else if (fileState === FileState.Invalid) {
+                    Icon = <Error style={{ color: 'red' }} />;
                   } else {
                     Icon = <></>;
                   }
