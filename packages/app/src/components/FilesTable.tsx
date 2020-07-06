@@ -329,10 +329,13 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
     setState({ ...state, [name]: checked });
   };
 
+  const toRawGithubUrl = (path: string) =>
+    `https://raw.githubusercontent.com/gjgd/jsonld-checker/master/${path}`;
+
   const onCheck = async () => {
     const filesToCheck = files.filter((file) => selected.get(file.path));
     for (const file of filesToCheck) {
-      const rawUrl = `https://raw.githubusercontent.com/gjgd/jsonld-checker/master/${file.path}`;
+      const rawUrl = toRawGithubUrl(file.path);
       const res = await fetch(rawUrl);
       const text = await res.text();
       const jsonldObjects: Array<any> = await getAllJsonLdFromString(text);
@@ -390,6 +393,7 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
                 .map((row: any, index: number) => {
                   const isItemSelected = isSelected(row.path);
                   const labelId = `enhanced-table-checkbox-${index}`;
+                  const rawUrl = `${toRawGithubUrl(row.path)}`;
 
                   return (
                     <TableRow
@@ -414,6 +418,9 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
                         padding="none"
                       >
                         {row.path}
+                      </TableCell>
+                      <TableCell>
+                        <a href={rawUrl}>{rawUrl}</a>
                       </TableCell>
                     </TableRow>
                   );
