@@ -55,19 +55,19 @@ function getComparator<Key extends keyof any>(
     : (a, b) => -descendingComparator(a, b, orderBy);
 }
 
-function stableSort<T>(array: T[], comparator: (a: T, b: T) => number) {
-  const stabilizedThis = array.map((el, index) => [el, index] as [T, number]);
-  stabilizedThis.sort((a, b) => {
+function stableSort(array: any, comparator: any) {
+  const stabilizedThis = array.map((el: any, index: number) => [el, index]);
+  stabilizedThis.sort((a: any, b: any) => {
     const order = comparator(a[0], b[0]);
     if (order !== 0) return order;
     return a[1] - b[1];
   });
-  return stabilizedThis.map((el) => el[0]);
+  return stabilizedThis.map((el: any) => el[0]);
 }
 
 interface HeadCell {
   disablePadding: boolean;
-  id: keyof Data;
+  id: string;
   label: string;
   align: TableCellProps['align'];
 }
@@ -79,16 +79,25 @@ const headCells: HeadCell[] = [
     disablePadding: true,
     label: 'Path',
   },
+  {
+    id: 'url',
+    align: 'left',
+    disablePadding: true,
+    label: 'Raw URL',
+  },
+  {
+    id: 'ok',
+    align: 'left',
+    disablePadding: true,
+    label: 'valid',
+  },
 ];
 
 interface EnhancedTableProps {
   // eslint-disable-next-line @typescript-eslint/no-use-before-define
   classes: ReturnType<typeof useStyles>;
   numSelected: number;
-  onRequestSort: (
-    event: React.MouseEvent<unknown>,
-    property: keyof Data
-  ) => void;
+  onRequestSort: (event: React.MouseEvent<unknown>, property: string) => void;
   onSelectAllClick: (event: React.ChangeEvent<HTMLInputElement>) => void;
   order: Order;
   orderBy: string;
@@ -105,7 +114,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
     rowCount,
     onRequestSort,
   } = props;
-  const createSortHandler = (property: keyof Data) => (
+  const createSortHandler = (property: string) => (
     event: React.MouseEvent<unknown>
   ) => {
     onRequestSort(event, property);
@@ -246,7 +255,7 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
 }) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('path');
+  const [orderBy, setOrderBy] = React.useState<string>('path');
   const [selected, setSelected] = React.useState(() => {
     const initialSelected = new Map();
     files.forEach((file) => {
@@ -259,7 +268,7 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
 
   const handleRequestSort = (
     event: React.MouseEvent<unknown>,
-    property: keyof Data
+    property: string
   ) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
@@ -378,7 +387,7 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
             <TableBody>
               {stableSort(files, getComparator(order, orderBy))
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row, index) => {
+                .map((row: any, index: number) => {
                   const isItemSelected = isSelected(row.path);
                   const labelId = `enhanced-table-checkbox-${index}`;
 
