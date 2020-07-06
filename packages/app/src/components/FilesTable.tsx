@@ -23,6 +23,8 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Typography from '@material-ui/core/Typography';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import clsx from 'clsx';
+import Done from '@material-ui/icons/Done';
+import Error from '@material-ui/icons/Error';
 import { check, getAllJsonLdFromString } from 'jsonld-checker';
 import LoaderButton from './LoaderButton';
 
@@ -263,6 +265,13 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
     });
     return initialSelected;
   });
+  const [valid, setValid] = React.useState(() => {
+    const initialValid = new Map();
+    files.forEach((file) => {
+      initialValid.set(file.path, false);
+    });
+    return initialValid;
+  });
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(100);
 
@@ -302,6 +311,8 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
   };
 
   const isSelected = (name: string) => selected.get(name);
+
+  const isValid = (name: string) => valid.get(name);
 
   const countSelected = () => {
     const arraySelected = Array.from(selected);
@@ -345,6 +356,9 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
         const result = await check(object);
         ok = ok && result.ok;
       }
+      const newValid = new Map(valid);
+      newValid.set(file.path, ok);
+      setValid(newValid);
     }
   };
 
@@ -392,9 +406,19 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((row: any, index: number) => {
                   const isItemSelected = isSelected(row.path);
+                  const isItemValid = isValid(row.path);
                   const labelId = `enhanced-table-checkbox-${index}`;
                   const rawUrl = `${toRawGithubUrl(row.path)}`;
-
+                  let Icon;
+                  if (isItemSelected) {
+                    if (isItemValid) {
+                      Icon = <Done style={{ color: 'green' }} />;
+                    } else {
+                      Icon = <Error style={{ color: 'red' }} />;
+                    }
+                  } else {
+                    Icon = <></>;
+                  }
                   return (
                     <TableRow
                       hover
@@ -422,6 +446,7 @@ const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
                       <TableCell>
                         <a href={rawUrl}>{rawUrl}</a>
                       </TableCell>
+                      <TableCell>{Icon}</TableCell>
                     </TableRow>
                   );
                 })}

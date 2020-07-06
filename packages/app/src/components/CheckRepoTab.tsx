@@ -1,10 +1,7 @@
 import React from 'react';
-// import LinearProgress from '@material-ui/core/LinearProgress';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-// import { Alert, AlertTitle } from '@material-ui/lab';
 import { getFiles } from 'jsonld-checker';
-// import ResultTable from './ResultTable';
 import { getQueryParameter, updateQueryParameter } from '../utils';
 import LoaderButton from './LoaderButton';
 import FilesTable from './FilesTable';
