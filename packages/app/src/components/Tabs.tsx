@@ -81,7 +81,7 @@ export default function SimpleTabs() {
         <CheckJsonTab />
       </TabPanel>
       <TabPanel value={tab} index={1}>
-        <CheckFileTab setTab={setTab} />
+        <CheckFileTab />
       </TabPanel>
       <TabPanel value={tab} index={2}>
         <CheckRepoTab />

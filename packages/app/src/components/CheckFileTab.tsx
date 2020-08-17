@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const CheckFileTab: React.FunctionComponent<{ setTab: any }> = ({ setTab }) => {
+const CheckFileTab: React.FunctionComponent<{}> = () => {
   const analyzeQueryParameter = getQueryParameter('analyze');
   const [url, setUrl] = React.useState(() => {
     const urlQueryParameter = getQueryParameter('url');
@@ -99,7 +99,7 @@ const CheckFileTab: React.FunctionComponent<{ setTab: any }> = ({ setTab }) => {
       ) : (
         <></>
       )}
-      <ResultTable results={docs} setTab={setTab} />
+      <ResultTable results={docs} />
     </div>
   );
 };

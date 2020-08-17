@@ -18,7 +18,6 @@ import Done from '@material-ui/icons/Done';
 import Error from '@material-ui/icons/Error';
 import JsonEditor from './JsonEditor';
 import CheckResult from './CheckResult';
-import { updateQueryParameter } from '../utils';
 
 const useRowStyles = makeStyles({
   root: {
@@ -28,8 +27,8 @@ const useRowStyles = makeStyles({
   },
 });
 
-function Row(props: { row: any; setTab: any }) {
-  const { row, setTab } = props;
+function Row(props: { row: any }) {
+  const { row } = props;
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
   let Icon;
@@ -63,11 +62,11 @@ function Row(props: { row: any; setTab: any }) {
               color="primary"
               variant="contained"
               onClick={() => {
-                updateQueryParameter(
-                  'json',
+                const encodedJson = encodeURIComponent(
                   JSON.stringify(row.object, null, 2)
                 );
-                setTab(0);
+                const objectUrl = `${window.location.origin}?json=${encodedJson}&tab=0&analyze=1`;
+                window.open(objectUrl);
               }}
             >
               Inspect
@@ -96,10 +95,9 @@ function Row(props: { row: any; setTab: any }) {
   );
 }
 
-const ResultTable: React.FunctionComponent<{
-  results: Array<Object>;
-  setTab: any;
-}> = ({ results, setTab }) => {
+const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
+  results,
+}) => {
   const rows = results.map(({ object, result }: any, index: number) => ({
     key: index,
     name: object.id ? object.id : `object ${index}`,
@@ -121,7 +119,7 @@ const ResultTable: React.FunctionComponent<{
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.key} row={row} setTab={setTab} />
+            <Row key={row.key} row={row} />
           ))}
         </TableBody>
       </Table>
