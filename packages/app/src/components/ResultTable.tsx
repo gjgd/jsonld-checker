@@ -115,6 +115,7 @@ const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
             <TableCell />
             <TableCell>JSON-LD objects detected</TableCell>
             <TableCell align="center">Status</TableCell>
+            <TableCell> </TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
