@@ -12,4 +12,14 @@ const getQueryParameter = (key: string): string | null => {
   return urlParams.get(key);
 };
 
-export { updateQueryParameter, getQueryParameter };
+const getGithubInfo = (url: string) => {
+  try {
+    const parsed = new URL(url);
+    const [, userName, repoName] = parsed.pathname.split('/');
+    return { userName, repoName };
+  } catch (e) {
+    return { userName: '', repoName: '' };
+  }
+};
+
+export { updateQueryParameter, getQueryParameter, getGithubInfo };
