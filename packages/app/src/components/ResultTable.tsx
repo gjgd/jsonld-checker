@@ -63,8 +63,10 @@ function Row(props: { row: any; setTab: any }) {
               color="primary"
               variant="contained"
               onClick={() => {
-                console.log(row);
-                updateQueryParameter('json', '{}');
+                updateQueryParameter(
+                  'json',
+                  JSON.stringify(row.object, null, 2)
+                );
                 setTab(0);
               }}
             >
