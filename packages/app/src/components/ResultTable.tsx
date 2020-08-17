@@ -18,6 +18,7 @@ import Done from '@material-ui/icons/Done';
 import Error from '@material-ui/icons/Error';
 import JsonEditor from './JsonEditor';
 import CheckResult from './CheckResult';
+import { updateQueryParameter } from '../utils';
 
 const useRowStyles = makeStyles({
   root: {
@@ -27,8 +28,8 @@ const useRowStyles = makeStyles({
   },
 });
 
-function Row(props: { row: any }) {
-  const { row } = props;
+function Row(props: { row: any; setTab: any }) {
+  const { row, setTab } = props;
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
   let Icon;
@@ -58,7 +59,15 @@ function Row(props: { row: any }) {
           {row.result.ok ? (
             <></>
           ) : (
-            <Button color="primary" variant="contained" onClick={console.log}>
+            <Button
+              color="primary"
+              variant="contained"
+              onClick={() => {
+                console.log(row);
+                updateQueryParameter('json', '{}');
+                setTab(0);
+              }}
+            >
               Inspect
             </Button>
           )}
@@ -85,9 +94,10 @@ function Row(props: { row: any }) {
   );
 }
 
-const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
-  results,
-}) => {
+const ResultTable: React.FunctionComponent<{
+  results: Array<Object>;
+  setTab: any;
+}> = ({ results, setTab }) => {
   const rows = results.map(({ object, result }: any, index: number) => ({
     key: index,
     name: object.id ? object.id : `object ${index}`,
@@ -109,7 +119,7 @@ const ResultTable: React.FunctionComponent<{ results: Array<Object> }> = ({
         </TableHead>
         <TableBody>
           {rows.map((row) => (
-            <Row key={row.key} row={row} />
+            <Row key={row.key} row={row} setTab={setTab} />
           ))}
         </TableBody>
       </Table>
