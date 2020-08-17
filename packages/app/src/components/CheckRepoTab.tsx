@@ -2,7 +2,11 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { getFiles } from 'jsonld-checker';
-import { getQueryParameter, updateQueryParameter } from '../utils';
+import {
+  getQueryParameter,
+  updateQueryParameter,
+  getGithubInfo,
+} from '../utils';
 import LoaderButton from './LoaderButton';
 import FilesTable from './FilesTable';
 
@@ -41,7 +45,8 @@ const CheckRepoTab: React.FunctionComponent<{}> = () => {
   };
 
   const onClick = async () => {
-    const filesInRepo = await getFiles('gjgd', 'jsonld-checker');
+    const { userName, repoName } = getGithubInfo(repo);
+    const filesInRepo = await getFiles(userName, repoName);
     setFiles(filesInRepo);
   };
 
@@ -56,7 +61,7 @@ const CheckRepoTab: React.FunctionComponent<{}> = () => {
         fullWidth
         margin="normal"
       />
-      {files.length > 0 ? <FilesTable files={files} /> : <></>}
+      {files.length > 0 ? <FilesTable files={files} repo={repo} /> : <></>}
     </div>
   );
 };

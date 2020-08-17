@@ -27,6 +27,7 @@ import Done from '@material-ui/icons/Done';
 import Error from '@material-ui/icons/Error';
 import { check, getAllJsonLdFromString } from 'jsonld-checker';
 import LoaderButton from './LoaderButton';
+import { getGithubInfo } from '../utils';
 
 interface Data {
   path: string;
@@ -258,9 +259,10 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const EnhancedTable: React.FunctionComponent<{ files: Array<Data> }> = ({
-  files,
-}) => {
+const EnhancedTable: React.FunctionComponent<{
+  files: Array<Data>;
+  repo: string;
+}> = ({ files, repo }) => {
   const classes = useStyles();
   const [order, setOrder] = React.useState<Order>('asc');
   const [orderBy, setOrderBy] = React.useState<string>('path');
