@@ -385,6 +385,7 @@ const EnhancedTable: React.FunctionComponent<{
         });
     });
     setSelected(newSelected);
+    // eslint-disable-next-line
   }, [state]);
 
   return (
