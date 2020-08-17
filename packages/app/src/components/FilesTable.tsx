@@ -330,26 +330,19 @@ const EnhancedTable: React.FunctionComponent<{
 
   const fileTypes = ['*.js', '*.ts', '*.json', '*.html'];
 
-  const [state, setState] = React.useState<any>({});
+  const [state, setState] = React.useState<any>({
+    '*.html': true,
+  });
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, checked } = event.target;
-    const extension = name.split('.').pop();
-    const newSelected = new Map(selected);
-    files
-      .filter((file) => {
-        const fileMatchesExtension = file.path.split('.').pop() === extension;
-        return fileMatchesExtension;
-      })
-      .forEach((file) => {
-        newSelected.set(file.path, checked);
-      });
-    setSelected(newSelected);
     setState({ ...state, [name]: checked });
   };
 
-  const toRawGithubUrl = (path: string) =>
-    `https://raw.githubusercontent.com/gjgd/jsonld-checker/master/${path}`;
+  const toRawGithubUrl = (path: string) => {
+    const { userName, repoName } = getGithubInfo(repo);
+    return `https://raw.githubusercontent.com/${userName}/${repoName}/master/${path}`;
+  };
 
   const onCheck = async () => {
     const filesToCheck = files.filter((file) => selected.get(file.path));
@@ -377,6 +370,23 @@ const EnhancedTable: React.FunctionComponent<{
     });
     setValid(newValid);
   }, [selected, setValid, files]);
+
+  React.useEffect(() => {
+    const newSelected = new Map(selected);
+    Object.entries(state).forEach(([fileType, checked]) => {
+      const extension = fileType.split('.').pop();
+      files
+        .filter((file) => {
+          const fileMatchesExtension = file.path.split('.').pop() === extension;
+          return fileMatchesExtension;
+        })
+        .forEach((file) => {
+          newSelected.set(file.path, checked);
+        });
+    });
+    setSelected(newSelected);
+  }, [state]);
+
   return (
     <div className={classes.root}>
       <Paper className={classes.paper}>
