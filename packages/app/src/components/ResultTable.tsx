@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
+import Button from '@material-ui/core/Button';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
@@ -53,6 +54,15 @@ function Row(props: { row: any }) {
           {row.name}
         </TableCell>
         <TableCell align="center">{Icon}</TableCell>
+        <TableCell align="center">
+          {row.result.ok ? (
+            <></>
+          ) : (
+            <Button color="primary" variant="contained" onClick={console.log}>
+              Inspect
+            </Button>
+          )}
+        </TableCell>
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
