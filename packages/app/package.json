@@ -27,7 +27,7 @@
     "eject": "react-scripts eject",
     "lint": "eslint --ext .tsx,.ts src",
     "start": "react-scripts start",
-    "test": "react-scripts test --passWithNoTests"
+    "test": "react-scripts test --passWithNoTests --watchAll=false"
   },
   "browserslist": {
     "production": [
