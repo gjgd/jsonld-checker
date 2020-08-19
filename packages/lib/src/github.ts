@@ -1,4 +1,3 @@
-/* eslint-disable import/prefer-default-export */
 const fetch = require('node-fetch');
 
 const githubApi = async endpoint => {
@@ -13,4 +12,4 @@ const getFiles = async (user, repo, ref = 'HEAD') => {
   return files;
 };
 
-export { getFiles };
+export default getFiles;

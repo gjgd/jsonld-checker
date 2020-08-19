@@ -11,7 +11,7 @@
     "deploy": "lerna run deploy",
     "lint": "lerna run lint",
     "postinstall": "lerna bootstrap",
-    "publish": "lerna publish",
+    "publish:patch": "lerna publish patch",
     "test": "lerna run test"
   },
   "husky": {
