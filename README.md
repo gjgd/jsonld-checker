@@ -102,6 +102,39 @@ CheckResult {
 console.log(resultNotOk);
 ```
 
+### Passing a custom document loader
+
+The lib supports passing a custom document loader to the check function:
+
+```js
+const privateContextUrl = 'https://my-domain.com/private-context.jsonld';
+// A document with a private context that cannot be resolved by the default document loader
+const docWithPrivateContext = {
+  '@context': privateContextUrl,
+  customProperty: 'customValue',
+};
+
+// A custom document loader that can resolve a private context
+const customDocumentLoader = async (url: string) => {
+  if (url === privateContextUrl) {
+    return {
+      contextUrl: null,
+      document: {
+        '@context': {
+          customProperty: 'https://custom-url.test',
+        },
+      },
+      documentUrl: url,
+    };
+  }
+  return {};
+};
+
+const result = await check(docWithPrivateContext, customDocumentLoader);
+/*
+CheckResult { ok: true, error: { type: '', details: '' } }
+*/
+```
 
 # Useful links
 
