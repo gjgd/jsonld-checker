@@ -1,40 +1,16 @@
 import jsonld from 'jsonld';
 import CheckResult from './CheckResult';
+import defaultLoader from './defaultDocumentLoader';
 
 // TODO: refactor
 export * from './github';
 
-const CONTEXTS = {};
-
-// From https://github.com/flexdinesh/browser-or-node/blob/master/src/index.js
-const isNode =
-  typeof process !== 'undefined' &&
-  process.versions != null &&
-  process.versions.node != null;
-
-const nodeDocumentLoader = isNode
-  ? jsonld.documentLoaders.node()
-  : jsonld.documentLoaders.xhr();
-
-// change the default document loader
-const customLoader = async (url: string) => {
-  if (url in CONTEXTS) {
-    return {
-      contextUrl: null,
-      document: CONTEXTS[url],
-      documentUrl: url,
-    };
-  }
-  const res = await nodeDocumentLoader(url);
-  CONTEXTS[url] = res.document;
-  return res;
-};
-
-jsonld.documentLoader = customLoader;
-
 const isNotJsonLdPropery = property => !['@id', '@type'].includes(property);
 
-export const check = async (jsonldDocument: string | object) => {
+export const check = async (
+  jsonldDocument: string | object,
+  documentLoader = defaultLoader
+) => {
   try {
     let jsonldDoc: object;
     if (typeof jsonldDocument === 'string') {
@@ -43,8 +19,10 @@ export const check = async (jsonldDocument: string | object) => {
       jsonldDoc = jsonldDocument;
     }
     // Remove all keys not present in the jsonld context
-    const expanded = await jsonld.expand(jsonldDoc);
-    const compacted = await jsonld.compact(expanded, jsonldDoc['@context']);
+    const expanded = await jsonld.expand(jsonldDoc, { documentLoader });
+    const compacted = await jsonld.compact(expanded, jsonldDoc['@context'], {
+      documentLoader,
+    });
     // Check which keys have been removed
     const keys = Object.keys(jsonldDoc).filter(isNotJsonLdPropery);
     const newKeysSet = new Set(Object.keys(compacted));
