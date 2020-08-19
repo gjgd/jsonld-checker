@@ -1,5 +1,8 @@
 {
   "name": "jsonld-checker",
+  "publishConfig": {
+    "access": "public"
+  },
   "author": "gjgd",
   "version": "0.1.3",
   "license": "MIT",
