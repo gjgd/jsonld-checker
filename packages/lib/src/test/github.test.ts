@@ -1,4 +1,4 @@
-import { getFiles } from '../github';
+import { getFiles } from '..';
 
 describe('getFiles', () => {
   it('should return all files in a github repository at a given ref', async () => {
