@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.4](https://github.com/gjgd/jsonld-checker/compare/v0.1.3...v0.1.4) (2020-08-19)
+
+
+### Bug Fixes
+
+* react hook lint warning ([a5950e2](https://github.com/gjgd/jsonld-checker/commit/a5950e2ba977988a90c3d745beefb754e206a686))
+* table header ([fdbf048](https://github.com/gjgd/jsonld-checker/commit/fdbf048dff64a154277d162a1a32303ee1963fb9))
+* use username and reponame from url ([36bbdd7](https://github.com/gjgd/jsonld-checker/commit/36bbdd7a3c090335cf65306f06e0932b871a19f1))
+
+
+### Features
+
+* add inspect button in file tab ([7e89ca7](https://github.com/gjgd/jsonld-checker/commit/7e89ca718a597f14fa895a2a776b75e2986f392b))
+* check all html files by default ([d619ac1](https://github.com/gjgd/jsonld-checker/commit/d619ac17240b766eabce2d44b928997ff60069ed))
+
+
+
+
+
 ## [0.1.3](https://github.com/gjgd/jsonld-checker/compare/v0.1.2...v0.1.3) (2020-07-08)
 
 
