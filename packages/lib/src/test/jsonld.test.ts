@@ -71,7 +71,7 @@ describe('getAllJsonLdFromString', () => {
 describe('integration', () => {
   it('should return all non exhaustive json-ld contexts', async () => {
     const jsonldObjects = getAllJsonLdFromString(text);
-    const promises = jsonldObjects.map(check);
+    const promises = jsonldObjects.map(jsonldObject => check(jsonldObject));
     const results = await Promise.all(promises);
     expect(results).toHaveLength(16);
   });
