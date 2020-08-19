@@ -41,6 +41,12 @@ const docWithAtProperty = {
 
 const docNotJsonLd = { bonjour: 'lol' };
 
+const privateContextUrl = 'https://my-domain.com/private-context.jsonld';
+const docWithPrivateContext = {
+  '@context': privateContextUrl,
+  customProperty: 'customValue',
+};
+
 const textPath = path.join(__dirname, './example.html');
 const text = fs.readFileSync(textPath).toString();
 
@@ -51,5 +57,7 @@ export {
   docWithInvalidContext,
   docWithNotExhaustiveContext,
   docWithAtProperty,
+  privateContextUrl,
+  docWithPrivateContext,
   text,
 };
