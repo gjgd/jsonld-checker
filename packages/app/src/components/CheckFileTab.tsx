@@ -5,7 +5,7 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import { check, getAllJsonLdFromString } from 'jsonld-checker';
 import React from 'react';
 import ResultTable from './ResultTable';
-import { getQueryParameter, updateQueryParameter } from '../utils';
+import { getData, updateData } from '../utils';
 import LoaderButton from './LoaderButton';
 
 const useStyles = makeStyles((theme) => ({
@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 const CheckFileTab: React.FunctionComponent<{}> = () => {
   const analyzeQueryParameter = getQueryParameter('analyze');
   const [url, setUrl] = React.useState(() => {
-    const urlQueryParameter = getQueryParameter('url');
+    const urlQueryParameter = getData('url');
     if (urlQueryParameter) {
       return decodeURIComponent(urlQueryParameter);
     }
@@ -49,7 +49,7 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
   };
 
   React.useEffect(() => {
-    updateQueryParameter('url', url);
+    updateData('url', url);
   }, [url]);
 
   React.useEffect(() => {

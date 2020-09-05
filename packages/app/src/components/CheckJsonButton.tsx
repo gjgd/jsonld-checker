@@ -3,7 +3,6 @@ import { check } from 'jsonld-checker';
 import { green, red } from '@material-ui/core/colors';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { getQueryParameter, updateQueryParameter } from '../utils';
 import LoaderButton from './LoaderButton';
 
 const useStyles = makeStyles((theme: Theme) =>

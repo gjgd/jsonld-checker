@@ -7,7 +7,7 @@ import CheckJsonButton from './CheckJsonButton';
 import defaultValueJson from '../data/defaultValue.json';
 import CheckResult from './CheckResult';
 import ShareButton from './ShareButton';
-import { getQueryParameter, updateQueryParameter } from '../utils';
+import { getData, updateData } from '../utils';
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 const CheckJsonTab: React.FunctionComponent<{}> = () => {
   const classes = useStyles();
   const [jsonValue, setJsonValue] = React.useState(() => {
-    const jsonQueryParameter = getQueryParameter('json');
+    const jsonQueryParameter = getData('json');
     if (jsonQueryParameter) {
       return decodeURIComponent(jsonQueryParameter);
     }
@@ -42,7 +42,7 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
   };
 
   React.useEffect(() => {
-    updateQueryParameter('json', encodeURIComponent(jsonValue));
+    updateData('json', encodeURIComponent(jsonValue));
   }, [jsonValue]);
 
   return (

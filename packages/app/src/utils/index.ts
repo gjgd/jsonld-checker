@@ -1,23 +1,20 @@
-const resetQueryParameters = () => {
-  window.history.pushState(null, '', `/?`);
-};
+import QueryParameterStore from './QueryParameterStore';
+// import LocalStorageStore from './LocalStorageStore';
 
-const updateQueryParameter = (key: string, value: string) => {
-  const newUrl = new URLSearchParams(window.location.search);
-  if (newUrl.get(key) !== value) {
-    newUrl.set(key, value);
-    window.history.pushState(null, '', `/?${newUrl.toString()}`);
-  }
-};
-
-const getQueryParameter = (key: string): string | null => {
-  const urlParams = new URLSearchParams(window.location.search);
-  return urlParams.get(key);
-};
+const queryParameters = new QueryParameterStore();
+// const localStore = new LocalStorageStore();
 
 const switchTab = (newTab: number) => {
-  resetQueryParameters();
-  updateQueryParameter('tab', `${newTab}`);
+  queryParameters.reset();
+  queryParameters.update('tab', `${newTab}`);
+};
+
+const updateData = (key: string, value: string): void => {
+  queryParameters.update(key, value);
+};
+
+const getData = (key: string): string | null => {
+  return queryParameters.get(key);
 };
 
 const getGithubInfo = (url: string) => {
@@ -30,4 +27,4 @@ const getGithubInfo = (url: string) => {
   }
 };
 
-export { updateQueryParameter, getQueryParameter, getGithubInfo, switchTab };
+export { updateData, getData, getGithubInfo, switchTab };

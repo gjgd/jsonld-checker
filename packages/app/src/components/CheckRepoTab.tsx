@@ -2,11 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { getFiles } from 'jsonld-checker';
-import {
-  getQueryParameter,
-  updateQueryParameter,
-  getGithubInfo,
-} from '../utils';
+import { getData, updateData, getGithubInfo } from '../utils';
 import LoaderButton from './LoaderButton';
 import FilesTable from './FilesTable';
 
@@ -26,7 +22,7 @@ const CheckRepoTab: React.FunctionComponent<{}> = () => {
   const classes = useStyles();
 
   const [repo, setRepo] = React.useState(() => {
-    const repoQueryParameter = getQueryParameter('repo');
+    const repoQueryParameter = getData('repo');
     if (repoQueryParameter) {
       return decodeURIComponent(repoQueryParameter);
     }
@@ -37,7 +33,7 @@ const CheckRepoTab: React.FunctionComponent<{}> = () => {
   >([]);
 
   React.useEffect(() => {
-    updateQueryParameter('repo', repo);
+    updateData('repo', repo);
   }, [repo]);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
