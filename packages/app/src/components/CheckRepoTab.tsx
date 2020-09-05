@@ -22,11 +22,8 @@ const CheckRepoTab: React.FunctionComponent<{}> = () => {
   const classes = useStyles();
 
   const [repo, setRepo] = React.useState(() => {
-    const repoQueryParameter = getData('repo');
-    if (repoQueryParameter) {
-      return decodeURIComponent(repoQueryParameter);
-    }
-    return 'https://github.com/transmute-industries/universal-wallet';
+    const repoData = getData('repo');
+    return repoData;
   });
   const [files, setFiles] = React.useState<
     Array<{ path: string; url: string }>

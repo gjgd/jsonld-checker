@@ -47,10 +47,10 @@ const useStyles = makeStyles((theme) => ({
 export default function SimpleTabs() {
   const classes = useStyles();
   const [tab, setTab] = React.useState(() => {
-    const tabQueryParameter = getData('tab');
+    const tabData = getData('tab');
     let defaultTab: number;
-    if (tabQueryParameter) {
-      defaultTab = Number.parseInt(tabQueryParameter, 10);
+    if (tabData) {
+      defaultTab = Number.parseInt(tabData, 10);
       if (defaultTab > 2) {
         defaultTab = 0;
       }

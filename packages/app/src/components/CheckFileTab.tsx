@@ -22,11 +22,8 @@ const useStyles = makeStyles((theme) => ({
 
 const CheckFileTab: React.FunctionComponent<{}> = () => {
   const [url, setUrl] = React.useState(() => {
-    const urlQueryParameter = getData('url');
-    if (urlQueryParameter) {
-      return decodeURIComponent(urlQueryParameter);
-    }
-    return 'https://raw.githubusercontent.com/transmute-industries/universal-wallet/master/docs/index.html';
+    const urlData = getData('url');
+    return urlData;
   });
 
   const [docs, setDocs] = React.useState<Array<any>>([]);
