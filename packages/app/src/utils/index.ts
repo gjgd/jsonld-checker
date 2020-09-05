@@ -1,4 +1,7 @@
-/* eslint-disable import/prefer-default-export */
+const resetQueryParameters = () => {
+  window.history.pushState(null, '', `/?`);
+};
+
 const updateQueryParameter = (key: string, value: string) => {
   const newUrl = new URLSearchParams(window.location.search);
   if (newUrl.get(key) !== value) {
@@ -12,6 +15,11 @@ const getQueryParameter = (key: string): string | null => {
   return urlParams.get(key);
 };
 
+const switchTab = (newTab: number) => {
+  resetQueryParameters();
+  updateQueryParameter('tab', `${newTab}`);
+};
+
 const getGithubInfo = (url: string) => {
   try {
     const parsed = new URL(url);
@@ -22,4 +30,4 @@ const getGithubInfo = (url: string) => {
   }
 };
 
-export { updateQueryParameter, getQueryParameter, getGithubInfo };
+export { updateQueryParameter, getQueryParameter, getGithubInfo, switchTab };

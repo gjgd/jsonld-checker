@@ -7,7 +7,7 @@ import Box from '@material-ui/core/Box';
 import CheckJsonTab from './CheckJsonTab';
 import CheckFileTab from './CheckFileTab';
 import CheckRepoTab from './CheckRepoTab';
-import { updateQueryParameter, getQueryParameter } from '../utils';
+import { switchTab, getQueryParameter } from '../utils';
 
 type TabPanelProps = {
   children: React.ReactNode;
@@ -61,12 +61,9 @@ export default function SimpleTabs() {
   });
 
   const handleChange = (event: ChangeEvent<{}>, newTab: number) => {
+    switchTab(tab);
     setTab(newTab);
   };
-
-  React.useEffect(() => {
-    updateQueryParameter('tab', `${tab}`);
-  }, [tab]);
 
   return (
     <div className={classes.root}>
