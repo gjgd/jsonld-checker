@@ -34,7 +34,6 @@ const CheckJsonButton: React.FunctionComponent<{
   value: Object;
   setResult: any;
 }> = ({ value, setResult }) => {
-  const analyzeQueryParameter = getQueryParameter('analyze');
   const classes = useStyles();
   const [success, setSuccess] = React.useState(false);
   const [error, setError] = React.useState(false);
@@ -49,15 +48,7 @@ const CheckJsonButton: React.FunctionComponent<{
     setSuccess(res.ok);
     setError(!res.ok);
     setResult(res);
-    updateQueryParameter('analyze', '1');
   };
-
-  React.useEffect(() => {
-    if (analyzeQueryParameter === '1') {
-      analyzeObject();
-    }
-    // eslint-disable-next-line
-  }, [analyzeQueryParameter]);
 
   React.useEffect(() => {
     setSuccess(false);

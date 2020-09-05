@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CheckFileTab: React.FunctionComponent<{}> = () => {
-  const analyzeQueryParameter = getQueryParameter('analyze');
   const [url, setUrl] = React.useState(() => {
     const urlQueryParameter = getData('url');
     if (urlQueryParameter) {
@@ -45,22 +44,13 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
       processed.push({ object, result });
       setDocs([...processed]);
     }
-    updateQueryParameter('analyze', '1');
   };
 
   React.useEffect(() => {
     updateData('url', url);
   }, [url]);
 
-  React.useEffect(() => {
-    if (analyzeQueryParameter === '1') {
-      onClickCheck();
-    }
-    // eslint-disable-next-line
-  }, [analyzeQueryParameter]);
-
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateQueryParameter('analyze', '0');
     setUrl(event.target.value);
   };
 
