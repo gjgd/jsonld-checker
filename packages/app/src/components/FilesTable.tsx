@@ -436,7 +436,7 @@ const EnhancedTable: React.FunctionComponent<{
                   const labelId = `enhanced-table-checkbox-${index}`;
                   const checkFileUrl = `${
                     window.location.origin
-                  }?url=${toRawGithubUrl(row.path)}&tab=1&analyze=1`;
+                  }?url=${toRawGithubUrl(row.path)}&tab=1`;
                   let Icon;
                   if (fileState === FileState.Valid) {
                     Icon = <Done style={{ color: 'green' }} />;

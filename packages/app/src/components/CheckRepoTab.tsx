@@ -2,11 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import { getFiles } from 'jsonld-checker';
-import {
-  getQueryParameter,
-  updateQueryParameter,
-  getGithubInfo,
-} from '../utils';
+import { getData, updateData, getGithubInfo } from '../utils';
 import LoaderButton from './LoaderButton';
 import FilesTable from './FilesTable';
 
@@ -26,18 +22,15 @@ const CheckRepoTab: React.FunctionComponent<{}> = () => {
   const classes = useStyles();
 
   const [repo, setRepo] = React.useState(() => {
-    const repoQueryParameter = getQueryParameter('repo');
-    if (repoQueryParameter) {
-      return decodeURIComponent(repoQueryParameter);
-    }
-    return 'https://github.com/transmute-industries/universal-wallet';
+    const repoData = getData('repo');
+    return repoData;
   });
   const [files, setFiles] = React.useState<
     Array<{ path: string; url: string }>
   >([]);
 
   React.useEffect(() => {
-    updateQueryParameter('repo', repo);
+    updateData('repo', repo);
   }, [repo]);
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {

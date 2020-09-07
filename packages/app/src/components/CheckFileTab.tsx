@@ -5,7 +5,7 @@ import { Alert, AlertTitle } from '@material-ui/lab';
 import { check, getAllJsonLdFromString } from 'jsonld-checker';
 import React from 'react';
 import ResultTable from './ResultTable';
-import { getQueryParameter, updateQueryParameter } from '../utils';
+import { getData, updateData } from '../utils';
 import LoaderButton from './LoaderButton';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,13 +21,9 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const CheckFileTab: React.FunctionComponent<{}> = () => {
-  const analyzeQueryParameter = getQueryParameter('analyze');
   const [url, setUrl] = React.useState(() => {
-    const urlQueryParameter = getQueryParameter('url');
-    if (urlQueryParameter) {
-      return decodeURIComponent(urlQueryParameter);
-    }
-    return 'https://raw.githubusercontent.com/transmute-industries/universal-wallet/master/docs/index.html';
+    const urlData = getData('url');
+    return urlData;
   });
 
   const [docs, setDocs] = React.useState<Array<any>>([]);
@@ -45,22 +41,13 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
       processed.push({ object, result });
       setDocs([...processed]);
     }
-    updateQueryParameter('analyze', '1');
   };
 
   React.useEffect(() => {
-    updateQueryParameter('url', url);
+    updateData('url', url);
   }, [url]);
 
-  React.useEffect(() => {
-    if (analyzeQueryParameter === '1') {
-      onClickCheck();
-    }
-    // eslint-disable-next-line
-  }, [analyzeQueryParameter]);
-
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    updateQueryParameter('analyze', '0');
     setUrl(event.target.value);
   };
 

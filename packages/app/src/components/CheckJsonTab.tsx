@@ -4,10 +4,9 @@ import { CheckResult as JsonLdCheckResult } from 'jsonld-checker';
 import JsonEditor from './JsonEditor';
 import JsonLdPlaygroundButton from './JsonLdPlaygroundButton';
 import CheckJsonButton from './CheckJsonButton';
-import defaultValueJson from '../data/defaultValue.json';
 import CheckResult from './CheckResult';
 import ShareButton from './ShareButton';
-import { getQueryParameter, updateQueryParameter } from '../utils';
+import { getData, updateData } from '../utils';
 
 const useStyles = makeStyles((theme) => ({
   buttonWrapper: {
@@ -26,23 +25,19 @@ const useStyles = makeStyles((theme) => ({
 const CheckJsonTab: React.FunctionComponent<{}> = () => {
   const classes = useStyles();
   const [jsonValue, setJsonValue] = React.useState(() => {
-    const jsonQueryParameter = getQueryParameter('json');
-    if (jsonQueryParameter) {
-      return decodeURIComponent(jsonQueryParameter);
-    }
-    return JSON.stringify(defaultValueJson, null, 2);
+    const jsonData = getData('json');
+    return jsonData;
   });
 
   const [result, setResult] = React.useState<JsonLdCheckResult>();
 
   const onChange = (value: string) => {
-    updateQueryParameter('analyze', '0');
     setResult(undefined);
     setJsonValue(value);
   };
 
   React.useEffect(() => {
-    updateQueryParameter('json', encodeURIComponent(jsonValue));
+    updateData('json', encodeURIComponent(jsonValue));
   }, [jsonValue]);
 
   return (

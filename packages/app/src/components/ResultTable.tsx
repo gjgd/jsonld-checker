@@ -65,7 +65,7 @@ function Row(props: { row: any }) {
                 const encodedJson = encodeURIComponent(
                   JSON.stringify(row.object, null, 2)
                 );
-                const objectUrl = `${window.location.origin}?json=${encodedJson}&tab=0&analyze=1`;
+                const objectUrl = `${window.location.origin}?json=${encodedJson}&tab=0`;
                 window.open(objectUrl);
               }}
             >
