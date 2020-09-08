@@ -33,13 +33,7 @@ jobs:
         aws-region: us-east-1
 
     - name: Serverless deploy
-      run: |
-        ls -la ~
-        # cat ~/.aws/credentials
-        npm i -g serverless
-        echo $SERVERLESS_ACCESS_KEY
-        # sls login
-        sls deploy
+      run: npx serverless deploy
       working-directory: ./packages/app
       env:
         SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
