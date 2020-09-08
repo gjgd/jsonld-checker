@@ -34,7 +34,8 @@ jobs:
 
     - name: Serverless deploy
       run: |
-        cat ~/.aws/credentials
+        ls -la ~
+        # cat ~/.aws/credentials
         npm i -g serverless
         echo $SERVERLESS_ACCESS_KEY
         # sls login
