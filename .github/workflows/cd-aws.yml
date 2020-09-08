@@ -3,6 +3,7 @@ name: Deploy to AWS
 on:
   push:
     branches:
+      - use-serverless-app
       - master
 
 jobs:
