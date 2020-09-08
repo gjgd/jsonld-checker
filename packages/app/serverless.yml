@@ -1,0 +1,12 @@
+name: jsonld-checker
+component: website
+org: gjgdserverless
+repo: https://github.com/gjgd/jsonld-checker
+license: MIT
+
+inputs:
+  domain: new.jsonld-checker.com
+  src:
+    src: ./src
+    hook: npm run build
+    dist: ./build
