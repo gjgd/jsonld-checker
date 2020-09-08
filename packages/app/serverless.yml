@@ -1,5 +1,6 @@
 name: jsonld-checker
 component: website
+org: gjgdserverless
 repo: https://github.com/gjgd/jsonld-checker
 license: MIT
 
