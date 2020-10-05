@@ -31,7 +31,7 @@ const getData = (key: string): string => {
   // Else return a default value
   switch (key) {
     case 'url':
-      return 'https://raw.githubusercontent.com/w3c-ccg/universal-wallet-interop-spec/master/docs/index.html';
+      return 'https://github.com/w3c-ccg/universal-wallet-interop-spec/blob/master/docs/index.html';
     case 'repo':
       return 'https://github.com/w3c-ccg/universal-wallet-interop-spec';
     case 'json':
