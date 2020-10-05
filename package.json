@@ -23,6 +23,9 @@
   "devDependencies": {
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
+    "conventional-changelog-angular": "^5.0.11",
+    "conventional-changelog-writer": "^4.0.17",
+    "dot-prop": "^4.2.1",
     "husky": "^4.2.5",
     "lerna": "^3.22.0"
   }
