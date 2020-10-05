@@ -328,7 +328,7 @@ const EnhancedTable: React.FunctionComponent<{
     return count;
   };
 
-  const fileTypes = ['*.js', '*.ts', '*.json', '*.html'];
+  const fileTypes = ['*.js', '*.ts', '*.json', '*.jsonld', '*.html'];
 
   const [state, setState] = React.useState<any>({
     '*.html': true,
