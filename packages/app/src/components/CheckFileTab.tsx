@@ -30,7 +30,15 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
   const [total, setTotal] = React.useState<number>(0);
 
   const onClickCheck = async () => {
-    const res = await fetch(url);
+    let rawUrl = url;
+    if (rawUrl.includes('github.com')) {
+      rawUrl = rawUrl.replace('github.com', 'raw.githubusercontent.com');
+      rawUrl = rawUrl.replace('/blob', '');
+      console.info(
+        `It seems you are using the Github URL of the file. Checking the raw URL instead: ${rawUrl}`
+      );
+    }
+    const res = await fetch(rawUrl);
     const text = await res.text();
     const jsonldObjects: Array<any> = await getAllJsonLdFromString(text);
     setTotal(jsonldObjects.length);
