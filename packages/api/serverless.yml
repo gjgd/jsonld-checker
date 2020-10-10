@@ -1,0 +1,9 @@
+name: jsonld-checker-api
+component: express
+org: gjgdserverless
+repo: https://github.com/gjgd/jsonld-checker
+license: MIT
+
+inputs:
+  src: ./
+  domain: api.jsonld-checker.com
