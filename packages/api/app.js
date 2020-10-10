@@ -22,6 +22,22 @@ app.get('/test', (req, res) => {
   res.status(200).send('Request received');
 });
 
+app.get('/:id', async (req, res) => {
+  const { id } = req.params;
+  const params = {
+    TableName: process.env.TABLE_NAME,
+    Key: {
+      id,
+    },
+  };
+  const record = await dynamoDb.get(params).promise();
+  if (record.Item) {
+    res.status(200).send(record.Item.json);
+  } else {
+    res.sendStatus(404);
+  }
+});
+
 app.post('/', async (req, res) => {
   const { body } = req;
   const id = uuidv4();
