@@ -10,3 +10,4 @@ inputs:
   domain: api.jsonld-checker.com
   env:
     TABLE_NAME: ${output:jsonld-checker-db.name}
+    API_URL: ${output:jsonld-checker-api.url}

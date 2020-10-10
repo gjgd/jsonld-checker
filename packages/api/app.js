@@ -51,7 +51,7 @@ app.post('/', async (req, res) => {
     },
   };
   await dynamoDb.put(params).promise();
-  res.status(200).send(`api.jsonld-checker.com/${id}`);
+  res.status(200).send(`${process.env.API_URL}/${id}`);
 });
 
 app.get('/*', (req, res) => {
