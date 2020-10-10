@@ -24,13 +24,12 @@ app.get('/test', (req, res) => {
 
 app.post('/', async (req, res) => {
   const { body } = req;
-  const { url } = body;
   const id = uuidv4();
   const params = {
     TableName: process.env.TABLE_NAME,
     Item: {
       id,
-      url,
+      json: JSON.stringify(body),
       created_timestamp: Date.now(),
       created_date: new Date().toISOString(),
     },
