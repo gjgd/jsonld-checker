@@ -6,15 +6,28 @@ const app = express();
 const dynamoDb = new DynamoDB.DocumentClient();
 
 // Enable CORS
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', '*');
-//   res.header('Access-Control-Allow-Headers', '*');
-//   next();
-// });
-// app.options('*', (req, res) => {
-//   res.status(200).send();
-// });
+app.use((req, res, next) => {
+  // List of domains that are allowed to POST to the create lambda
+  // const corsWhitelist = process.env.CORS_WHITELIST.split(' ');
+  const corsWhitelist = ['http://localhost:3000'];
+
+  if (req && req.headers && req.headers.origin) {
+    const origin = req.headers.origin
+      .toLowerCase();
+    console.log(`${origin} allowed?: ${corsWhitelist.includes(origin)}`);
+    if (corsWhitelist.includes(origin)) {
+      res.header('Access-Control-Allow-Origin', req.headers.origin);
+      // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Access-Control-Allow-Origin
+      res.header('Vary', 'Origin');
+      res.header('Access-Control-Allow-Methods', '*');
+      res.header('Access-Control-Allow-Headers', '*');
+    }
+  }
+  next();
+});
+app.options('*', (req, res) => {
+  res.status(200).send();
+});
 
 app.use(express.json());
 
