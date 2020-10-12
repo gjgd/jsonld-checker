@@ -30,6 +30,7 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
   });
 
   const [result, setResult] = React.useState<JsonLdCheckResult>();
+  const [loading, setLoading] = React.useState<Boolean>(false);
 
   const onChange = (value: string) => {
     setResult(undefined);
@@ -40,17 +41,46 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
     updateData('json', encodeURIComponent(jsonValue));
   }, [jsonValue]);
 
+  React.useEffect(() => {
+    const jsonId = getData('jsonid');
+    if (jsonId) {
+      (async () => {
+        console.log('loading json from API...');
+        setLoading(true);
+        const jsonString = await fetch(
+          `${process.env.REACT_APP_API_URL}/${jsonId}`,
+          {
+            method: 'GET',
+          }
+        ).then((res) => {
+          if (res.ok) {
+            return res.text();
+          }
+          throw new Error();
+        });
+        updateData('jsonid', '');
+        const prettyString = JSON.stringify(JSON.parse(jsonString), null, 2);
+        setJsonValue(prettyString);
+        setLoading(false);
+      })();
+    }
+  }, []);
+
   return (
     <>
       <div className={classes.buttonWrapper}>
         <CheckJsonButton value={jsonValue} setResult={setResult} />
         <JsonLdPlaygroundButton value={jsonValue} />
-        <ShareButton />
+        <ShareButton json={jsonValue} />
       </div>
-      <div className={classes.contentWrapper}>
-        <CheckResult className={classes.checkResult} result={result} />
-        <JsonEditor onChange={onChange} value={jsonValue} />
-      </div>
+      {loading ? (
+        <></>
+      ) : (
+        <div className={classes.contentWrapper}>
+          <CheckResult className={classes.checkResult} result={result} />
+          <JsonEditor onChange={onChange} value={jsonValue} />
+        </div>
+      )}
     </>
   );
 };

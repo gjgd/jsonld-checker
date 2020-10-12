@@ -1,7 +1,7 @@
 {
   "name": "jsonld-checker-app",
   "private": true,
-  "author": "gjgd",
+  "author": "gjgd <gjgd@protonmail.com>",
   "version": "0.1.4",
   "license": "MIT",
   "engines": {

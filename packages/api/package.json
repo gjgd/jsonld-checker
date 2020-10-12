@@ -1,0 +1,20 @@
+{
+  "name": "jsonld-checker-api",
+  "private": true,
+  "author": "gjgd <gjgd@protonmail.com>",
+  "version": "0.1.4",
+  "license": "MIT",
+  "scripts": {
+    "deploy": "sls deploy"
+  },
+  "devDependencies": {
+    "eslint": "7.2.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-plugin-import": "^2.21.2"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.701.0",
+    "express": "^4.17.1",
+    "uuid": "^8.3.1"
+  }
+}

@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const ShareButton: React.FunctionComponent = () => {
+const ShareButton: React.FunctionComponent<{ json: string }> = ({ json }) => {
   const classes = useStyles();
   const [tinyUrl, setTinyUrl] = React.useState('');
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
@@ -31,23 +31,22 @@ const ShareButton: React.FunctionComponent = () => {
   const id = open ? 'simple-popover' : undefined;
 
   const createShortUrl = () => {
-    const url = `${window.location.toString()}`;
-    const tinyUrlService = 'https://tiny.gjgd.fr/';
-    return fetch(tinyUrlService, {
+    return fetch(process.env.REACT_APP_API_URL as string, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
       },
-      body: JSON.stringify({ url }),
+      body: json,
     })
       .then((res) => {
         if (res.ok) {
-          return res.json();
+          return res.text();
         }
         throw new Error();
       })
       .then((data) => {
-        const shortUrl = data.shortUrl || '';
+        const jsonId = data.split('/').pop();
+        const shortUrl = `${window.origin}?tab=0&jsonid=${jsonId}`;
         setTinyUrl(shortUrl);
         return shortUrl;
       });
@@ -77,11 +76,11 @@ const ShareButton: React.FunctionComponent = () => {
         }}
       >
         <Typography className={classes.typography}>
-          <span>Copy the URL or use this short one:</span>
+          <span>Use this short URL to share the current JSON:</span>
           <br />
           <a
             className={classes.wrapper}
-            href={`https://${tinyUrl}`}
+            href={tinyUrl}
             target="_blank"
             rel="noopener noreferrer"
           >

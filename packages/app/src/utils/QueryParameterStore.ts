@@ -8,6 +8,10 @@ export default class QueryParameterStore implements Store {
       newUrl.set(key, value);
       window.history.pushState(null, '', `/?${newUrl.toString()}`);
     }
+    if (value === '') {
+      newUrl.delete(key);
+      window.history.pushState(null, '', `/?${newUrl.toString()}`);
+    }
   }
 
   public get(key: string): string | null {

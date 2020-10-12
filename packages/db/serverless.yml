@@ -1,0 +1,18 @@
+name: jsonld-checker-db
+app: jsonld-checker
+component: aws-dynamodb
+org: gjgdserverless
+repo: https://github.com/gjgd/jsonld-checker
+license: MIT
+
+inputs:
+  name: ${name}-${stage}
+  region: us-east-1
+  # Don't delete the Database Table if "serverless remove" is run
+  deletionPolicy: retain
+  attributeDefinitions:
+    - AttributeName: id
+      AttributeType: S
+  keySchema:
+    - AttributeName: id
+      KeyType: HASH
