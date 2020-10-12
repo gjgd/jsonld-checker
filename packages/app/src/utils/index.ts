@@ -36,6 +36,8 @@ const getData = (key: string): string => {
       return 'https://github.com/w3c-ccg/universal-wallet-interop-spec';
     case 'json':
       return JSON.stringify(defaultValueJson, null, 2);
+    case 'jsonid':
+      return '';
     case 'tab':
       return '0';
     default:

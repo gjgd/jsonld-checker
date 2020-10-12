@@ -40,6 +40,28 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
     updateData('json', encodeURIComponent(jsonValue));
   }, [jsonValue]);
 
+  React.useEffect(() => {
+    (async () => {
+      const jsonId = getData('jsonid');
+      if (jsonId) {
+        console.log('loading json from API...');
+        const jsonString = await fetch(
+          `${process.env.REACT_APP_API_URL}/${jsonId}`,
+          {
+            method: 'GET',
+          }
+        ).then((res) => {
+          if (res.ok) {
+            return res.text();
+          }
+          throw new Error();
+        });
+        const prettyString = JSON.stringify(JSON.parse(jsonString), null, 2);
+        setJsonValue(prettyString);
+      }
+    })();
+  }, []);
+
   return (
     <>
       <div className={classes.buttonWrapper}>
