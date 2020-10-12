@@ -25,7 +25,7 @@ jobs:
       run: npm install
 
     - name: Serverless deploy app
-      run: npm run deploy
+      run: npx serverless deploy
       working-directory: ./packages/app
       env:
         SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
@@ -33,7 +33,7 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
     - name: Serverless deploy api
-      run: npm run deploy
+      run: npx serverless deploy
       working-directory: ./packages/api
       env:
         SERVERLESS_ACCESS_KEY: ${{ secrets.SERVERLESS_ACCESS_KEY }}
