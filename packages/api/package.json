@@ -1,5 +1,5 @@
 {
-  "name": "jsonld-checker-app",
+  "name": "jsonld-checker-api",
   "private": true,
   "author": "gjgd <gjgd@protonmail.com>",
   "version": "0.1.4",
