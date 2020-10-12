@@ -56,6 +56,7 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
           }
           throw new Error();
         });
+        updateData('jsonid', '');
         const prettyString = JSON.stringify(JSON.parse(jsonString), null, 2);
         setJsonValue(prettyString);
       }
