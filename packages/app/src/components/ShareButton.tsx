@@ -76,7 +76,7 @@ const ShareButton: React.FunctionComponent<{ json: string }> = ({ json }) => {
         }}
       >
         <Typography className={classes.typography}>
-          <span>Copy the URL or use this short one:</span>
+          <span>Use this short URL to share the current JSON:</span>
           <br />
           <a
             className={classes.wrapper}
