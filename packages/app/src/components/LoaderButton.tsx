@@ -20,7 +20,7 @@ const useStyles = makeStyles(() =>
   })
 );
 
-const ShareButton: React.FunctionComponent<{
+const LoaderButton: React.FunctionComponent<{
   className?: any;
   onClick: any;
   buttonText: string;
@@ -50,4 +50,4 @@ const ShareButton: React.FunctionComponent<{
   );
 };
 
-export default ShareButton;
+export default LoaderButton;

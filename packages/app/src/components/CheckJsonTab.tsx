@@ -45,7 +45,7 @@ const CheckJsonTab: React.FunctionComponent<{}> = () => {
       <div className={classes.buttonWrapper}>
         <CheckJsonButton value={jsonValue} setResult={setResult} />
         <JsonLdPlaygroundButton value={jsonValue} />
-        <ShareButton />
+        <ShareButton json={jsonValue} />
       </div>
       <div className={classes.contentWrapper}>
         <CheckResult className={classes.checkResult} result={result} />
