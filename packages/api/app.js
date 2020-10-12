@@ -9,7 +9,11 @@ const dynamoDb = new DynamoDB.DocumentClient();
 app.use((req, res, next) => {
   // List of domains that are allowed to POST to the create lambda
   // const corsWhitelist = process.env.CORS_WHITELIST.split(' ');
-  const corsWhitelist = ['http://localhost:3000'];
+  const corsWhitelist = [
+    'http://localhost:3000',
+    'https://jsonld-checker.com',
+    'https://www.jsonld-checker.com',
+  ];
 
   if (req && req.headers && req.headers.origin) {
     const origin = req.headers.origin
