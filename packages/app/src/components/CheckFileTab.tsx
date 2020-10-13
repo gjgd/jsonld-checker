@@ -31,11 +31,12 @@ const CheckFileTab: React.FunctionComponent<{}> = () => {
 
   const onClickCheck = async () => {
     let rawUrl = url;
-    if (rawUrl.includes('github.com')) {
+    const githubDomainRegex = /^(https?:\/\/)?(www\.)?github.com/;
+    if (githubDomainRegex.exec('https://www.github.com')) {
       rawUrl = rawUrl.replace('github.com', 'raw.githubusercontent.com');
       rawUrl = rawUrl.replace('/blob', '');
       console.info(
-        `It seems you are using the Github URL of the file. Checking the raw URL instead: ${rawUrl}`
+        `It seems you are using the Github URL of the file. Using the raw URL instead: ${rawUrl}`
       );
     }
     const res = await fetch(rawUrl);
