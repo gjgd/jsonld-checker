@@ -5,12 +5,15 @@
   "version": "0.1.4",
   "license": "MIT",
   "scripts": {
-    "deploy": "sls deploy"
+    "deploy": "sls deploy",
+    "test": "jest"
   },
   "devDependencies": {
     "eslint": "7.2.0",
     "eslint-config-airbnb": "^18.2.0",
-    "eslint-plugin-import": "^2.21.2"
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jest": "^24.1.0",
+    "jest": "^26.5.3"
   },
   "dependencies": {
     "aws-sdk": "^2.701.0",
