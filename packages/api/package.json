@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "deploy": "sls deploy",
+    "lint": "eslint .",
     "test": "jest"
   },
   "devDependencies": {
