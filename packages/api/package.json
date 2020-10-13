@@ -13,7 +13,8 @@
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.21.2",
     "eslint-plugin-jest": "^24.1.0",
-    "jest": "^26.5.3"
+    "jest": "^26.5.3",
+    "supertest": "^5.0.0"
   },
   "dependencies": {
     "aws-sdk": "^2.701.0",
