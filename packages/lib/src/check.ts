@@ -1,4 +1,5 @@
 import jsonld from 'jsonld';
+import { flatten } from 'flat';
 import CheckResult from './CheckResult';
 import defaultLoader from './defaultDocumentLoader';
 
@@ -20,10 +21,28 @@ const check = async (
     const compacted = await jsonld.compact(expanded, jsonldDoc['@context'], {
       documentLoader,
     });
+    const delimiter = '.';
     // Check which keys have been removed
-    const keys = Object.keys(jsonldDoc).filter(isNotJsonLdPropery);
-    const newKeysSet = new Set(Object.keys(compacted));
-    const difference = keys.filter(key => !newKeysSet.has(key));
+    let keys = Object.keys(flatten(jsonldDoc, { delimiter }))
+      .filter(isNotJsonLdPropery)
+      .map(key =>
+        key
+          .split(delimiter)
+          .filter(keyPart => !/^\d+$/.test(keyPart))
+          .join(delimiter)
+      );
+    let compactedKeys = Object.keys(flatten(compacted, { delimiter })).map(
+      key =>
+        key
+          .split(delimiter)
+          .filter(keyPart => !/^\d+$/.test(keyPart))
+          .join(delimiter)
+    );
+    keys = keys.filter((key, idx) => keys.indexOf(key) === idx);
+    compactedKeys = compactedKeys.filter(
+      (key, idx) => compactedKeys.indexOf(key) === idx
+    );
+    const difference = keys.filter(key => !compactedKeys.includes(key));
     if (difference.length === 0) {
       return new CheckResult(true);
     }

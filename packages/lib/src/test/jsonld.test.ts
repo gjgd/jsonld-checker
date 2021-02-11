@@ -8,7 +8,7 @@ import {
   docWithAtProperty,
 } from './__fixtures__';
 
-jest.setTimeout(10 * 1000);
+jest.setTimeout(15 * 1000);
 
 describe('check', () => {
   it('should return true if all properties are in the context', async () => {
@@ -54,6 +54,26 @@ describe('check', () => {
       'Invalid JSON-LD syntax; @context must be an object.'
     );
   });
+
+  it('should return false if there are dropped terms in a nested json ld', async () => {
+    const jsonLD = {
+      '@context': [
+        {
+          type: '@type',
+          IntentToSell: 'https://w3id.org/traceability#IntentToSell',
+          seller: 'https://w3id.org/traceability#Entity',
+        },
+      ],
+      type: ['IntentToSell', 'name'],
+      seller: {
+        type: 'Person',
+        firstName: 'Colten',
+        lastName: 'Welch',
+      },
+    };
+    const result = await check(jsonLD);
+    expect(result.ok).toBeFalsy();
+  });
 });
 
 describe('getAllJsonLdFromString', () => {
@@ -71,7 +91,7 @@ describe('getAllJsonLdFromString', () => {
 describe('integration', () => {
   it('should return all non exhaustive json-ld contexts', async () => {
     const jsonldObjects = getAllJsonLdFromString(text);
-    const promises = jsonldObjects.map(jsonldObject => check(jsonldObject));
+    const promises = jsonldObjects.map((jsonldObject) => check(jsonldObject));
     const results = await Promise.all(promises);
     expect(results).toHaveLength(16);
   });
