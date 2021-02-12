@@ -7,8 +7,10 @@ import {
   text,
   docWithAtProperty,
 } from './__fixtures__';
+import docMissingPropertyMappingNested from './__fixtures__/docMissingPropMapNested.json';
+import docNestedWithDotKey from './__fixtures__/docNestedWithDotKey.json';
 
-jest.setTimeout(10 * 1000);
+jest.setTimeout(15 * 1000);
 
 describe('check', () => {
   it('should return true if all properties are in the context', async () => {
@@ -53,6 +55,16 @@ describe('check', () => {
     expect(result.error!.details).toBe(
       'Invalid JSON-LD syntax; @context must be an object.'
     );
+  });
+
+  it('should return false if there are dropped terms in a nested json ld', async () => {
+    const result = await check(docMissingPropertyMappingNested);
+    expect(result.ok).toBeFalsy();
+  });
+
+  it('should still check correctly if nested doc has dot in key', async () => {
+    const result = await check(docNestedWithDotKey);
+    expect(result.ok).toBeTruthy();
   });
 });
 
