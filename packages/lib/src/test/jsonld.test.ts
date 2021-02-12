@@ -58,17 +58,19 @@ describe('check', () => {
     );
   });
 
-  it('should return false if there are dropped terms in a nested json ld', async () => {
+  it('should return false if nested properties are not defined in the context', async () => {
     const result = await check(docMissingPropertyMappingNested);
     expect(result.ok).toBeFalsy();
+    expect(result.error!.type).toBe('MISSING_PROPERTIES_IN_CONTEXT');
+    expect(result.error!.details).toBe(['seller.firstName', 'seller.lastName']);
   });
 
-  it('should still check correctly if nested doc has dot in key', async () => {
+  it('should return true if nested doc has dot in key', async () => {
     const result = await check(docNestedWithDotKey);
     expect(result.ok).toBeTruthy();
   });
 
-  it('should check a credential with nested ids ', async () => {
+  it('should return true if doc has nested "id" property', async () => {
     const result = await check(docWithNestedIds);
     expect(result.ok).toBeTruthy();
   });
