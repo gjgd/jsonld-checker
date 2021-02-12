@@ -5,6 +5,22 @@ import defaultLoader from './defaultDocumentLoader';
 
 const isNotJsonLdPropery = property => !['@id', '@type'].includes(property);
 
+const delimiter = '.';
+
+// removeArrayArtifacts("type.0") returns "type"
+const removeArrayArtifacts = key =>
+  key
+    .split(delimiter)
+    .filter(keyPart => !/^\d+$/.test(keyPart))
+    .join(delimiter);
+
+// [1, 2, 3, 2, 1].filter(onlyKeepUnique) returns [ 1, 2, 3 ]
+const onlyKeepUnique = (key, idx, array) => array.indexOf(key) === idx;
+
+// trimTrailingId("credentialSubject.id") returns "credentialSubject"
+const trimTrailingId = flattenedProperty =>
+  flattenedProperty.replace(/\.id$/, '');
+
 const check = async (
   jsonldDocument: string | object,
   documentLoader = defaultLoader
@@ -21,27 +37,16 @@ const check = async (
     const compacted = await jsonld.compact(expanded, jsonldDoc['@context'], {
       documentLoader,
     });
-    const delimiter = '.';
     // Check which keys have been removed
-    let keys = Object.keys(flatten(jsonldDoc, { delimiter }))
+    const keys = Object.keys(flatten(jsonldDoc, { delimiter }))
       .filter(isNotJsonLdPropery)
-      .map(key =>
-        key
-          .split(delimiter)
-          .filter(keyPart => !/^\d+$/.test(keyPart))
-          .join(delimiter)
-      );
-    let compactedKeys = Object.keys(flatten(compacted, { delimiter })).map(
-      key =>
-        key
-          .split(delimiter)
-          .filter(keyPart => !/^\d+$/.test(keyPart))
-          .join(delimiter)
-    );
-    keys = keys.filter((key, idx) => keys.indexOf(key) === idx);
-    compactedKeys = compactedKeys.filter(
-      (key, idx) => compactedKeys.indexOf(key) === idx
-    );
+      .map(trimTrailingId)
+      .map(removeArrayArtifacts)
+      .filter(onlyKeepUnique);
+
+    const compactedKeys = Object.keys(flatten(compacted, { delimiter }))
+      .map(removeArrayArtifacts)
+      .filter(onlyKeepUnique);
     const difference = keys.filter(key => !compactedKeys.includes(key));
     if (difference.length === 0) {
       return new CheckResult(true);
