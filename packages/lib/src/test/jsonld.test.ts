@@ -7,6 +7,8 @@ import {
   text,
   docWithAtProperty,
 } from './__fixtures__';
+import docMissingPropertyMappingNested from './__fixtures__/docMissingPropMapNested.json';
+import docNestedWithDotKey from './__fixtures__/docNestedWithDotKey.json';
 
 jest.setTimeout(15 * 1000);
 
@@ -56,23 +58,13 @@ describe('check', () => {
   });
 
   it('should return false if there are dropped terms in a nested json ld', async () => {
-    const jsonLD = {
-      '@context': [
-        {
-          type: '@type',
-          IntentToSell: 'https://w3id.org/traceability#IntentToSell',
-          seller: 'https://w3id.org/traceability#Entity',
-        },
-      ],
-      type: ['IntentToSell', 'name'],
-      seller: {
-        type: 'Person',
-        firstName: 'Colten',
-        lastName: 'Welch',
-      },
-    };
-    const result = await check(jsonLD);
+    const result = await check(docMissingPropertyMappingNested);
     expect(result.ok).toBeFalsy();
+  });
+
+  it('should still check correctly if nested doc has dot in key', async () => {
+    const result = await check(docNestedWithDotKey);
+    expect(result.ok).toBeTruthy();
   });
 });
 

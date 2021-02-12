@@ -1,0 +1,15 @@
+{
+  "@context": [
+    {
+      "type": "@type",
+      "IntentToSell": "https://w3id.org/traceability#IntentToSell",
+      "seller": "https://w3id.org/traceability#Entity"
+    }
+  ],
+  "type": ["IntentToSell", "name"],
+  "seller": {
+    "type": "Person",
+    "firstName": "Colten",
+    "lastName": "Welch"
+  }
+}

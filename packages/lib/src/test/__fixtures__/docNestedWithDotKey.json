@@ -1,0 +1,22 @@
+{
+  "@context": [
+    {
+      "IntentToSell": "https://w3id.org/traceability#IntentToSell",
+      "seller": {
+        "@id": "https://w3id.org/traceability#Entity",
+        "@context": {
+          "firstName": "https://schema.org/givenName",
+          "lastName": "https://schema.org/familyName",
+          "homepage.url": "https://schema.org/url"
+        }
+      }
+    }
+  ],
+  "@type": "IntentToSell",
+  "seller": {
+    "@type": "Person",
+    "firstName": "Colten",
+    "lastName": "Welch",
+    "homepage.url": "http://example.com#coltenWelch"
+  }
+}
