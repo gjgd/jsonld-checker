@@ -9,8 +9,8 @@ const isNode =
   process.versions.node != null;
 
 const nodeDocumentLoader = isNode
-  ? jsonld.documentLoaders.node()
-  : jsonld.documentLoaders.xhr();
+  ? (jsonld as any).documentLoaders.node()
+  : (jsonld as any).documentLoaders.xhr();
 
 // change the default document loader
 const defaultLoader = async (url: string) => {
