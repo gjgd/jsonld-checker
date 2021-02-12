@@ -9,6 +9,7 @@ import {
 } from './__fixtures__';
 import docMissingPropertyMappingNested from './__fixtures__/docMissingPropMapNested.json';
 import docNestedWithDotKey from './__fixtures__/docNestedWithDotKey.json';
+import vc from './__fixtures__/vc.json';
 
 jest.setTimeout(15 * 1000);
 
@@ -64,6 +65,11 @@ describe('check', () => {
 
   it('should still check correctly if nested doc has dot in key', async () => {
     const result = await check(docNestedWithDotKey);
+    expect(result.ok).toBeTruthy();
+  });
+
+  it('vc should be valid json ld', async () => {
+    const result = await check(vc);
     expect(result.ok).toBeTruthy();
   });
 });
