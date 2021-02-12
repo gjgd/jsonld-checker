@@ -3,6 +3,7 @@ import path from 'path';
 
 import docMissingPropertyMappingNested from './docMissingPropMapNested.json';
 import docNestedWithDotKey from './docNestedWithDotKey.json';
+import docWithNestedIds from './docWithNestedIds.json';
 
 const context = [
   {
@@ -61,6 +62,7 @@ export {
   docWithAtProperty,
   docWithExhaustiveContext,
   docWithInvalidContext,
+  docWithNestedIds,
   docWithNotExhaustiveContext,
   docWithPrivateContext,
   privateContextUrl,

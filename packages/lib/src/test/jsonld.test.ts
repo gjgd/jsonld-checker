@@ -6,6 +6,7 @@ import {
   docWithAtProperty,
   docWithExhaustiveContext,
   docWithInvalidContext,
+  docWithNestedIds,
   docWithNotExhaustiveContext,
   text,
 } from './__fixtures__';
@@ -64,6 +65,11 @@ describe('check', () => {
 
   it('should still check correctly if nested doc has dot in key', async () => {
     const result = await check(docNestedWithDotKey);
+    expect(result.ok).toBeTruthy();
+  });
+
+  it('should check a credential with nested ids ', async () => {
+    const result = await check(docWithNestedIds);
     expect(result.ok).toBeTruthy();
   });
 });
