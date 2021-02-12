@@ -1,6 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 
+import docMissingPropertyMappingNested from './docMissingPropMapNested.json';
+import docNestedWithDotKey from './docNestedWithDotKey.json';
+
 const context = [
   {
     test: 'http://test.com#',
@@ -52,12 +55,14 @@ const text = fs.readFileSync(textPath).toString();
 
 export {
   context,
+  docMissingPropertyMappingNested,
+  docNestedWithDotKey,
   docNotJsonLd,
+  docWithAtProperty,
   docWithExhaustiveContext,
   docWithInvalidContext,
   docWithNotExhaustiveContext,
-  docWithAtProperty,
-  privateContextUrl,
   docWithPrivateContext,
+  privateContextUrl,
   text,
 };

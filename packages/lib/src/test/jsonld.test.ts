@@ -1,14 +1,14 @@
 import { check, getAllJsonFromString, getAllJsonLdFromString } from '..';
 import {
+  docMissingPropertyMappingNested,
+  docNestedWithDotKey,
   docNotJsonLd,
+  docWithAtProperty,
   docWithExhaustiveContext,
   docWithInvalidContext,
   docWithNotExhaustiveContext,
   text,
-  docWithAtProperty,
 } from './__fixtures__';
-import docMissingPropertyMappingNested from './__fixtures__/docMissingPropMapNested.json';
-import docNestedWithDotKey from './__fixtures__/docNestedWithDotKey.json';
 
 jest.setTimeout(15 * 1000);
 
