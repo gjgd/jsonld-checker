@@ -53,4 +53,31 @@ const getAllJsonLdFromString = (text: string) => {
   return getAllJsonFromString(text).filter(obj => isJsonLdObject(obj));
 };
 
-export { getAllJsonLdFromString, isJsonLdObject, getAllJsonFromString };
+const delimiter = '.';
+
+const isNotJsonLdPropery = property => !['@id', '@type'].includes(property);
+
+// removeArrayArtifacts("type.0") returns "type"
+const removeArrayArtifacts = key =>
+  key
+    .split(delimiter)
+    .filter(keyPart => !/^\d+$/.test(keyPart))
+    .join(delimiter);
+
+// [1, 2, 3, 2, 1].filter(onlyKeepUnique) returns [ 1, 2, 3 ]
+const onlyKeepUnique = (key, idx, array) => array.indexOf(key) === idx;
+
+// trimTrailingId("credentialSubject.id") returns "credentialSubject"
+const trimTrailingId = flattenedProperty =>
+  flattenedProperty.replace(/\.id$/, '');
+
+export {
+  getAllJsonFromString,
+  getAllJsonLdFromString,
+  isJsonLdObject,
+  isNotJsonLdPropery,
+  onlyKeepUnique,
+  removeArrayArtifacts,
+  trimTrailingId,
+  delimiter,
+};

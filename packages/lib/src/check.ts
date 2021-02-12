@@ -2,24 +2,13 @@ import jsonld from 'jsonld';
 import { flatten } from 'flat';
 import CheckResult from './CheckResult';
 import defaultLoader from './defaultDocumentLoader';
-
-const isNotJsonLdPropery = property => !['@id', '@type'].includes(property);
-
-const delimiter = '.';
-
-// removeArrayArtifacts("type.0") returns "type"
-const removeArrayArtifacts = key =>
-  key
-    .split(delimiter)
-    .filter(keyPart => !/^\d+$/.test(keyPart))
-    .join(delimiter);
-
-// [1, 2, 3, 2, 1].filter(onlyKeepUnique) returns [ 1, 2, 3 ]
-const onlyKeepUnique = (key, idx, array) => array.indexOf(key) === idx;
-
-// trimTrailingId("credentialSubject.id") returns "credentialSubject"
-const trimTrailingId = flattenedProperty =>
-  flattenedProperty.replace(/\.id$/, '');
+import {
+  delimiter,
+  isNotJsonLdPropery,
+  onlyKeepUnique,
+  removeArrayArtifacts,
+  trimTrailingId,
+} from './utils';
 
 const check = async (
   jsonldDocument: string | object,
