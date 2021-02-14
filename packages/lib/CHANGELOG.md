@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## 0.1.8-unstable.0 (2021-02-14)
+
+**Note:** Version bump only for package jsonld-checker
+
+
+
+
+
 ## [0.1.5-unstable.0](https://github.com/gjgd/jsonld-checker/compare/v0.1.4...v0.1.5-unstable.0) (2021-02-14)
 
 **Note:** Version bump only for package jsonld-checker
