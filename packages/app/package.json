@@ -2,7 +2,7 @@
   "name": "jsonld-checker-app",
   "private": true,
   "author": "gjgd <gjgd@protonmail.com>",
-  "version": "0.1.8-unstable.0",
+  "version": "0.1.8-unstable.1",
   "license": "MIT",
   "engines": {
     "node": ">=10"
@@ -13,7 +13,7 @@
     "@material-ui/lab": "^4.0.0-alpha.54",
     "ace-builds": "^1.4.11",
     "clsx": "^1.1.1",
-    "jsonld-checker": "^0.1.8-unstable.0",
+    "jsonld-checker": "^0.1.8-unstable.1",
     "react": "^16.13.1",
     "react-ace": "^9.0.0",
     "react-dom": "^16.13.1",
