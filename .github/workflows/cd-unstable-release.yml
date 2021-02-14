@@ -2,9 +2,6 @@ name: CD
 
 on:
   push:
-    # release unstable wont run if the commit is already a stable release (tagged commit)
-    tags-ignore:
-      - "v*"
     branches:
       - main
       - rename-main-branch
@@ -36,9 +33,9 @@ jobs:
       - name: Setup git profile
         run: |
           git config user.name "GJGD"
-          git config user.email "gjg"
+          git config user.email $NPM_EMAIL
         env:
-          NPM_EMAIL: ${{ secrets.NPM_TOKEN }}
+          NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
 
       - name: Publish unstable version with lerna
         run: npm run publish:unstable
