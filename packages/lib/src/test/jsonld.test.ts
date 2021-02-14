@@ -10,6 +10,10 @@ import {
 import docMissingPropertyMappingNested from './__fixtures__/docMissingPropMapNested.json';
 import docNestedWithDotKey from './__fixtures__/docNestedWithDotKey.json';
 import vc from './__fixtures__/vc.json';
+import docOnlyId from './__fixtures__/docOnlyId.json';
+import docNoMappedProp from './__fixtures__/docNoMappedProp.json';
+import docOnlyIdOnePropNoMap from './__fixtures__/docOnlyIdOnePropNoMap.json';
+import docOnlyIdOneProp from './__fixtures__/docOnlyIdOneProp.json';
 
 jest.setTimeout(15 * 1000);
 
@@ -71,6 +75,17 @@ describe('check', () => {
   it('vc should be valid json ld', async () => {
     const result = await check(vc);
     expect(result.ok).toBeTruthy();
+  });
+
+  it('should pass json with no mapped properties', async () => {
+    const result = await check(docOnlyId);
+    expect(result.ok).toBeTruthy();
+    const result2 = await check(docNoMappedProp);
+    expect(result2.ok).toBeTruthy();
+    const result3 = await check(docOnlyIdOnePropNoMap);
+    expect(result3.ok).toBeFalsy();
+    const result4 = await check(docOnlyIdOneProp);
+    expect(result4.ok).toBeTruthy();
   });
 });
 
