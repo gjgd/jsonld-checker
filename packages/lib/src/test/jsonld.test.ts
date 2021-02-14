@@ -10,6 +10,11 @@ import {
 import docMissingPropertyMappingNested from './__fixtures__/docMissingPropMapNested.json';
 import docNestedWithDotKey from './__fixtures__/docNestedWithDotKey.json';
 import vc from './__fixtures__/vc.json';
+import docOnlyId from './__fixtures__/docOnlyId.json';
+import docNoMappedProp from './__fixtures__/docNoMappedProp.json';
+import docOnlyIdOnePropNoMap from './__fixtures__/docOnlyIdOnePropNoMap.json';
+import docOnlyIdOneProp from './__fixtures__/docOnlyIdOneProp.json';
+import docEmojiAsProp from './__fixtures__/docEmojiAsProp.json';
 
 jest.setTimeout(15 * 1000);
 
@@ -70,6 +75,28 @@ describe('check', () => {
 
   it('vc should be valid json ld', async () => {
     const result = await check(vc);
+    expect(result.ok).toBeTruthy();
+  });
+
+  it('should pass json with no mapped properties', async () => {
+    const result = await check(docNoMappedProp);
+    expect(result.ok).toBeTruthy();
+  });
+
+  it('should pass json with only id', async () => {
+    const result = await check(docOnlyId);
+    expect(result.ok).toBeTruthy();
+  });
+
+  it('should pass json with only one prop', async () => {
+    const result = await check(docOnlyIdOneProp);
+    expect(result.ok).toBeTruthy();
+    const result2 = await check(docOnlyIdOnePropNoMap);
+    expect(result2.ok).toBeFalsy();
+  });
+
+  it('should pass json with emoji as prop or value', async () => {
+    const result = await check(docEmojiAsProp);
     expect(result.ok).toBeTruthy();
   });
 });

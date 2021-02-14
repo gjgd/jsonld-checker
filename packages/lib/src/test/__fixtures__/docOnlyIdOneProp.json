@@ -1,0 +1,8 @@
+{
+  "id": "did:example:123",
+  "lastName": "Welch",
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    { "lastName": "https://schema.org/familyName" }
+  ]
+}
