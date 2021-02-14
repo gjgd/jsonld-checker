@@ -1,0 +1,10 @@
+{
+  "@context": [
+    "https://www.w3.org/ns/did/v1",
+    {
+      "🔥": "https://en.wikipedia.org/wiki/Open-world_assumption"
+    }
+  ],
+  "id": "did:example:123",
+  "🔥": "💩"
+}
