@@ -1,0 +1,44 @@
+name: CD
+
+on:
+  push:
+    # release unstable wont run if the commit is already a stable release (tagged commit)
+    tags-ignore:
+      - "v*"
+    branches:
+      - main
+      - rename-main-branch
+
+jobs:
+  release-unstable:
+    # Don't run on any commit that features [skip ci] in the commit message
+    name: Publish unstable release
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Use Node 14
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: Install
+        run: npm install
+
+      - name: Setup npm profile
+        run: |
+          echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+          # Gives a clean failure prior to attempting a release if npm token is incorrect
+          npm whoami
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Setup git profile
+        run: |
+          git config user.name "GJGD"
+          git config user.email "gjg"
+        env:
+          NPM_EMAIL: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish unstable version with lerna
+        run: npm run publish:unstable

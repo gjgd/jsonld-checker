@@ -12,7 +12,8 @@
     "lint": "lerna run lint",
     "postinstall": "lerna bootstrap",
     "publish:patch": "lerna publish patch",
-    "test": "lerna run test"
+    "test": "lerna run test",
+    "publish:unstable": "lerna publish prerelease --preid unstable --yes --no-push"
   },
   "husky": {
     "hooks": {
