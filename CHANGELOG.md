@@ -3,6 +3,45 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.5-unstable.0](https://github.com/gjgd/jsonld-checker/compare/v0.1.4...v0.1.5-unstable.0) (2021-02-14)
+
+
+### Bug Fixes
+
+* enable cors for api ([6a2ad12](https://github.com/gjgd/jsonld-checker/commit/6a2ad121ff6f7593ad2d71a6334b1c08f166439c))
+* update examples ([7651904](https://github.com/gjgd/jsonld-checker/commit/7651904cdbe56e5c0e9fb2887ea4a1cae9aab1f0))
+* use regex to determine if url is github domain ([60b88e8](https://github.com/gjgd/jsonld-checker/commit/60b88e86dd166bcdb486baf3da94f04df86efe34)), closes [#45](https://github.com/gjgd/jsonld-checker/issues/45)
+
+
+### Features
+
+* add boilerplate express api ([a51cba4](https://github.com/gjgd/jsonld-checker/commit/a51cba4e7936ae73ed159edd22f71a8e8489bd91))
+* add db package ([536e3a9](https://github.com/gjgd/jsonld-checker/commit/536e3a90c9a71f8b84ab2c11b69d16e6f70833ca))
+* add endpoint for getting a json from id ([322c12d](https://github.com/gjgd/jsonld-checker/commit/322c12d33908a0dd5df7cfbb7270f46e3adcb860))
+* add endpoint to save a json under a uuid ([1ca83f4](https://github.com/gjgd/jsonld-checker/commit/1ca83f4e772142886dbc768699fc762674367b50))
+* add jsonld file type ([6cc96da](https://github.com/gjgd/jsonld-checker/commit/6cc96da9d6f23e8f9ca14f539753e902c773758d)), closes [#40](https://github.com/gjgd/jsonld-checker/issues/40)
+* add loading ([0e46d4e](https://github.com/gjgd/jsonld-checker/commit/0e46d4ee3a11285ab751919fed43e216130e9ea2))
+* add serverless config for deploying app to AWS ([76512b9](https://github.com/gjgd/jsonld-checker/commit/76512b9adcbbf0a1af2c11b78883eb87ece6821d))
+* add support for getting a json by id ([cd113ec](https://github.com/gjgd/jsonld-checker/commit/cd113ec139c22fcb71108b2df1a766066e77e2d6))
+* add support for saving a large json ([e39b5b0](https://github.com/gjgd/jsonld-checker/commit/e39b5b0ec043025954ce6aa9ed2010baa084ebc1))
+* consume jsonid value after use ([f14b853](https://github.com/gjgd/jsonld-checker/commit/f14b8537019bafbbc67948eabc2b385ed2b67d12))
+* expand cors whitelist ([090f512](https://github.com/gjgd/jsonld-checker/commit/090f512c8f6060efa126c931f2ae2cb7e77dc4f0))
+* fix default url in url page ([3011599](https://github.com/gjgd/jsonld-checker/commit/3011599a03b5ee4289817b8f1cd2e95c1fb4a81a))
+* remove analyze query param ([d31e3f0](https://github.com/gjgd/jsonld-checker/commit/d31e3f0aeca13c73d1734c7d4f56f53eef4a69ac))
+* support github link ([577117e](https://github.com/gjgd/jsonld-checker/commit/577117eb7c91fdd361209af79db37fcb7ebed705)), closes [#38](https://github.com/gjgd/jsonld-checker/issues/38)
+* switching tabs resets query parameters ([7bccd4a](https://github.com/gjgd/jsonld-checker/commit/7bccd4a193cbae182392127ff86f5c37d32337b8))
+* use API_URL env variable ([d339093](https://github.com/gjgd/jsonld-checker/commit/d3390938d21e10d394988fe363b85b8f7aac5aac))
+* use localStorage to remember data ([275d7ad](https://github.com/gjgd/jsonld-checker/commit/275d7ad826a45841cece30b5e5791e13d87371a8))
+
+
+### Reverts
+
+* Revert "chore: fix dot-prop dependencies" ([c1d7854](https://github.com/gjgd/jsonld-checker/commit/c1d78540c3f58b831a808bce809448c7019d3a36))
+
+
+
+
+
 ## [0.1.4](https://github.com/gjgd/jsonld-checker/compare/v0.1.3...v0.1.4) (2020-08-19)
 
 
