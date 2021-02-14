@@ -40,7 +40,9 @@ jobs:
         env:
           NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
 
-      - run: cat .npmrc
       - run: git diff
+
+      - run: git checkout package-lock.json
+
       - name: Publish unstable version with lerna
         run: npm run publish:unstable
