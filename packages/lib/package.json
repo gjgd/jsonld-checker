@@ -1,5 +1,11 @@
 {
   "name": "jsonld-checker",
+  "homepage": "https://github.com/gjgd/jsonld-checker",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gjgd/jsonld-checker",
+    "directory": "packages/lib"
+  },
   "publishConfig": {
     "access": "public"
   },

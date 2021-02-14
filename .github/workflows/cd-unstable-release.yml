@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - main
-      - rename-main-branch
-
 jobs:
   release-unstable:
     # Don't run on any commit that features [skip ci] in the commit message
