@@ -40,5 +40,7 @@ jobs:
         env:
           NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
 
+      - run: cat .npmrc
+      - run: git diff
       - name: Publish unstable version with lerna
         run: npm run publish:unstable
