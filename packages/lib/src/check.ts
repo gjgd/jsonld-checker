@@ -24,7 +24,7 @@ const check = async (
           unmappedProperties.push(
             `${info.activeProperty}.${info.unmappedProperty}`
           );
-        } else {
+        } else if (info.unmappedProperty) {
           unmappedProperties.push(info.unmappedProperty);
         }
       }
