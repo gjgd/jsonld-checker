@@ -36,13 +36,11 @@ jobs:
       - name: Setup git profile
         run: |
           git config user.name "GJGD"
-          git config user.email $NPM_EMAIL
+          git config user.email "$NPM_EMAIL"
         env:
           NPM_EMAIL: ${{ secrets.NPM_EMAIL }}
 
-      - run: git diff
-
-      - run: git checkout package-lock.json
+      - run: npm whoami
 
       - name: Publish unstable version with lerna
         run: npm run publish:unstable
