@@ -10,7 +10,7 @@
     "access": "public"
   },
   "author": "gjgd",
-  "version": "0.1.8-unstable.3",
+  "version": "0.1.8-unstable.4",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
