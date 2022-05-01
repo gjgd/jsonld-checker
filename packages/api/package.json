@@ -4,6 +4,7 @@
   "author": "gjgd <gjgd@protonmail.com>",
   "version": "0.1.8-unstable.3",
   "license": "MIT",
+  "main": "app.js",
   "scripts": {
     "deploy": "sls deploy",
     "lint": "eslint .",
