@@ -31,12 +31,18 @@ describe('check', () => {
   });
 
   it('should return true for valid string argument', async () => {
-    const result = await check(JSON.stringify(docWithExhaustiveContext), customDocumentLoader);
+    const result = await check(
+      JSON.stringify(docWithExhaustiveContext),
+      customDocumentLoader
+    );
     expect(result.ok).toBeTruthy();
   });
 
   it('should return false if some properties are missing from the context', async () => {
-    const result = await check(docWithNotExhaustiveContext, customDocumentLoader);
+    const result = await check(
+      docWithNotExhaustiveContext,
+      customDocumentLoader
+    );
     expect(result.ok).toBeFalsy();
     expect(result.error!.type).toBe('MISSING_PROPERTIES_IN_CONTEXT');
     expect(result.error!.details).toEqual('["property3"]');
@@ -65,7 +71,10 @@ describe('check', () => {
   });
 
   it('should return false if there are dropped terms in a nested json ld', async () => {
-    const result = await check(docMissingPropertyMappingNested, customDocumentLoader);
+    const result = await check(
+      docMissingPropertyMappingNested,
+      customDocumentLoader
+    );
     expect(result.ok).toBeFalsy();
   });
 
@@ -117,7 +126,9 @@ describe('getAllJsonLdFromString', () => {
 describe('integration', () => {
   it('should return all non exhaustive json-ld contexts', async () => {
     const jsonldObjects = getAllJsonLdFromString(text);
-    const promises = jsonldObjects.map(jsonldObject => check(jsonldObject, customDocumentLoader));
+    const promises = jsonldObjects.map(jsonldObject =>
+      check(jsonldObject, customDocumentLoader)
+    );
     const results = await Promise.all(promises);
     expect(results).toHaveLength(16);
   });

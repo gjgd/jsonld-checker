@@ -32,9 +32,9 @@ const docWithInvalidContext = {
 const docWithAtProperty = {
   '@context': [
     {
-      name: 'https://schema.org/name'
+      name: 'https://schema.org/name',
     },
-    'https://identity.foundation/EcdsaSecp256k1RecoverySignature2020/lds-ecdsa-secp256k1-recovery2020-0.0.jsonld'
+    'https://identity.foundation/EcdsaSecp256k1RecoverySignature2020/lds-ecdsa-secp256k1-recovery2020-0.0.jsonld',
   ],
   '@type': 'SpecialAnnouncement',
   name: 'Stanford announce COVID-19 testing facility',

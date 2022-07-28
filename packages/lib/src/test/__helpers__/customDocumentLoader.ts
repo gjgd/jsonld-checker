@@ -18,10 +18,10 @@ const CONTEXTS = {
   'https://w3id.org/security/v1': SECURITY_V1,
   'https://w3id.org/security/v2': SECURITY_V2,
   'https://identity.foundation/.well-known/contexts/did-configuration-v0.0.jsonld': DID_CONFIGURATION,
-  'https://identity.foundation/EcdsaSecp256k1RecoverySignature2020/lds-ecdsa-secp256k1-recovery2020-0.0.jsonld': SECP256K1_RECOVERY_2020
+  'https://identity.foundation/EcdsaSecp256k1RecoverySignature2020/lds-ecdsa-secp256k1-recovery2020-0.0.jsonld': SECP256K1_RECOVERY_2020,
 };
 
-export default async function customDocumentLoader (url: string) {
+export default async function customDocumentLoader(url: string) {
   if (url in CONTEXTS) {
     return {
       contextUrl: null,
