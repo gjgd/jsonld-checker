@@ -7,7 +7,9 @@ license: MIT
 
 inputs:
   src: ./
-  domain: api.jsonld-checker.com
+  domain: api-jsonld-checker.gjgd.xyz
   env:
     TABLE_NAME: ${output:jsonld-checker-db.name}
+    # Comment this line before deploying for the first time
+    # because the output is created after the first deploy
     API_URL: ${output:jsonld-checker-api.url}

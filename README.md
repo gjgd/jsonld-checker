@@ -1,6 +1,6 @@
 # JSONLD Checker
 
-https://www.jsonld-checker.com
+https:/jsonld-checker.gjgd.xyz
 
 ## Getting started with the lib:
 

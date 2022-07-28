@@ -11,8 +11,7 @@ app.use((req, res, next) => {
   // const corsWhitelist = process.env.CORS_WHITELIST.split(' ');
   const corsWhitelist = [
     'http://localhost:3000',
-    'https://jsonld-checker.com',
-    'https://www.jsonld-checker.com',
+    'https://jsonld-checker.gjgd.xyz',
   ];
 
   if (req && req.headers && req.headers.origin) {
