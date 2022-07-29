@@ -21,7 +21,7 @@ jest.setTimeout(15 * 1000);
 
 describe('check', () => {
   it('should return true if all properties are in the context', async () => {
-    const result = await check(docWithExhaustiveContext, customDocumentLoader);
+    const result = await check(docWithExhaustiveContext);
     expect(result.ok).toBeTruthy();
   });
 
@@ -31,18 +31,12 @@ describe('check', () => {
   });
 
   it('should return true for valid string argument', async () => {
-    const result = await check(
-      JSON.stringify(docWithExhaustiveContext),
-      customDocumentLoader
-    );
+    const result = await check(JSON.stringify(docWithExhaustiveContext));
     expect(result.ok).toBeTruthy();
   });
 
   it('should return false if some properties are missing from the context', async () => {
-    const result = await check(
-      docWithNotExhaustiveContext,
-      customDocumentLoader
-    );
+    const result = await check(docWithNotExhaustiveContext);
     expect(result.ok).toBeFalsy();
     expect(result.error!.type).toBe('MISSING_PROPERTIES_IN_CONTEXT');
     expect(result.error!.details).toEqual('["property3"]');
@@ -56,13 +50,13 @@ describe('check', () => {
   });
 
   it('should return false is doc has invalid context', async () => {
-    const result = await check(docWithInvalidContext, customDocumentLoader);
+    const result = await check(docWithInvalidContext);
     expect(result.ok).toBeFalsy();
     expect(result.error!.type).toBe('jsonld.InvalidUrl');
   });
 
   it('should return false is doc is not JSON-LD', async () => {
-    const result = await check(docNotJsonLd, customDocumentLoader);
+    const result = await check(docNotJsonLd);
     expect(result.ok).toBeFalsy();
     expect(result.error!.type).toBe('jsonld.SyntaxError');
     expect(result.error!.details).toBe(
@@ -71,15 +65,12 @@ describe('check', () => {
   });
 
   it('should return false if there are dropped terms in a nested json ld', async () => {
-    const result = await check(
-      docMissingPropertyMappingNested,
-      customDocumentLoader
-    );
+    const result = await check(docMissingPropertyMappingNested);
     expect(result.ok).toBeFalsy();
   });
 
   it('should still check correctly if nested doc has dot in key', async () => {
-    const result = await check(docNestedWithDotKey, customDocumentLoader);
+    const result = await check(docNestedWithDotKey);
     expect(result.ok).toBeTruthy();
   });
 
