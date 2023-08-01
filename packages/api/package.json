@@ -2,7 +2,7 @@
   "name": "jsonld-checker-api",
   "private": true,
   "author": "gjgd <gjgd@protonmail.com>",
-  "version": "0.1.8-unstable.4",
+  "version": "0.1.8",
   "license": "MIT",
   "main": "app.js",
   "scripts": {

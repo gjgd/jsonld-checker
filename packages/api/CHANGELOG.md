@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.1.8](https://github.com/gjgd/jsonld-checker/compare/v0.1.8-unstable.4...v0.1.8) (2022-07-30)
+
+
+### Features
+
+* **deps:** bump jsonld version to 5 ([8387cbd](https://github.com/gjgd/jsonld-checker/commit/8387cbd0aad7558fbc988980d9b162082e6694f0))
+
+
+
+
+
 ## 0.1.8-unstable.4 (2022-05-01)
 
 **Note:** Version bump only for package jsonld-checker-api
