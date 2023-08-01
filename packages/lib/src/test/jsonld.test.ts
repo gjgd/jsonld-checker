@@ -102,7 +102,11 @@ describe('check', () => {
   it('should pass json with only one prop', async () => {
     const result = await check(docOnlyIdOneProp, customDocumentLoader);
     expect(result.ok).toBeTruthy();
-    const result2 = await check(docOnlyIdOnePropNoMap, customDocumentLoader, USE_SAFE_MODE);
+    const result2 = await check(
+      docOnlyIdOnePropNoMap,
+      customDocumentLoader,
+      USE_SAFE_MODE
+    );
     expect(result2.ok).toBeFalsy();
   });
 
