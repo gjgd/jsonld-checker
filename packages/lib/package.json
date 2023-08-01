@@ -30,7 +30,7 @@
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "jest",
+    "test": "jest --maxWorkers=1",
     "lint": "tsdx lint src",
     "prepare": "tsdx build"
   },

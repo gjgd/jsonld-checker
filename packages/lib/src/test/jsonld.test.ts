@@ -2,7 +2,7 @@ import { check, getAllJsonFromString, getAllJsonLdFromString } from '..';
 import {
   docNotJsonLd,
   docWithExhaustiveContext,
-  // docWithInvalidContext,
+  docWithInvalidContext,
   docWithNotExhaustiveContext,
   text,
   docWithAtProperty,
@@ -55,11 +55,11 @@ describe('check', () => {
     expect(result.error!.message).toBe('Unexpected end of JSON input');
   });
 
-  // it('should return false is doc has invalid context', async () => {
-  //   const result = await check(docWithInvalidContext);
-  //   expect(result.ok).toBeFalsy();
-  //   expect(result.error!.type).toBe('jsonld.InvalidUrl');
-  // });
+  it('should return false is doc has invalid context', async () => {
+    const result = await check(docWithInvalidContext);
+    expect(result.ok).toBeFalsy();
+    expect(result.error!.type).toBe('jsonld.InvalidUrl');
+  });
 
   it('should return false is doc is not JSON-LD', async () => {
     const result = await check(docNotJsonLd);
@@ -125,12 +125,12 @@ describe('getAllJsonLdFromString', () => {
 });
 
 describe('integration', () => {
-  // it.only('should return all non exhaustive json-ld contexts', async () => {
-  //   const jsonldObjects = getAllJsonLdFromString(text);
-  //   const promises = jsonldObjects.map(jsonldObject =>
-  //     check(jsonldObject, customDocumentLoader)
-  //   );
-  //   const results = await Promise.all(promises);
-  //   expect(results).toHaveLength(16);
-  // });
+  it('should return all non exhaustive json-ld contexts', async () => {
+    const jsonldObjects = getAllJsonLdFromString(text);
+    const promises = jsonldObjects.map(jsonldObject =>
+      check(jsonldObject, customDocumentLoader)
+    );
+    const results = await Promise.all(promises);
+    expect(results).toHaveLength(16);
+  });
 });
