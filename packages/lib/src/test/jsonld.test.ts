@@ -17,6 +17,8 @@ import docOnlyIdOneProp from './__fixtures__/docOnlyIdOneProp.json';
 import docEmojiAsProp from './__fixtures__/docEmojiAsProp.json';
 import customDocumentLoader from './__helpers__/customDocumentLoader';
 
+const USE_SAFE_MODE = true;
+
 jest.setTimeout(15 * 1000);
 
 describe('check', () => {
@@ -36,7 +38,11 @@ describe('check', () => {
   });
 
   it('should return false if some properties are missing from the context', async () => {
-    const result = await check(docWithNotExhaustiveContext);
+    const result = await check(
+      docWithNotExhaustiveContext,
+      undefined,
+      USE_SAFE_MODE
+    );
     expect(result.ok).toBeFalsy();
     expect(result.error!.type).toBe('jsonld.ValidationError');
     expect(result.error!.event.details?.property).toEqual('property3');
@@ -58,25 +64,23 @@ describe('check', () => {
   it('should return false is doc is not JSON-LD', async () => {
     const result = await check(docNotJsonLd);
     expect(result.ok).toBeFalsy();
-    expect(result.error!.type).toBe('jsonld.ValidationError');
-    expect(result.error!.event).toEqual({
-      code: 'invalid property',
-      details: { expandedProperty: 'bonjour', property: 'bonjour' },
-      level: 'warning',
-      message:
-        'Dropping property that did not expand into an absolute IRI or keyword.',
-      type: ['JsonLdEvent'],
-    });
+    expect(result.error!.type).toBe('jsonld.SyntaxError');
+    expect(result.error!.message).toBe(
+      'Invalid JSON-LD syntax; @context must be an object.'
+    );
   });
 
   it('should return false if there are dropped terms in a nested json ld', async () => {
-    const result = await check(docMissingPropertyMappingNested);
+    const result = await check(
+      docMissingPropertyMappingNested,
+      undefined,
+      USE_SAFE_MODE
+    );
     expect(result.ok).toBeFalsy();
   });
 
   it('should still check correctly if nested doc has dot in key', async () => {
     const result = await check(docNestedWithDotKey);
-    console.log(JSON.stringify(result, null, 2));
     expect(result.ok).toBeTruthy();
   });
 
@@ -85,22 +89,20 @@ describe('check', () => {
     expect(result.ok).toBeTruthy();
   });
 
-  it('should not pass json with no mapped properties', async () => {
+  it('should pass json with no mapped properties', async () => {
     const result = await check(docNoMappedProp, customDocumentLoader);
-    expect(result.ok).toBeFalsy();
-    expect(result.error?.event.message).toBe('Dropping empty object.');
+    expect(result.ok).toBeTruthy();
   });
 
-  it('should not pass json with only id', async () => {
+  it('should pass json with only id', async () => {
     const result = await check(docOnlyId, customDocumentLoader);
-    expect(result.ok).toBeFalsy();
-    expect(result.error?.event.message).toBe('Dropping object with only @id.');
+    expect(result.ok).toBeTruthy();
   });
 
   it('should pass json with only one prop', async () => {
     const result = await check(docOnlyIdOneProp, customDocumentLoader);
     expect(result.ok).toBeTruthy();
-    const result2 = await check(docOnlyIdOnePropNoMap, customDocumentLoader);
+    const result2 = await check(docOnlyIdOnePropNoMap, customDocumentLoader, USE_SAFE_MODE);
     expect(result2.ok).toBeFalsy();
   });
 

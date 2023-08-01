@@ -6,7 +6,8 @@ import defaultLoader from './defaultDocumentLoader';
 
 const check = async (
   jsonldDocument: string | object,
-  documentLoader = defaultLoader
+  documentLoader = defaultLoader,
+  safe: boolean = false
 ) => {
   try {
     let jsonldDoc: object;
@@ -21,7 +22,7 @@ const check = async (
     // Remove all keys not present in the jsonld context
     const expanded = await jsonld.expand(jsonldDoc, {
       documentLoader,
-      safe: true,
+      safe,
     });
     await jsonld.compact(expanded, jsonldDoc['@context'], { documentLoader });
 
