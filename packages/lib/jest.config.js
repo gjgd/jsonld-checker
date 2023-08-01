@@ -1,8 +1,7 @@
-{
+module.exports = {
   "globals": {
-    "ts-jest": {
-      "tsconfig": "tsconfig.json"
-    }
+    TextEncoder: require('util').TextEncoder,
+    TextDecoder: require('util').TextDecoder
   },
   "coverageThreshold": {
     "global": {

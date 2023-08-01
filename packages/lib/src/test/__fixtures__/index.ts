@@ -32,6 +32,9 @@ const docWithInvalidContext = {
 const docWithAtProperty = {
   '@context': [
     {
+      '@base': 'https://path.to.context',
+    },
+    {
       name: 'https://schema.org/name',
     },
     'https://identity.foundation/EcdsaSecp256k1RecoverySignature2020/lds-ecdsa-secp256k1-recovery2020-0.0.jsonld',
