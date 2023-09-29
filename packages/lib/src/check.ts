@@ -6,7 +6,8 @@ import defaultLoader from './defaultDocumentLoader';
 
 const check = async (
   jsonldDocument: string | object,
-  documentLoader = defaultLoader
+  documentLoader = defaultLoader,
+  safe: boolean = false
 ) => {
   try {
     let jsonldDoc: object;
@@ -18,22 +19,10 @@ const check = async (
 
     const unmappedProperties: string[] = [];
 
-    const expansionMap = info => {
-      if (info) {
-        if (info.activeProperty) {
-          unmappedProperties.push(
-            `${info.activeProperty}.${info.unmappedProperty}`
-          );
-        } else if (info.unmappedProperty) {
-          unmappedProperties.push(info.unmappedProperty);
-        }
-      }
-    };
-
     // Remove all keys not present in the jsonld context
     const expanded = await jsonld.expand(jsonldDoc, {
       documentLoader,
-      expansionMap,
+      safe,
     });
     await jsonld.compact(expanded, jsonldDoc['@context'], { documentLoader });
 
@@ -46,7 +35,12 @@ const check = async (
       JSON.stringify(unmappedProperties)
     );
   } catch (err) {
-    return new CheckResult(false, err.name, err.message);
+    return new CheckResult(
+      false,
+      (err as any).name,
+      (err as any).message,
+      (err as any).details?.event
+    );
   }
 };
 

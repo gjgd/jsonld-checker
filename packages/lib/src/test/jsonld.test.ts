@@ -17,6 +17,8 @@ import docOnlyIdOneProp from './__fixtures__/docOnlyIdOneProp.json';
 import docEmojiAsProp from './__fixtures__/docEmojiAsProp.json';
 import customDocumentLoader from './__helpers__/customDocumentLoader';
 
+const USE_SAFE_MODE = true;
+
 jest.setTimeout(15 * 1000);
 
 describe('check', () => {
@@ -36,17 +38,21 @@ describe('check', () => {
   });
 
   it('should return false if some properties are missing from the context', async () => {
-    const result = await check(docWithNotExhaustiveContext);
+    const result = await check(
+      docWithNotExhaustiveContext,
+      undefined,
+      USE_SAFE_MODE
+    );
     expect(result.ok).toBeFalsy();
-    expect(result.error!.type).toBe('MISSING_PROPERTIES_IN_CONTEXT');
-    expect(result.error!.details).toEqual('["property3"]');
+    expect(result.error!.type).toBe('jsonld.ValidationError');
+    expect(result.error!.event.details?.property).toEqual('property3');
   });
 
   it('should return false if argument is a non parseable string', async () => {
     const result = await check('');
     expect(result.ok).toBeFalsy();
     expect(result.error!.type).toBe('SyntaxError');
-    expect(result.error!.details).toBe('Unexpected end of JSON input');
+    expect(result.error!.message).toBe('Unexpected end of JSON input');
   });
 
   it('should return false is doc has invalid context', async () => {
@@ -59,13 +65,17 @@ describe('check', () => {
     const result = await check(docNotJsonLd);
     expect(result.ok).toBeFalsy();
     expect(result.error!.type).toBe('jsonld.SyntaxError');
-    expect(result.error!.details).toBe(
+    expect(result.error!.message).toBe(
       'Invalid JSON-LD syntax; @context must be an object.'
     );
   });
 
   it('should return false if there are dropped terms in a nested json ld', async () => {
-    const result = await check(docMissingPropertyMappingNested);
+    const result = await check(
+      docMissingPropertyMappingNested,
+      undefined,
+      USE_SAFE_MODE
+    );
     expect(result.ok).toBeFalsy();
   });
 
@@ -92,7 +102,11 @@ describe('check', () => {
   it('should pass json with only one prop', async () => {
     const result = await check(docOnlyIdOneProp, customDocumentLoader);
     expect(result.ok).toBeTruthy();
-    const result2 = await check(docOnlyIdOnePropNoMap, customDocumentLoader);
+    const result2 = await check(
+      docOnlyIdOnePropNoMap,
+      customDocumentLoader,
+      USE_SAFE_MODE
+    );
     expect(result2.ok).toBeFalsy();
   });
 

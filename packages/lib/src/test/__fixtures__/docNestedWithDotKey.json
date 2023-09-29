@@ -1,6 +1,9 @@
 {
   "@context": [
     {
+      "@base": "https://path.to.context"
+    },
+    {
       "IntentToSell": "https://w3id.org/traceability#IntentToSell",
       "seller": {
         "@id": "https://w3id.org/traceability#Entity",
